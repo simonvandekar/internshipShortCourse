@@ -1,0 +1,7 @@
+---
+title: "About This Website"
+---
+
+This is an [R Markdown website](http://rmarkdown.rstudio.com/rmarkdown_websites.html) created by Simon Vandekar. Thanks to [Julia Wrobel](http://juliawrobel.com)  & [Jeff Goldsmith](jeffgoldsmith.com) for providing the website templates [template1](https://github.com/julia-wrobel/MI_tutorial) [template2](https://github.com/jeff-goldsmith/ICAMPAM).
+<br>
+

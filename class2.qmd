@@ -1,0 +1,614 @@
+---
+title: "Class 2"
+author: "Simon Vandekar"
+toc: true
+format:
+  html:
+    code-fold: true
+    html-math-method: katex
+---
+
+```{r setup, include=FALSE}
+knitr::knit_hooks$set(GPs=function(before, options, envir){
+if (before){
+  cex=1.5
+par(mgp=c(1.7,.7,0), lwd=1.5, lend=2,
+    cex.lab=0.8*cex, cex.axis=0.8*cex, cex.main=0.6*cex,
+    mar=c(2.8,2.8,1.8,.2), bty='l', oma=c(0,0,0,0), pch=16)}
+})
+knitr::opts_chunk$set(echo = TRUE, fig.height = 3, fig.width = 3, cache=FALSE, GPs=TRUE)
+set.seed(1333)
+cols = c('black', RColorBrewer::brewer.pal(9, 'Set1'))
+```
+
+## Objectives:
+
+1. Learn some basic concepts about probabilities
+2. Learn to use probability to think about data
+
+## Why probability
+
+* Probability is the language of statistics.
+* It is how we can understand data and evaluate the quantitative methods we use.
+
+## Properties of probability
+Examples
+Coin flip
+Dice roll
+Dependence/Independence
+Continuous example
+Expected values/Averages
+CDF, PDF
+
+
+###	Coin flips and diagnoses
+
+* Something that takes only two values can be described with a Bernoulli random variable.
+  + Coin flip
+  + Diagnosis: schizophrenia, COVID+ or not
+  
+| Bernoulli values $x$ | probabilities |
+| ----------- | ----------- |
+| 0 (tails)    |    1-p   |
+| 1 (heads)   |   p    |
+
+* What is a sensible value for $p$ for the different Bernoulli variables above?
+
+
+### Random variables and probability notation
+* For $X\sim \text{Be}(\pi)$: X is distributed as ($\sim$ means "is distributed as") [Bernoulli](https://en.wikipedia.org/wiki/Bernoulli_distribution), with parameter $p \in (0,1)$, e.g. $p=0.25$.
+* Blackboard or capital P is probability, $\mathbb{P}(X=x)$, means the probability the random variable $X$ is equal to the nonrandom value $x$.
+* $\mathbb{P}(X = x) = p^x(1-p)^{(1-x)}$. That is the probability mass function (PMF) of a Bernoulli random variable
+* Common notation is $f_X(x)$ is the PMF of the random variable $X$. In this case $f_X(x):=p^x(1-p)^{(1-x)}$.
+* $:=$ notation means "is defined by."
+* A random variable does not have a value in itself... We don't usually talk about $X=0.5$, but $\mathbb{P}(X=0.5)$.
+
+### Probability axioms
+
+We have an intuitive understanding of the basic axioms of probability.
+
+* An event $E$ is something that can occur, e.g. head or tails.
+* $F$ is the collection of all events e.g. $F = \{ \{0\}, \{1\} \}$.
+* Let $\Omega = {0,1}$ be union of all possible events
+
+The (Kolmogorov) axioms are
+
+1. $\mathbb{P}(X\in E) \ge 0$ -- probability is positive.
+2. $\mathbb{P}(X\in \Omega) = 1$ -- probabilities sum to 1 (a person has COVID, or they don't). 
+3. For disjoint sets $E_1 \cap E_2 = \varnothing$, $\mathbb{P}(E_1 \cup E_2) = \mathbb{P}(E_1) + \mathbb{P}(E_2)$.
+
+All the other properties of probability can be derived using these three axioms.
+
+### Wordle using the multinomial distribution
+
+* Multinomial can be used for distributions with multiple categories.
+  + Die rolls, Wordle number of guesses
+  + Likert scales (e.g. [PANSS](https://en.wikipedia.org/wiki/Positive_and_Negative_Syndrome_Scale) in schizophrenia), Tanner staging (puberty; 1-5), Cancer staging (0-4)
+* The probability of getting the Wordle in a certain number of guesses.
+* Also 6 (or one more) possible values.
+* Same family of distribution as the die, except with different *parameters*
+
+$Y=$Number of tries | $\mathbb{P}(Y)$  |
+|-------|:----:|
+| 1 | 0 |
+| 2 | 0.03 |
+| 3 | 0.28 |
+| 4 | 0.40 |
+| 5 | 0.18 |
+| 6 | 0.11  |
+| 7 | ?? |
+
+<center>
+![Wordle results](figures/wordle.jpg){#id .class width=25%}
+
+
+### Cumulative Distribution Function (CDF)
+
+The cumulative distribution function (CDF), $F(x)$, for a random variable $X$ is a function that satisfies
+$$
+F(x) = \mathbb{P}(X \le x).
+$$
+They are usually functions of parameters. Here are some examples.
+
+```{r, echo=FALSE, eval=TRUE, fig.cap='Some distribution functions.', fig.width=8, fig.height=2}
+# Example CDFs (Cumulative distribution functions/Distribution functions)
+# F(x) = P(X<=x) \in [0,1]
+# properties: nonegative increasing function, F(-\infty) = 0, F(\infty)=1
+# Multivariate version "Distribution" function
+# Normal
+# Gamma
+# Poisson
+
+layout(matrix(1:4, nrow=1))
+x = seq(-3, 3, length.out=1000)
+plot(x, pnorm(x), type='l', main='Normal(0,1)', ylab='P(X<=x)')
+x = seq(-1, 10, length.out=1000)
+plot(x, pgamma(x, shape=1, rate=1/2), type='l', main='Gamma(1,1/2)', ylab='P(X<=x)')
+x = seq(-1, 15, length.out=1000)
+plot(x, ppois(x, lambda=5), main='Poisson(5)', type='s', ylab='P(X<=x)')
+x = seq(-1, 2, length.out=1000)
+plot(x, pbinom(x, size = 1, prob = 1/4), main='Bern(1/4)', type='s', ylab='P(X<=x)')
+```
+
+* What are some features that you recognize about these distribution functions?
+
+For discrete random variables the derivative of the CDF does not exist because it is a step function, but the probability mass function is the amount the CDF jumps up at that location, heuristically we can define it as
+$$
+f(x) = F(x+\Delta x) - F(x),
+$$
+for an infinitesimal value $\Delta x$.
+
+
+#### Wordle CDF example
+
+* Let's compare the CDFs of my score and my partner's score.
+
+$y=$Number of tries | $P(Y=y|\text{Simon})$  |  $P(Y=y|\text{Lillie})$ |
+|-------|:----:|:----:|
+| 1 | 0 | 0 
+| 2 | 0.03 | 0.05
+| 3 | 0.28 | 0.24
+| 4 | 0.40 | 0.44
+| 5 | 0.18 | 0.19
+| 6 | 0.11  | 0.08
+
+
+
+<!-- <center> -->
+<!-- ![Wordle results](figures/wordle.jpg){#id .class width=25%} -->
+
+```{r}
+wordle1 = c(0, 2, 17, 25, 11, 7)
+wordle2 = c(0, 2, 9, 16, 7, 3)
+wordle1 = cumsum(wordle1/sum(wordle1))
+wordle2 = cumsum(wordle2/sum(wordle2))
+x = 0:7
+plot(x, c(0,wordle1, 1), main='Wordle CDFs', type='s', ylab='P(X<=x)')
+points(x, c(0,wordle2, 1), type='s', col='red')
+main = c()
+```
+
+* What is the interpretation of this graph?
+* Who is doing better (getting the word in fewer guesses)?
+
+
+### Mean
+
+* The mean might be a nicer way to compare our scores.
+
+The mean is the most common expected value
+$$
+\mathbb{E} X = \int_{\mathcal{X}} x p(x) dx = \sum_{x}x p(x).
+$$
+
+* The integral notation is in the sense of "real analysis" type integrals that can refer to sums or integrals. This is to emphasize that the definition is the same with continuous or discrete random variables.
+
+$y=$Number of tries | $P(Y=y|\text{Simon})$  |  $P(Y=y|\text{Lillie})$ | $y\times P(Y=y|\text{Lillie or Simon})$
+|-------|:----:|:----:|:----:|
+| 1 | 0 | 0 |
+| 2 | 0.03 | 0.05|
+| 3 | 0.28 | 0.24|
+| 4 | 0.40 | 0.44|
+| 5 | 0.18 | 0.19|
+| 6 | 0.11  | 0.08|
+
+* $\mathbb{E}X$ is a nonrandom value, called a *parameter*.
+* A parameter is something that describes a feature of the distribution of a random variable.
+* For the Bernoulli distribution, $p$.
+* For multinomial, it's the vector of probabilities.
+
+### Variance
+
+
+ 
+Probability – basic concepts (long-run frequencies, basic distributions)
+Notes 01, 03, 05, 06, 08
+
+Mean/variance
+
+Conditional probabilities (still using sets and real-world examples)
+Biomedical data examples:
+Categorical
+Example:
+Probabilities for categorical data
+Continuous
+Example:
+Probabilities for continuous data
+
+### Jointly distributed random variables
+
+
+## Connecting data and probability with a random sample
+
+
+
+### Statistics is a way to learn about the world from a data set
+
+For now, let's work with the question, "What is the proportion of people in the united states who have used alcohol in the last 30 days?"
+
+1. What is my parameter of interest (target parameter)?
+    + Descriptively -- proportion of people who have used alcohol
+    + Mathematically -- call this value $p$ unknown value
+2. What is my population of interest?
+    + Descriptively -- The United States population
+    + Quantitatively -- Theoretical distribution defined by the model below in point 4. $\text{Be}(p)$
+3. What is a data point?
+    + An answer from an individual in the population "yes"/"no" to the survey question. Coded as 1/0.
+4. What model can I use to describe how I get a data point?
+    + Most obvious one is $X_i \sim \text{Be}(p)$, where $p$ is the parameter in point 1.
+
+
+### A random sample for the alcohol question
+
+* A random sample is a collection of independent random variables that represent potential data points.
+* Let $X_i \sim \text{Be}(p)$ for $i=1,\ldots, n$.
+* Our assumption about the population the $X_i$ are drawn from connects the random sample to the parameter of interest.
+* Our dataset is assumed to be a single realization of the process we are assuming.
+
+#### Example
+
+
+
+ 
+## Estimates
+
+Note, an **estimate** is a function of the observed sample and it is nonrandom (Why is it non random?). We often use lowercase letters to make that clear
+\[
+\bar x = n^{-1} \sum_{i=1}^n x_i.
+\]
+
+## Estimators
+
+An **estimator** is a function of a random sample.
+The goal (usually) is to estimate a parameter of interest (here, $p$).
+Let's consider the estimator
+\[
+\hat p = \bar X = n^{-1} \sum_{i=1}^n X_i,
+\]
+which we know is pretty reasonable since $\E \bar X = p$.
+
+ * We can study the properties of estimators to learn about how they behave.
+ * If we like an estimator we can compute an estimate using our sample.
+ * We can use features of our estimator to make probabilistic statements about what might happen if we repeat our study. **Dataset-to-dataset variability**
+ 
+
+# Module 1: Class 9/13
+ 
+## Properties of estimators
+ 
+ Some common metrics are
+ 
+ * **Bias:** let $p$ denote our target parameter, bias is defined as
+ \[
+ \E (\hat p - p).
+ \]
+ 
+ * **Variance:** this is the same as for other random variables
+ \[
+ \E (\hat p - \E\hat p)^2
+ \]
+ 
+ * **Mean Squared Error:** this combines variance and bias:
+ \[
+ \E (\hat p - p)^2
+ \]
+
+## Bias, variance, and MSE of the proportion estimator
+
+* The bias of the proportion estimator (used to estimate the proportion of people who regularly drink alcohol) is:
+\[
+\E( \hat p - p) = 0
+\]
+* The variance of the estimator is
+\[
+\begin{align*}
+\text{Var}(\hat p)
+ & = n^{-2} \sum_{i=1}^n\text{Var}(X_i) \\
+ & = n^{-1} p(1-p)
+\end{align*}
+\]
+* The MSE is the same as the variance since $\hat p$ is unbiased.
+
+We will come back to this example to construct confidence intervals in the next lecture.
+
+
+## NSDUH: example of bias, variance, and MSE
+
+* In NSDUH data
+
+```{r}
+
+puf = readRDS('../../datasets/nsduh/puf.rds')
+p = mean(puf$alcmon=='yes')
+
+
+
+# Show what Bias and Variance mean in NSDUH data using simulations
+nstudies = 100000
+n = 1000
+phats = rep(NA, nstudies)
+for(study in 1:nstudies){
+  # random sample
+  x = rbinom(n = n, prob = p, size=1)
+  # estimate phat
+  phats[study] = mean(x)
+}
+
+# mean of phat across the simulations
+mean(phats)
+hist(phats)
+# variance of phat across the simulations
+var(phats) # for n=100 this was 0.002527289
+# what the variance should be equal to
+p * (1-p)/n
+```
+
+
+
+## Parameters, Estimators, Estimates
+
+To reiterate:
+
+* **Parameter** -- Target unknown feature of a population (nonrandom)
+* **Estimate** -- Value computed from observed data to approximate the parameter (nonrandom)
+* **Estimator** -- A function of a random sample to approximate the parameter
+
+In statistics, probability is used to define and describe the behavior of estimators.
+
+
+<!-- In the last class we -->
+
+<!-- * Defined a parameter (example was "$p$", proportion of US population who has used alcohol in the last 30 days). -->
+<!-- * Used the concept of a random sample to compute an estimator of the parameter -->
+<!--     + We assessed our estimator with three metrics (Bias, Variance, and Mean Square Error) -->
+
+
+* Often, the distribution of an estimator is makes it too hard to find the bias, variance, and MSE of the estimator.
+* In this case, we use simulations to *estimate* the bias, variance, and MSE of an estimator.
+* Important concepts for this session:
+  + Simulations can be used to estimate the bias and variance when it is too hard to find mathematically.
+  + Sometimes, the parameter of interest is not distributional parameter.
+
+## Example for today: multiplexed immunofluorescence (mIF) microscopy
+
+* mIF imaging uses antibody markers to identify protein in tissue samples.
+* The protein Beta-catenin is known to be higher in tumor cells.
+
+<center>
+![beta catenin image](figures/B_CATENIN.jpg){#id .class width=60% height=60%}
+</center>  
+  
+## mIF imaging in a statistical framework
+Suppose we want to ask the question, "What is the mean concentration of Beta-catenin in the cells from a given tissue sample?"
+
+
+1. What is my parameter of interest (target parameter)?
+    + Mean cellular concentration of Beta-catenin $\E X_i$
+2. What is my population of interest?
+    + All possible cells from the given tumor (potentially)?
+    + All possible cells from similar tumors?
+3. What is a data point?
+    + A single cell
+4. What model can I use to describe how I get a data point?
+    + That's a good question. Here is the histogram of the data
+```{r, fig.height=5, fig.width=6}
+bc = readRDS('betaCatenin.rds')
+hist(bc, main='Beta Catenin Histogram', xlab='Marker count')
+```
+    + The Beta-catenin concentration across cells could be modeled with a Gamma distribution.
+
+
+## A Gamma model for Beta-catenin concentration
+
+* Previously, we defined the parameter of interest $p$ based on what we were interested in the alcohol problem and it also happened to be the parameter of the Bernoulli distribution.
+* In this example that is not the case.
+
+* Let $X_i$ denote a randomly drawn cell from the tissue image.
+* Assume $X_i \sim \text{Gamma}(\alpha, \beta)$.
+* Let's consider three parameters
+  1. $\E X_i = \alpha/\beta$
+  2. $\alpha$ (shape parameter)
+  3. $\beta$ (rate parameter)
+
+Let's assess estimators for each of these parameters.
+
+
+# Module 1: Class 9/15
+
+## MxIF example: Estimators
+
+
+I used method of moments (which you'll learn in another class) to obtain estimators for these parameters.
+The estimators are
+\[
+\begin{align*}
+\hat \mu & = \bar X = n^{-1} \sum_{i=1}^n X_i \\
+\tilde \alpha & = \frac{\bar X^2}{\left(\overline{X^2} - \bar X^2\right)} \\
+\tilde \beta & = \frac{\bar X}{\left(\overline{X^2} - \bar X^2\right)} 
+\end{align*}
+\]
+
+* $\tilde \alpha$ and $\tilde \beta$ are complicated functions of random variables involving ratios.
+* It might be hard to find their bias. It will definitely be hard to find their variance.
+* Instead, let's use simulations to assess the bias, variance, and MSE of these estimators.
+
+## Concept of simulation study
+* The bias, variance, and MSE are defined with respect to distribution of the test statistic across repeated samples of the data.
+* If I can repeat the experiment in `R` multiple times, then I can see multiple random versions of the estimator.
+* A simulation is an experiment to study what happens across experiments.
+
+
+
+
+## Simulation study
+
+
+```{r, cache=TRUE}
+set.seed(100)
+# number simulation
+nsim = 10000
+# sample sizes
+ns = c(10, 25, 50, 100, 200, 500)
+# values of alpha to consider
+alphas = c(0.5, 5)
+# values of beta to consider
+betas = c(0.25, 3)
+
+# presults = data.frame(p=ps, biasmuHat = rep(NA, np), biassigmaSqHat=rep(NA, np), biassigmaSqHat2=rep(NA, np),
+#                       varmuHat=rep(NA, np), varsigmaSqHat=rep(NA, np), varsigmaSqHat2=rep(NA, np))
+
+presults = expand.grid(alpha = alphas, beta=betas, n=ns)
+colNames = paste(rep(c('muHat', 'alphaTilde', 'betaTilde'), each=3),
+                rep(c('Bias', 'Variance', 'MSE'), 3))
+presults[, colNames ] = NA
+
+alphaind = 1; betaind = 2; nind = 3
+# loops through the parameter values
+for(alphaind in 1:length(alphas) ){
+  for(betaind in 1:length(betas)){
+    
+      # data generating distribution parameters (for the gamma distribution)
+      alpha = alphas[alphaind]
+      beta = betas[betaind]
+      
+    for(nind in 1:length(ns)){
+      # get n for this simulation setting
+      n = ns[nind]
+      cat(which(presults$n==n & presults$alpha==alpha & presults$beta == beta), '\t')
+      
+      # loops through the simulations
+      # each simulation is one realization of the world
+      results = data.frame(muHat = rep(NA, nsim), alphaTilde=rep(NA, nsim), betaTilde=rep(NA, nsim) )
+      for(sim in 1:nsim){
+        
+        # sample a data set of size n from some random variable
+        x = rgamma(n, shape=alpha, rate=beta)
+        
+        # compute estimators
+        muHat = mean(x)
+        alphaTilde = muHat^2 / var(x)
+        betaTilde = muHat / var(x)
+        #sigmaSqHat = sum((x-mean(x))^2)/(length(x)-1)
+        
+        results[sim, c('muHat', 'alphaTilde', 'betaTilde') ] = c(muHat, alphaTilde, betaTilde)
+      } # end of the nsim loop
+      
+      # saving the results for each value of p
+      #presults[pind, c('biasmuHat', 'biassigmaSqHat', 'biasSigmaSqHat2')] = colMeans(results) - c(p, p*(1-p), p*(1-p))
+      #presults[pind, c('varmuHat', 'varsigmaSqHat', 'varSigmaSqHat2')] = diag(var(results))
+      
+      # Bias variance MSE for muHat
+      presults[ which(presults$n==n & presults$alpha==alpha & presults$beta == beta), c('muHat Bias', 'muHat Variance', 'muHat MSE')] = c(mean(results$muHat) - alpha/beta,
+                                                                var(results$muHat),
+                                                                (mean(results$muHat) - alpha/beta)^2 + var(results$muHat) )
+      presults[ which(presults$n==n & presults$alpha==alpha & presults$beta == beta), c('alphaTilde Bias', 'alphaTilde Variance', 'alphaTilde MSE')] = c(mean(results$alphaTilde) - alpha,
+                                                                var(results$alphaTilde),
+                                                                (mean(results$alphaTilde) - alpha)^2 + var(results$alphaTilde) )
+      presults[ which(presults$n==n & presults$alpha==alpha & presults$beta == beta), c('betaTilde Bias', 'betaTilde Variance', 'betaTilde MSE')] = c(mean(results$betaTilde) - beta,
+                                                                var(results$betaTilde),
+                                                                (mean(results$betaTilde) - beta)^2 + var(results$betaTilde) )
+    } # loop through ns
+  } # loop through the betas
+} # loop through the alphas
+
+```
+
+
+
+
+```{r, fig.height=6, fig.width=9}
+subres = presults[ presults$alpha==0.5 & presults$beta ==0.25,]
+layout(matrix(1:6, nrow=2, byrow=TRUE))
+
+# Bias plots
+plot(subres$n, subres[, 'muHat Bias'], xlab='Sample size', ylab='Bias', main='Bias of muHat', type='b')
+abline(h=0, lty=2, lwd=2)
+plot(subres$n, subres[, 'alphaTilde Bias'], xlab='Sample size', ylab='Bias', main='Bias of alphaTilde', type='b')
+abline(h=0, lty=2, lwd=2)
+plot(subres$n, subres[, 'betaTilde Bias'], xlab='Sample size', ylab='Bias', main='Bias of betaTilde', type='b')
+abline(h=0, lty=2, lwd=2)
+plot(subres$n, subres[, 'muHat Variance'], xlab='Sample size', ylab='Variance', main='Variance of muHat', type='b')
+abline(h=0, lty=2, lwd=2)
+plot(subres$n, subres[, 'alphaTilde Variance'], xlab='Sample size', ylab='Variance', main='Variance of alphaTilde', type='b')
+abline(h=0, lty=2, lwd=2)
+plot(subres$n, subres[, 'betaTilde Variance'], xlab='Sample size', ylab='Variance', main='Variance of betaTilde', type='b')
+abline(h=0, lty=2, lwd=2)
+
+
+
+
+
+
+subres = presults[ presults$alpha==5 & presults$beta ==3,]
+layout(matrix(1:6, nrow=2, byrow=TRUE))
+
+# Bias plots
+plot(subres$n, subres[, 'muHat Bias'], xlab='Sample size', ylab='Bias', main='Bias of muHat', type='b')
+abline(h=0, lty=2, lwd=2)
+plot(subres$n, subres[, 'alphaTilde Bias'], xlab='Sample size', ylab='Bias', main='Bias of alphaTilde', type='b')
+abline(h=0, lty=2, lwd=2)
+plot(subres$n, subres[, 'betaTilde Bias'], xlab='Sample size', ylab='Bias', main='Bias of betaTilde', type='b')
+abline(h=0, lty=2, lwd=2)
+plot(subres$n, subres[, 'muHat Variance'], xlab='Sample size', ylab='Variance', main='Variance of muHat', type='b')
+abline(h=0, lty=2, lwd=2)
+plot(subres$n, subres[, 'alphaTilde Variance'], xlab='Sample size', ylab='Variance', main='Variance of alphaTilde', type='b')
+abline(h=0, lty=2, lwd=2)
+plot(subres$n, subres[, 'betaTilde Variance'], xlab='Sample size', ylab='Variance', main='Variance of betaTilde', type='b')
+abline(h=0, lty=2, lwd=2)
+
+
+```
+
+
+
+* Percent bias instead of raw bias
+
+
+```{r, fig.height=6, fig.width=9}
+subres = presults[ presults$alpha==0.5 & presults$beta ==0.25,]
+layout(matrix(1:6, nrow=2, byrow=TRUE))
+
+# Bias plots
+plot(subres$n, subres[, 'muHat Bias']/(subres[,'alpha']/subres[,'beta']), xlab='Sample size', ylab='Bias', main='Percent bias of muHat', type='b')
+abline(h=0, lty=2, lwd=2)
+plot(subres$n, subres[, 'alphaTilde Bias']/subres[,'alpha']*100, xlab='Sample size', ylab='Bias', main='Percent bias of alphaTilde', type='b')
+abline(h=0, lty=2, lwd=2)
+plot(subres$n, subres[, 'betaTilde Bias']/subres[,'beta']*100, xlab='Sample size', ylab='Bias', main='Percent bias of betaTilde', type='b')
+abline(h=0, lty=2, lwd=2)
+plot(subres$n, sqrt(subres[, 'muHat Variance'])/(subres[,'alpha']/subres[,'beta'])*100, xlab='Sample size', ylab='Percentage', main='Percent SE of muHat', type='b')
+abline(h=0, lty=2, lwd=2)
+plot(subres$n, sqrt(subres[, 'alphaTilde Variance'])/subres[,'alpha']*100, xlab='Sample size', ylab='Percentage', main='percent SE of alphaTilde', type='b')
+abline(h=0, lty=2, lwd=2)
+plot(subres$n, sqrt(subres[, 'betaTilde Variance'])/subres[,'beta']*100, xlab='Sample size', ylab='Percentage', main='percent SE of betaTilde', type='b')
+abline(h=0, lty=2, lwd=2)
+```
+
+
+## Assessing estimators in the homework
+
+* I left more interesting problems for you to do in the homework.
+* There, you will compare two estimators for the same parameter, and pick which one you think is better.
+
+
+## MxIF example: Estimate {.flexbox .vcenter}
+
+The estimates in the real data are $\hat\mu=$``r round(mean(bc), 1)``, $\tilde\alpha=$``r round( mean(bc)^2/var(bc), 1)``, and $\tilde\beta=$``r round(mean(bc)/var(bc), 3)``.
+
+```{r, echo=TRUE, fig.height=5, fig.width=6}
+
+
+bc = readRDS('betaCatenin.rds')
+alphaTilde = mean(bc)^2/var(bc)
+betaTilde = mean(bc)/var(bc)
+
+
+x = seq(from=min(bc), to=max(bc), length.out=1000)
+y = dgamma(x, shape=alphaTilde, rate=betaTilde)
+hist(bc, main='Beta Catenin Histogram', freq=FALSE, xlab='Marker count', ylim=range(y))
+points(x, y, type='l')
+```
+
+
+
+
+## Practice

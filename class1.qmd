@@ -1,0 +1,417 @@
+---
+title: "Class 1"
+author: "Simon Vandekar"
+toc: true
+format:
+  html:
+    code-fold: true
+    html-math-method: katex
+---
+
+```{r setup, include=FALSE}
+knitr::knit_hooks$set(GPs=function(before, options, envir){
+if (before){
+  cex=1.5
+par(mgp=c(1.7,.7,0), lwd=1.5, lend=2,
+    cex.lab=0.8*cex, cex.axis=0.8*cex, cex.main=0.9*cex,
+    mar=c(2.8,2.8,1.8,.2), bty='l', oma=c(0,0,0,0), pch=16)}
+})
+knitr::opts_chunk$set(echo = TRUE, fig.height = 4, fig.width = 4, cache=FALSE, GPs=TRUE)
+set.seed(1333)
+cols = c('black', RColorBrewer::brewer.pal(9, 'Set1'))
+```
+
+## Objectives:
+
+1. Introductions
+2. Understand the importance of statistical/probabilistic reasoning
+3. Understand use of statistics in medical research
+4. Learn to summarize data with descriptive statistics
+
+## Introductions (15 min)
+
+### Info about you
+Let's spend some time learning about the other people in the class.
+
+1. What is your math/probability/statistics course experience?
+2. What are your current academic year and school?
+3. Why interested in Biostatistics?
+4. What are your other interests, academic and/or fun?
+5. What are your internship projects projects?
+  * Who are you working with?
+  * What are you working on?
+  
+### Goals for this course
+
+1. Foster your interest in Biostatistics for graduate school.
+2. Help you prepare for post-graduation (hopefully for grad school in Biostatistics 🙂).
+3. Build diversity in the field of Biostatistics [Goodman et al. 2022](https://journals.sagepub.com/doi/10.1177/00333549221097653).
+4. Teach you to think like a Biostatistician!
+
+<!-- | Race and ethnicity      | Graduating biostatistics students | General population | -->
+<!-- | ----------- | ----------- |----------- | -->
+<!-- | American Indian     | 0%       | -->
+<!-- | Asian   | 15.5%     | -->
+<!-- | Hispanic   |   7.3%     | -->
+<!-- | Native Hawaiian   | 0%       | -->
+<!-- | Non-Hispanic Black or African American   | 3.6%        | -->
+<!-- | Non-Hispanic White   | 29.1%        | -->
+<!-- | Unknown | 44.5% | -->
+
+
+## Demonstrating some statistical concepts (20 min)
+
+### Abraham Wald damaged bomber planes
+
+![Bomber plane damage](figures/Survivorship-bias.svg)
+Image credit: [Wikipedia](https://en.wikipedia.org/wiki/Survivorship_bias)
+
+* During World War 2, Abraham Wald was asked to examine damage done to aircraft returning to base and recommend what areas to reinforce with more armor. What are the most important areas to reinforce?
+* This is an example of [Survivorship bias](https://en.wikipedia.org/wiki/Survivorship_bias).
+* It is a type of *selection bias* that can occur in biomedical research if participants with a particular exposure or characteristics are less likely to enroll in a study [Glesby and Hoover, 1996](https://pubmed.ncbi.nlm.nih.gov/8624068/).
+
+
+### Monty hall problem
+
+
+* Named after the Monty Hall host of a TV show where a similar game happened.
+* The result is strongly counter-intuitive.
+
+![Monty Hall Problem](figures/Monty_open_door.svg){width=70%}
+
+> 'Suppose you're on a game show, and you're given the choice of three doors: Behind one door is a car; behind the others, goats. You pick a door, say No. 1, and the host, who knows what's behind the doors, opens another door, say No. 3, which has a goat. He then says to you, "Do you want to pick door No. 2?" Is it to your advantage to switch your choice?'
+
+Credit: [Wikipedia](https://en.wikipedia.org/wiki/Monty_Hall_problem)
+
+
+* What is the probability of choosing the car the first pick?
+* What is the probability of choosing a goat the first pick?
+* Imagine an extreme example: what if there were 50 doors, one car, and Monty Hall opened 48 doors?
+* It became famous from columnist [Marilyn vos Savant](https://en.wikipedia.org/wiki/Marilyn_vos_Savant), who had a world-record IQ and correctly answered the question in *Parade* magazine.
+  + Over 10,000 readers wrote-in saying she was wrong.
+  + Almost 1,000 of those readers had PhDs.
+* This problem relates to $p$-values and multiple hypothesis testing in Biostatistics.
+
+### Bayesian flipping probabilities leading to unintuitive results.
+Dog COVID example
+
+### Regression to the mean
+
+* Regression to the mean comes up a lot in sports [TDS](https://towardsdatascience.com/regression-to-the-mean-and-its-implications-648660c9bf76):
+
+> The LA Dodgers, Los Angeles' resident baseball team, appeared on the cover of Sports Illustratedss August 28, 2017 issue following a run of tremendous form. They had won 71% of their games and were on pace to tie the record for the most wins in a season. The cover came with the caption "Best. Team. Ever?"
+
+> The team then went on to lose 17 of their next 22 games, and would eventually lose in the World Series to the Houston Astros. This is just one example of the notorious Sports Illustrated cover jinx, an urban legend that apparently causes teams and athletes who appear on the cover to immediately experience a run of bad form.
+
+* The phenomenon is due to a combination of selection bias and the amount of randomness inherent in the measurements.
+* 100 people flipping coins example (completely random).
+* 100 people heights example (not very random).
+* In the baseball example, there are unpredictable factors affecting the teams performance and the team was selected on Sport's Illustrated's cover because of their unusually successful performance.
+
+```{r, fig.width=6}
+par(mfrow=c(1,2))
+
+set.seed(123)
+firstHalf = rnorm(100)
+secondHalf = (rnorm(100) + firstHalf)/2
+firstHalf = pnorm(firstHalf)
+secondHalf = pnorm(secondHalf)
+colinds = rep(1, 100)
+colinds[which.max(firstHalf)] = 2
+plot(firstHalf, secondHalf, main = 'Baseball performance, rho=1/2', ylab='Wins second half', xlab='Wins first half', ylim=c(0,1), xlim=c(0,1), col=cols[colinds])
+abline(lm(secondHalf~ firstHalf), lty=2)
+abline(a=0, b=1)
+
+firstHalf = rnorm(100)
+secondHalf = rnorm(100)
+firstHalf = pnorm(firstHalf)
+secondHalf = pnorm(secondHalf)
+colinds = rep(1, 100)
+colinds[which.max(firstHalf)] = 2
+plot(firstHalf, secondHalf, main = 'Baseball performance, rho=0', ylab='Wins second half', xlab='Wins first half', ylim=c(0,1), xlim=c(0,1), col=cols[colinds])
+abline(lm(secondHalf~ firstHalf), lty=2)
+abline(a=0, b=1)
+```
+
+
+## Statistics in medical research (Biostatistics) (20 min)
+
+**Features of Biostatistics medical research**
+* Improving health and understanding biological mechanisms
+* Prediction/diagnosis clinical translation (often with machine learning)
+* Collaboration on team with MDs, biologists, psychologists, epidemiologists, informaticians, etc.
+* Developing new statistical tools to address challenges in medical research!
+
+**Biostatisticians' role on the research team**
+* It is easy to fit statistical or machine learning models to data and get results.
+* It is difficult to understand how study design or analysis procedures may bias the results.
+* Organizing study results in a sensible structure.
+* Biostatistics offers tools necessary to reason through and understand the analysis procedures.
+
+### Example: Circularity analysis
+
+* Circularity analysis is a **bad** practice where the same data are used for variable selection and for prediction.
+* Circularity analysis remains a challenge in brain imaging studies [Kriegeskorte et al., 2010](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2949251/)
+
+A circular analysis:
+* Let's say I have measurements of brain activity across 100 brain regions and I want to know, which are associated with diagnosis (e.g. bipolar disorder) and to predict diagnosis using the brain imaging data
+* First, I fit a bunch of models to select important features
+
+```{r, fig.height=15, fig.width=15}
+set.seed(555)
+nregions = 100
+n = 50
+brain = as.data.frame(matrix(rgamma(n * nregions, shape = 10, scale=0.1), ncol=100))
+names(brain) = paste0('region', 1:nregions)
+diagnosis = as.factor(rep(c('control', 'bipolar'), each=25))
+par(mfrow=c(10,10))
+invisible(sapply(names(brain), function(y) plot(diagnosis, brain[,y], ylab='Cortical Thickness', xlab='Diagnosis', main=y) ) )
+```
+
+* Based on this curve, we might select the first 5 brain regions to build a prediction model.
+```{r, fig.width=15}
+difference = abs(do.call('-', by(brain, diagnosis, colMeans)))
+plot(difference[order(difference, decreasing = TRUE)], xaxt='n', ylab='Mean difference', mar=c(5,2.8,1.8,.2), xlab='Region')
+axis(side=1, at=1:nregions, labels = gsub('region', '', names(difference)[order(difference, decreasing=TRUE)]) )
+```
+
+* After selecting the features, we can fit a random forest to predict the outcome with our 5 strongest features.
+```{r}
+library(randomForest)
+x = as.matrix(brain[,order(difference, decreasing = TRUE)[1:5]])
+rf = randomForest(x, y=diagnosis, ntree = 1000)
+rf
+knitr::kable(rf$confusion)
+#summary(glm(diagnosis ~ x, family=binomial))
+```
+
+* The out-of-sample prediction error is 38%, indicating (100-38)% - 62% accuracy in predicting bipolar disorder from the brain imaging data.
+* While this accuracy isn't great, the true accuracy should be 50% (random chance) -- all of the data I showed were fake and there was not association.
+* **Circularity analysis** is a common mistake in high-dimensional biomedical data.
+* Biostatistical concepts help us to describe this error mathematically and understand how use methods to avoid it.
+
+## Learning about data (estimating values/statistics)
+
+```{r}
+
+```
+
+
+### Descriptive statistics and their uses
+
+* Descriptive statistics are used to get an idea of what a dataset looks like
+* In research studies, they are frequently reported in a "Table 1".
+
+![Table 1 example Muscatello et al. 2022](figures/table1_muscatello2022.png)
+[Muscatello et al., 2022](https://molecularautism.biomedcentral.com/articles/10.1186/s13229-022-00515-4)
+
+Commonly reported values are:
+
+* *Sample size*, usually denoted $n$
+* *Mean* $\bar x = n^{-1} \sum_{i=1}^n x_i$. *Proportions* are also often reported, which is just the mean of a categorical variable.
+* *Variance* $s^2 = (n-1)^{-1} \sum_{i=1}^n (x_i-\bar x)^2$.
+* *Standard deviation* (SD) $s = \sqrt{s^2}$ (square root of the variance)
+* *Median* is the middle value (or the average of the two middle values if $n$ is even. the 50% ordered value.
+* *Quartiles*, the 25% ordered value and 75% ordered value. Some times call *Inter quartile range  (IQR)*.
+
+These summary values provide information about what the distribution of data look like.
+
+
+```{r}
+nsduh = readRDS('nsduh/puf.rds')
+
+# age is categorical in this dataset
+agetab = table(nsduh$age)
+# proportions in each age group
+agetab = agetab/sum(agetab)
+# quantile(nsduh$age, probs = c(0.5, 0.25, 0.75))
+agetab
+
+# Number of cigarettes in the last 30 days
+# mean and standard deviation
+cigarettes = c(mean=mean(nsduh$ircigfm), SD=sd(nsduh$ircigfm))
+# quantiles
+qsCig = quantile(nsduh$ircigfm, probs = c(0.5, 0.25, 0.75))
+names(qsCig)[1] = 'Median'
+qsCig
+```
+
+```{r}
+library(table1)
+nsduh$ERvisit = factor(nsduh$ERvisit, labels = c('no', 'yes'))
+label(nsduh$ERvisit) = 'Visited ER'
+label(nsduh$age) = 'Age'
+label(nsduh$ircigfm) = 'No. Cig last 30 days'
+table1(~ ERvisit + age + ircigfm, data=nsduh)
+```
+
+
+* Sometimes test statistics and $p$-values are reported as well, that compare values between two or more groups.
+
+## Basic univariate visualizations
+
+
+#### Histograms
+
+* A histogram creates evenly sized bins of the x-axis and plots the number of observations falling into that bin.
+$$
+y_k(l_k, u_k) = \sum_{i=1}^n \mathrm{I}(x_i \in [l_k, u_k]),
+$$
+where $l_k, u_k$ are the lower and upper boundaries of bin $k$, respectively.
+* It is a nice way to summarize continuous variables.
+
+```{r}
+hist(as.numeric(nsduh$ERvisit)-1, xlab='no/yes', main='Visited ER')
+
+# Can change the number of bins
+hist(nsduh$nERvisit, xlab = 'No. ER Visits', main='')
+hist(nsduh$nERvisit, xlab = 'No. ER Visits', main='', breaks = 30)
+
+hist(nsduh$ircigfm, xlab='No. Days', main='No. Days Smoked', breaks=30)
+```
+* This is an example of bi-modal data, where there are two different groups of people.
+
+#### Density plots
+
+
+* Density plots are good alternative visualization for continuous variables
+* This example from [Harris et al. 2022](https://pubmed.ncbi.nlm.nih.gov/34983062/) is comparing distributions of single-cell expression data from multiplexed immunofluorescence imaging data.
+
+![Example of density plots](figures/harris_densities.png)
+
+#### QQ-plots
+
+
+### Basic bivariate visualizations
+
+#### Scatter plot
+
+* With and without lowess smooth
+* Scatter plot matrix
+
+```{r}
+# plot the data 
+plot(nsduh$ircigage, nsduh$iralcage, ylab='Age first alc use', xlab='Age first cig', main='Cig and Alc Use')
+# remove missing values for lowess fit
+subset = na.omit(nsduh[, c('ircigage', 'iralcage')])
+
+lines(lowess( subset$ircigage, subset$iralcage), col='blue', lwd=2)
+```
+
+
+```{r, fig.height=9, fig.width=9}
+plot(nsduh[,c('ircigage', 'iralcage', 'irmjage')])
+```
+
+
+#### Box plot
+
+* Box plot is a visual summary of quantiles of the data, usually stratified by a categorical variable.
+* Black line is the median, box is the IQR, whiskers are the minimum/maximum excluding "outliers".
+  + Outliers - value is smaller than the lower fence (= 1st quartile - 1.5*IQR) or greater than the upper fence (= 3rd quartile + 1.5*IQR).
+* Many different variations that you can control in `R` with the `boxplot` function.
+* Nice [blog post](https://r-coder.com/boxplot-r/#:~:text=ggplot2%20from%20dataframe-,How%20to%20interpret%20a%20box%20plot%20in%20R%3F,inside%20that%20represents%20the%20median.) on variations available in `R` packages.
+
+```{r}
+boxplot( nERvisit ~ age, data=nsduh, ylab='ER Visits', main='No. ER Visits by Age')
+boxplot( ircigfm ~ age, data=nsduh, ylab='No days smoking', main='Cig by Age')
+boxplot( ircigfm ~ age, data=nsduh, ylab='No days smoking', main='Cig by Age', outline=FALSE, notch=TRUE)
+```
+
+
+
+#### Violin plots
+
+## Some common statistical jargon so far
+
+**Types of variables**
+
+* Categorical variable - a variable that takes discrete values, such as diagnosis, sex, 
+* Continuous variable - a variable that can take any values within a range, such as age, blood pressure, brain volume.
+* Ordinal variable - a categorical variable that can be ordered, such as age category, Likert scales, Number of days, Number of occurrences.
+
+**Distribution/Density features**
+
+* Mode/ Non-modal/Unimodal/ Bimodal - a peak in a density.
+   + Non-modal - no peak
+   + Unimodal - one peak
+   + Bimodal - two peaks
+* Quantile - the $p$th quantile, $q_p$ divides the distribution such that $p$% of the data are below $q_p$.
+  + Median - 50th quantile of a distribution
+* Skew/Skewness - the amount of asymmetry of a distribution
+  + Symmetric distribution - a distribution with no skew
+* Kurtosis - the heavy tailed-ness of a distribution.
+
+  
+**Bivariate distribution features**
+
+* Correlation/correlated - two variables are linearly dependent
+* Dependent - two or more variables are related to each other in some way
+* Independent - two variables that are not related to each other
+
+
+## Practice (15 min)
+
+Below are some questions related to some of the material we've covered so far. The dataset we'll look at in an insurance dataset looking at amount of charges as a function of health and demographic features.
+
+
+* For each of the variables in the table below describe which are continuous, ordinal, or categorical. They might be one or more of these things.
+  + Age - 
+  + Sex - 
+  + BMI (body mass index) - 
+  + Children - 
+  + Smoker - 
+  + Region - 
+  + Charges - 
+  
+```{r}
+library(RESI)
+library(reactable)
+reactable(insurance)
+```
+
+
+The table below summarizes the variables in the dataset for nonsmokers smokers. For each of the variables in the table below, comment on the skewness and whether the variables look similar or different between smokers and nonsmokers.
+
+```{r}
+insurance$smoker = factor(insurance$smoker, labels = c('Nonsmoker', 'Smoker'))
+label(insurance$smoker) = 'Smoking Status'
+table1(~ age + bmi + children + sex + region + charges | smoker, data=insurance)
+```
+
+
+
+The plots below summarize each of the variables separately using histograms with densities.
+
+* For each of the histograms below comment on:
+  + Symmetry
+  + Skewness
+  + Mode(s)
+  
+```{r, fig.height=6, fig.width=6}
+par(mfrow=c(2,2))
+invisible(sapply(names(insurance)[sapply(insurance, is.numeric)], function(name){ hist(insurance[,name], xlab=name, main=name, freq=FALSE); lines(density(insurance[,name], adjust=1.5), lwd = 2) } ))
+```
+
+
+For each of the plots comment on the correlation and dependence of the variables with the number of charges.
+
+
+```{r, fig.width=9, fig.height=6}
+par(mfrow=c(2,3))
+xvars = names(insurance)[1:6]
+insurance$sex = factor(insurance$sex)
+insurance$region = factor(insurance$region)
+invisible(sapply(xvars, function(xvar){
+  if(!is.factor(xvar)){
+  plot(insurance[,xvar], insurance$charges, ylab='Charges', xlab=xvar, main=paste(xvar, 'and', 'Charges') )
+  # remove missing values for lowess fit
+  subset = na.omit(insurance[, c(xvar, 'charges')])
+  lines(lowess( subset[,xvar], subset$charges), col='blue', lwd=2)
+  } else {
+   barplot(as.formula(paste('charges ~', xvar)), data=insurance)
+  }
+}))
+```
+
+

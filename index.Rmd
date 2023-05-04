@@ -1,0 +1,79 @@
+---
+title: "Summer Intership for Underrepresented Undergraduates Short Course"
+---
+
+This is a series of five 90 minute lectures taught by [Simon Vandekar](http://simonvandekar.github.io) as part of the Department of Biostatistics Summer Internship for Underrepresented Undergraduates at Vanderbilt University. The course is part one of a 10 day series to introduce quantitative undergraduate students to Biostatistical methods.
+
+
+# Syllabus
+ 
+
+## Class 1
+ 
+Objectives:
+
+1. Introductions
+2. Understand the importance of statistical/probabilistic reasoning
+3. Understand use of statistics in medical research
+
+  
+## Day 2
+
+Objectives:
+
+1. Learn some basic concepts about probabilities
+2. Learn to use probability to think about data
+
+ 
+## Day 3
+ 
+Objectives:
+
+1. Understand ideas of expectation/variability
+2. Understanding the LLN
+3. Understanding the CLT
+
+Session 1: Sampling distributions
+Notes 09
+ 
+Session 2: Central limit theorem
+Notes 09
+
+ 
+## Day 4
+
+Objectives:
+
+1. Constructing Wald Statistics (Z-test/T-test)
+2. Using test statistics for statistical inference (drawing conclusions about the population)
+
+
+Wald statistics
+General formula
+Example one-sample t-test
+Example two proportions
+Example two-sample t-test
+Statistical inference
+Computing probabilities (p-values)
+Computing confidence intervals
+Practice
+ 
+
+        	Session 1: Point estimation and confidence intervals [one-sample means/proportions]
+	Notes 10
+        	Session 2: Point estimation and confidence intervals [one-sample means/proportions]
+	Notes 10
+	
+ 
+## Day 5
+
+Objectives:
+
+1. Review all materials we learned so far
+2. Contextualize
+ 
+        	Session 1: Inference and p-values
+	Notes 11, 12
+ 
+        	Session 2: Inference and p-values
+ 	Notes 11, 12

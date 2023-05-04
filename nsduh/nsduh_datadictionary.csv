@@ -1,0 +1,81 @@
+﻿Variable,Drug,Definition,Coding
+QUESTID2,NA,ID variable,
+Age,NA,Age at survey,
+cigflag,Cigarettes,Ever used this drug?,1-yes 0-no
+cgrflag,Cigar,Ever used this drug?,1-yes 0-no
+pipflag,Pipe,Ever used this drug?,1-yes 0-no
+smklssflag,Smokeless tobacco,Ever used this drug?,1-yes 0-no
+tobflag,Tobacco,Ever used this drug?,1-yes 0-no
+alcflag,Alcohol,Ever used this drug?,1-yes 0-no
+mrjflag,Marijuana,Ever used this drug?,1-yes 0-no
+cocflag,Cocaine,Ever used this drug?,1-yes 0-no
+crkflag,Crack,Ever used this drug?,1-yes 0-no
+herflag,Heroin,Ever used this drug?,1-yes 0-no
+hallucflag,Hallucinogens,Ever used this drug?,1-yes 0-no
+lsdflag,LSD,Ever used this drug?,1-yes 0-no
+pcpflag,PCP,Ever used this drug?,1-yes 0-no
+ecstmoflag,Ecstacy,Ever used this drug?,1-yes 0-no
+ketminflag,ketamine,Ever used this drug?,1-yes 0-no
+salviaflag,saliva,Ever used this drug?,1-yes 0-no
+inhalflag,inhalants,Ever used this drug?,1-yes 0-no
+methamflag,methamphetamine,Ever used this drug?,1-yes 0-no
+pnranyflag,pain reliever,Ever used this drug?,1-yes 0-no
+trqanyflag,tranquilizers,Ever used this drug?,1-yes 0-no
+stmanyflag,stimulants,Ever used this drug?,1-yes 0-no
+sedanyflag,sedatives,Ever used this drug?,1-yes 0-no
+psyanyflag,psychotherapeutic drugs,Ever used this drug?,1-yes 0-no
+pnrnmflag,pain reliever,Ever misused this drug?,1-yes 0-no
+trqnmflag,tranquilizers,Ever misused this drug?,1-yes 0-no
+stmnmflag,stimulants,Ever misused this drug?,1-yes 0-no
+sednmflag,sedatives,Ever misused this drug?,1-yes 0-no
+psychflag,psychotherapeutic drugs,Ever misused this drug?,1-yes 0-no
+illflag,illicit drug,Ever used this drug?,1-yes 0-no
+mjonlyflag,marijuana,Ever used ONLY marijuana?,1-yes 0-no
+illemflag,illicit drug (not marijuana),Ever used this drug?,1-yes 0-no
+ircigage,Cigarettes,Age of first use,"991-""Never used"""
+ircgrage,Cigar,Age of first use,"991-""Never used"""
+iralcage,Alcohol,Age of first use,"991-""Never used"""
+irmjage,Marijuana,Age of first use,"991-""Never used"""
+ircocage,Cocaine,Age of first use,"991-""Never used"""
+ircrkage,Crack,Age of first use,"991-""Never used"""
+irherage,heroin,Age of first use,"991-""Never used"""
+irhallucage,hallucinogens,Age of first use,"991-""Never used"""
+irlsdage,lsd,Age of first use,"991-""Never used"""
+irpcpage,pcp,Age of first use,"991-""Never used"""
+irecstmoage,ecstacy,Age of first use,"991-""Never used"""
+irinhalage,inhalants,Age of first use,"991-""Never used"""
+irmethamage,methamphetamine,Age of first use,"991-""Never used"""
+irpnrnmage,pain reliever,Age of first use,"991-""Never used"""
+irtrqnmage,tranquilizers,Age of first use,"991-""Never used"""
+ircigfm,Cigarettes,Number of days used in the past 30 days,"91-""Never used"", 93-""Didn't use in the past month"""
+iralcfm,Alcohol,Number of days used in the past 30 days,"91-""Never used"", 93-""Didn't use in the past month"""
+irmjfm,Marijuana,Number of days used in the past 30 days,"91-""Never used"", 93-""Didn't use in the past month"""
+ircocfm,Cocaine,Number of days used in the past 30 days,"91-""Never used"", 93-""Didn't use in the past month"""
+ircrkfm,Crack,Number of days used in the past 30 days,"91-""Never used"", 93-""Didn't use in the past month"""
+irherfm,Heroin,Number of days used in the past 30 days,"91-""Never used"", 93-""Didn't use in the past month"""
+IRHALLUC30N,Hallucinogens,Number of days used in the past 30 days,"91-""Never used"", 93-""Didn't use in the past month"""
+IRINHAL30N,Inhalants,Number of days used in the past 30 days,"91-""Never used"", 93-""Didn't use in the past month"""
+IRMETHAM30N,Methamphetamine,Number of days used in the past 30 days,"91-""Never used"", 93-""Didn't use in the past month"""
+cigmon,Cigarettes,Used in the past month,1-yes 0-no
+cgrmon,Cigar,Used in the past month,1-yes 0-no
+pipmon,Pipe,Used in the past month,1-yes 0-no
+smklssmon,Smokeless tobacco,Used in the past month,1-yes 0-no
+tobmon,Tobacco,Used in the past month,1-yes 0-no
+alcmon,Alcohol,Used in the past month,1-yes 0-no
+mrjmon,Marijuana,Used in the past month,1-yes 0-no
+cocmon,Cocaine,Used in the past month,1-yes 0-no
+crkmon,Crack,Used in the past month,1-yes 0-no
+hermon,Heroin,Used in the past month,1-yes 0-no
+hallucmon,Hallucinogens,Used in the past month,1-yes 0-no
+lsdmon,LSD,Used in the past month,1-yes 0-no
+pcpmon,PCP,Used in the past month,1-yes 0-no
+ecstmomon,Ecstacy,Used in the past month,1-yes 0-no
+ketminmon,ketamine,Used in the past month,1-yes 0-no
+salviamon,saliva,Used in the past month,1-yes 0-no
+inhalmon,inhalants,Used in the past month,1-yes 0-no
+methammon,methamphetamine,Used in the past month,1-yes 0-no
+pnrnmmon,pain reliever,Used in the past month,1-yes 0-no
+trqnmmon,tranquilizers,Used in the past month,1-yes 0-no
+stmnmmon,stimulants,Used in the past month,1-yes 0-no
+sednmmon,sedatives,Used in the past month,1-yes 0-no
+psychmon,psychotherapeutic drugs,Used in the past month,1-yes 0-no
