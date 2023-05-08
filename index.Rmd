@@ -2,7 +2,7 @@
 title: "Summer Intership for Underrepresented Undergraduates Short Course"
 ---
 
-This is a series of five 90 minute lectures taught by [Simon Vandekar](http://simonvandekar.github.io) as part of the Department of Biostatistics Summer Internship for Underrepresented Undergraduates at Vanderbilt University. The course is part one of a 10 day series to introduce quantitative undergraduate students to Biostatistical methods.
+This is a series of five 90 minute lectures taught by [Simon Vandekar](http://simonvandekar.github.io) as part of the Department of Biostatistics Summer Internship for Underrepresented Undergraduates at Vanderbilt University. The course is part one of a 10 day series to introduce undergraduate students interested in medical science, biology, and mathematics to Biostatistical methods.
 
 
 # Syllabus (Tentative)
