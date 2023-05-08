@@ -102,13 +102,70 @@ $Y=$Number of tries | $\mathbb{P}(Y)$  |
 ![Wordle results](figures/wordle.jpg){#id .class width=25%}
 
 
+
+### Probability density function (PDF)
+
+* The probability density function $f_X(x)$ for a random variable $X$ can be thought of as $\mathbb{P}(X=x)$.
+* It is called the probability mass function (PMF) for discrete random variables.
+
+The PDF (probability density function) is the derivative of the CDF and often denoted with a lower case letter $f(x)$.
+For discrete random variables the PDF is call the PMF (probability mass function).
+
+```{r, echo=FALSE, fig.cap='Density functions.'}
+layout(matrix(1:4, nrow=1))
+x = seq(-3, 3, length.out=1000)
+plot(x, dnorm(x), type='l', main='Normal(0,1)', ylab='P(X=x)')
+x = seq(0, 10, length.out=1000)
+plot(x, dgamma(x, shape=1, rate=1/2), type='l', main='Gamma(1,1/2)', ylab='P(X=x)')
+x = seq(0, 15)
+plot(x, dpois(x, lambda=5), main='Poisson(5)', type='p', ylab='P(X=x)')
+x = seq(0, 1)
+plot(x, dbinom(x, size = 1, prob = 1/4), main='Bern(1/4)', type='p', ylab='P(X=x)', ylim=c(0,1))
+```
+
+#### Wordle PDF
+
+* Let's draw the PDF for the Wordle distribution
+
+
+#### Body mass index
+
+From the `insurance` dataset
+
+* BMI is a continuous random variable,
+$$
+\mathrm{BMI} = \mathrm{weight}/\mathrm{height}^2
+$$
+
+* Here's a plot from the insurance dataset.
+* It looks approximately normally distributed (not quite).
+* I've drawn the normal density on top
+
+```{r}
+library(RESI)
+lims = hist(insurance$bmi, freq = FALSE, ylim=c(0, .08), main='BMI Histogram', xlab='BMI')
+x = seq(min(lims$mids), max(lims$mids), length.out=100)
+lines(x, dnorm(x, mean = mean(insurance$bmi),sd=sd(insurance$bmi)))
+```
+
+* The normal distribution is 
+$$
+f_X(x) = \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2}
+$$
+
+* In our dataset the mean is $\hat \mu =$ `r round(mean(insurance$bmi), 2)`, and the standard deviation is $\hat\sigma =$ `r round(sd(insurance$bmi), 2)`.
+* We can use $f_X(x)$ to compute probabilities that a person's BMI lies in a particular range.
+  + Probability less than or equal to "healthy" -- $\mathbb{P}(X \le x) = \int^{25}_0 f_X(x)dx$
+  + Probability in "healthy range" -- $\mathbb{P}(X \le x) = \int^{25}_{18} f_X(x)dx$
+
 ### Cumulative Distribution Function (CDF)
 
-The cumulative distribution function (CDF), $F(x)$, for a random variable $X$ is a function that satisfies
+The cumulative distribution function (CDF), $F_X(x)$, for a random variable $X$ is a function that satisfies
 $$
-F(x) = \mathbb{P}(X \le x).
+F_X(x) = \mathbb{P}(X \le x).
 $$
 They are usually functions of parameters. Here are some examples.
+
 
 ```{r, echo=FALSE, eval=TRUE, fig.cap='Some distribution functions.', fig.width=8, fig.height=2}
 # Example CDFs (Cumulative distribution functions/Distribution functions)
@@ -132,11 +189,23 @@ plot(x, pbinom(x, size = 1, prob = 1/4), main='Bern(1/4)', type='s', ylab='P(X<=
 
 * What are some features that you recognize about these distribution functions?
 
+
 For discrete random variables the derivative of the CDF does not exist because it is a step function, but the probability mass function is the amount the CDF jumps up at that location, heuristically we can define it as
 $$
 f(x) = F(x+\Delta x) - F(x),
 $$
 for an infinitesimal value $\Delta x$.
+
+
+#### BMI example continued
+
+* CDF can be thought of as a percentile function -- you plug in a BMI value and get out the probability that someone in the population is less than that value.
+* Use this [link](https://dqydj.com/bmi-percentile-calculator-united-states/) to compute the probabilities of being
+  + Underweight
+  + Healthy weight
+  + Overweight
+  + Obese
+* **Hint:** you'll have to use some calculus rules to compute the probabilities.
 
 
 #### Wordle CDF example
@@ -196,15 +265,55 @@ $y=$Number of tries | $P(Y=y|\text{Simon})$  |  $P(Y=y|\text{Lillie})$ | $y\time
 * A parameter is something that describes a feature of the distribution of a random variable.
 * For the Bernoulli distribution, $p$.
 * For multinomial, it's the vector of probabilities.
+* For the normal distribution
+$$
+\mathbb{E} X = \int_{-\inf}^\inf x \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \mu.
+$$
+
+* Properties include
+  + $\mathbb{E}\{ aX + b Y\} = \{ a\mathbb{E}X + b \mathbb{E}Y\}$, for constant values $a$ and $b$.
+
 
 ### Variance
 
+* Another common expectation is the variance
+$$
+\text{Var}(X) = \mathbb{E} (X - \E X)^2 = \E X^2 - (\E X)^2
+$$
+* In words, it is the average squared distance of the random variable from its expected value.
+* It is a measure of the amount of spread of a random variable
 
- 
-Probability – basic concepts (long-run frequencies, basic distributions)
-Notes 01, 03, 05, 06, 08
+* For the normal distribution
+$$
+\mathrm{Var}( X ) = \int_{-\inf}^\inf (x-\mu)^2 \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \sigma^2.
+$$
 
-Mean/variance
+
+
+* Properties 
+  + $\mathrm{Var}(bX-a) = b^2 \mathrm{Var}(X)$.
+
+#### Wordle example  
+
+$y=$Number of tries | $P(Y=y|\text{Simon})$  |  $P(Y=y|\text{Lillie})$ | $y\times P(Y=y|\text{Lillie or Simon})$
+|-------|:----:|:----:|:----:|
+| 1 | 0 | 0 |
+| 2 | 0.03 | 0.05|
+| 3 | 0.28 | 0.24|
+| 4 | 0.40 | 0.44|
+| 5 | 0.18 | 0.19|
+| 6 | 0.11  | 0.08|
+
+#### Z-normalization
+
+* Given what we know about properties of mean and variance, we can standardize random variables
+* Assume $\mathbb{E} X =\mu$ and $\mathrm{Var}(X) = \sigma^2$. What is the mean and variance of?
+\[
+(X-\mu)/\sigma
+\]
+* This is often applied to data using estimates
+
+
 
 Conditional probabilities (still using sets and real-world examples)
 Biomedical data examples:
@@ -272,26 +381,7 @@ which we know is pretty reasonable since $\E \bar X = p$.
  * We can use features of our estimator to make probabilistic statements about what might happen if we repeat our study. **Dataset-to-dataset variability**
  
 
-# Module 1: Class 9/13
- 
-## Properties of estimators
- 
- Some common metrics are
- 
- * **Bias:** let $p$ denote our target parameter, bias is defined as
- \[
- \E (\hat p - p).
- \]
- 
- * **Variance:** this is the same as for other random variables
- \[
- \E (\hat p - \E\hat p)^2
- \]
- 
- * **Mean Squared Error:** this combines variance and bias:
- \[
- \E (\hat p - p)^2
- \]
+
 
 ## Bias, variance, and MSE of the proportion estimator
 
@@ -318,7 +408,7 @@ We will come back to this example to construct confidence intervals in the next 
 
 ```{r}
 
-puf = readRDS('../../datasets/nsduh/puf.rds')
+puf = readRDS('nsduh/puf.rds')
 p = mean(puf$alcmon=='yes')
 
 
@@ -354,260 +444,6 @@ To reiterate:
 * **Estimator** -- A function of a random sample to approximate the parameter
 
 In statistics, probability is used to define and describe the behavior of estimators.
-
-
-<!-- In the last class we -->
-
-<!-- * Defined a parameter (example was "$p$", proportion of US population who has used alcohol in the last 30 days). -->
-<!-- * Used the concept of a random sample to compute an estimator of the parameter -->
-<!--     + We assessed our estimator with three metrics (Bias, Variance, and Mean Square Error) -->
-
-
-* Often, the distribution of an estimator is makes it too hard to find the bias, variance, and MSE of the estimator.
-* In this case, we use simulations to *estimate* the bias, variance, and MSE of an estimator.
-* Important concepts for this session:
-  + Simulations can be used to estimate the bias and variance when it is too hard to find mathematically.
-  + Sometimes, the parameter of interest is not distributional parameter.
-
-## Example for today: multiplexed immunofluorescence (mIF) microscopy
-
-* mIF imaging uses antibody markers to identify protein in tissue samples.
-* The protein Beta-catenin is known to be higher in tumor cells.
-
-<center>
-![beta catenin image](figures/B_CATENIN.jpg){#id .class width=60% height=60%}
-</center>  
-  
-## mIF imaging in a statistical framework
-Suppose we want to ask the question, "What is the mean concentration of Beta-catenin in the cells from a given tissue sample?"
-
-
-1. What is my parameter of interest (target parameter)?
-    + Mean cellular concentration of Beta-catenin $\E X_i$
-2. What is my population of interest?
-    + All possible cells from the given tumor (potentially)?
-    + All possible cells from similar tumors?
-3. What is a data point?
-    + A single cell
-4. What model can I use to describe how I get a data point?
-    + That's a good question. Here is the histogram of the data
-```{r, fig.height=5, fig.width=6}
-bc = readRDS('betaCatenin.rds')
-hist(bc, main='Beta Catenin Histogram', xlab='Marker count')
-```
-    + The Beta-catenin concentration across cells could be modeled with a Gamma distribution.
-
-
-## A Gamma model for Beta-catenin concentration
-
-* Previously, we defined the parameter of interest $p$ based on what we were interested in the alcohol problem and it also happened to be the parameter of the Bernoulli distribution.
-* In this example that is not the case.
-
-* Let $X_i$ denote a randomly drawn cell from the tissue image.
-* Assume $X_i \sim \text{Gamma}(\alpha, \beta)$.
-* Let's consider three parameters
-  1. $\E X_i = \alpha/\beta$
-  2. $\alpha$ (shape parameter)
-  3. $\beta$ (rate parameter)
-
-Let's assess estimators for each of these parameters.
-
-
-# Module 1: Class 9/15
-
-## MxIF example: Estimators
-
-
-I used method of moments (which you'll learn in another class) to obtain estimators for these parameters.
-The estimators are
-\[
-\begin{align*}
-\hat \mu & = \bar X = n^{-1} \sum_{i=1}^n X_i \\
-\tilde \alpha & = \frac{\bar X^2}{\left(\overline{X^2} - \bar X^2\right)} \\
-\tilde \beta & = \frac{\bar X}{\left(\overline{X^2} - \bar X^2\right)} 
-\end{align*}
-\]
-
-* $\tilde \alpha$ and $\tilde \beta$ are complicated functions of random variables involving ratios.
-* It might be hard to find their bias. It will definitely be hard to find their variance.
-* Instead, let's use simulations to assess the bias, variance, and MSE of these estimators.
-
-## Concept of simulation study
-* The bias, variance, and MSE are defined with respect to distribution of the test statistic across repeated samples of the data.
-* If I can repeat the experiment in `R` multiple times, then I can see multiple random versions of the estimator.
-* A simulation is an experiment to study what happens across experiments.
-
-
-
-
-## Simulation study
-
-
-```{r, cache=TRUE}
-set.seed(100)
-# number simulation
-nsim = 10000
-# sample sizes
-ns = c(10, 25, 50, 100, 200, 500)
-# values of alpha to consider
-alphas = c(0.5, 5)
-# values of beta to consider
-betas = c(0.25, 3)
-
-# presults = data.frame(p=ps, biasmuHat = rep(NA, np), biassigmaSqHat=rep(NA, np), biassigmaSqHat2=rep(NA, np),
-#                       varmuHat=rep(NA, np), varsigmaSqHat=rep(NA, np), varsigmaSqHat2=rep(NA, np))
-
-presults = expand.grid(alpha = alphas, beta=betas, n=ns)
-colNames = paste(rep(c('muHat', 'alphaTilde', 'betaTilde'), each=3),
-                rep(c('Bias', 'Variance', 'MSE'), 3))
-presults[, colNames ] = NA
-
-alphaind = 1; betaind = 2; nind = 3
-# loops through the parameter values
-for(alphaind in 1:length(alphas) ){
-  for(betaind in 1:length(betas)){
-    
-      # data generating distribution parameters (for the gamma distribution)
-      alpha = alphas[alphaind]
-      beta = betas[betaind]
-      
-    for(nind in 1:length(ns)){
-      # get n for this simulation setting
-      n = ns[nind]
-      cat(which(presults$n==n & presults$alpha==alpha & presults$beta == beta), '\t')
-      
-      # loops through the simulations
-      # each simulation is one realization of the world
-      results = data.frame(muHat = rep(NA, nsim), alphaTilde=rep(NA, nsim), betaTilde=rep(NA, nsim) )
-      for(sim in 1:nsim){
-        
-        # sample a data set of size n from some random variable
-        x = rgamma(n, shape=alpha, rate=beta)
-        
-        # compute estimators
-        muHat = mean(x)
-        alphaTilde = muHat^2 / var(x)
-        betaTilde = muHat / var(x)
-        #sigmaSqHat = sum((x-mean(x))^2)/(length(x)-1)
-        
-        results[sim, c('muHat', 'alphaTilde', 'betaTilde') ] = c(muHat, alphaTilde, betaTilde)
-      } # end of the nsim loop
-      
-      # saving the results for each value of p
-      #presults[pind, c('biasmuHat', 'biassigmaSqHat', 'biasSigmaSqHat2')] = colMeans(results) - c(p, p*(1-p), p*(1-p))
-      #presults[pind, c('varmuHat', 'varsigmaSqHat', 'varSigmaSqHat2')] = diag(var(results))
-      
-      # Bias variance MSE for muHat
-      presults[ which(presults$n==n & presults$alpha==alpha & presults$beta == beta), c('muHat Bias', 'muHat Variance', 'muHat MSE')] = c(mean(results$muHat) - alpha/beta,
-                                                                var(results$muHat),
-                                                                (mean(results$muHat) - alpha/beta)^2 + var(results$muHat) )
-      presults[ which(presults$n==n & presults$alpha==alpha & presults$beta == beta), c('alphaTilde Bias', 'alphaTilde Variance', 'alphaTilde MSE')] = c(mean(results$alphaTilde) - alpha,
-                                                                var(results$alphaTilde),
-                                                                (mean(results$alphaTilde) - alpha)^2 + var(results$alphaTilde) )
-      presults[ which(presults$n==n & presults$alpha==alpha & presults$beta == beta), c('betaTilde Bias', 'betaTilde Variance', 'betaTilde MSE')] = c(mean(results$betaTilde) - beta,
-                                                                var(results$betaTilde),
-                                                                (mean(results$betaTilde) - beta)^2 + var(results$betaTilde) )
-    } # loop through ns
-  } # loop through the betas
-} # loop through the alphas
-
-```
-
-
-
-
-```{r, fig.height=6, fig.width=9}
-subres = presults[ presults$alpha==0.5 & presults$beta ==0.25,]
-layout(matrix(1:6, nrow=2, byrow=TRUE))
-
-# Bias plots
-plot(subres$n, subres[, 'muHat Bias'], xlab='Sample size', ylab='Bias', main='Bias of muHat', type='b')
-abline(h=0, lty=2, lwd=2)
-plot(subres$n, subres[, 'alphaTilde Bias'], xlab='Sample size', ylab='Bias', main='Bias of alphaTilde', type='b')
-abline(h=0, lty=2, lwd=2)
-plot(subres$n, subres[, 'betaTilde Bias'], xlab='Sample size', ylab='Bias', main='Bias of betaTilde', type='b')
-abline(h=0, lty=2, lwd=2)
-plot(subres$n, subres[, 'muHat Variance'], xlab='Sample size', ylab='Variance', main='Variance of muHat', type='b')
-abline(h=0, lty=2, lwd=2)
-plot(subres$n, subres[, 'alphaTilde Variance'], xlab='Sample size', ylab='Variance', main='Variance of alphaTilde', type='b')
-abline(h=0, lty=2, lwd=2)
-plot(subres$n, subres[, 'betaTilde Variance'], xlab='Sample size', ylab='Variance', main='Variance of betaTilde', type='b')
-abline(h=0, lty=2, lwd=2)
-
-
-
-
-
-
-subres = presults[ presults$alpha==5 & presults$beta ==3,]
-layout(matrix(1:6, nrow=2, byrow=TRUE))
-
-# Bias plots
-plot(subres$n, subres[, 'muHat Bias'], xlab='Sample size', ylab='Bias', main='Bias of muHat', type='b')
-abline(h=0, lty=2, lwd=2)
-plot(subres$n, subres[, 'alphaTilde Bias'], xlab='Sample size', ylab='Bias', main='Bias of alphaTilde', type='b')
-abline(h=0, lty=2, lwd=2)
-plot(subres$n, subres[, 'betaTilde Bias'], xlab='Sample size', ylab='Bias', main='Bias of betaTilde', type='b')
-abline(h=0, lty=2, lwd=2)
-plot(subres$n, subres[, 'muHat Variance'], xlab='Sample size', ylab='Variance', main='Variance of muHat', type='b')
-abline(h=0, lty=2, lwd=2)
-plot(subres$n, subres[, 'alphaTilde Variance'], xlab='Sample size', ylab='Variance', main='Variance of alphaTilde', type='b')
-abline(h=0, lty=2, lwd=2)
-plot(subres$n, subres[, 'betaTilde Variance'], xlab='Sample size', ylab='Variance', main='Variance of betaTilde', type='b')
-abline(h=0, lty=2, lwd=2)
-
-
-```
-
-
-
-* Percent bias instead of raw bias
-
-
-```{r, fig.height=6, fig.width=9}
-subres = presults[ presults$alpha==0.5 & presults$beta ==0.25,]
-layout(matrix(1:6, nrow=2, byrow=TRUE))
-
-# Bias plots
-plot(subres$n, subres[, 'muHat Bias']/(subres[,'alpha']/subres[,'beta']), xlab='Sample size', ylab='Bias', main='Percent bias of muHat', type='b')
-abline(h=0, lty=2, lwd=2)
-plot(subres$n, subres[, 'alphaTilde Bias']/subres[,'alpha']*100, xlab='Sample size', ylab='Bias', main='Percent bias of alphaTilde', type='b')
-abline(h=0, lty=2, lwd=2)
-plot(subres$n, subres[, 'betaTilde Bias']/subres[,'beta']*100, xlab='Sample size', ylab='Bias', main='Percent bias of betaTilde', type='b')
-abline(h=0, lty=2, lwd=2)
-plot(subres$n, sqrt(subres[, 'muHat Variance'])/(subres[,'alpha']/subres[,'beta'])*100, xlab='Sample size', ylab='Percentage', main='Percent SE of muHat', type='b')
-abline(h=0, lty=2, lwd=2)
-plot(subres$n, sqrt(subres[, 'alphaTilde Variance'])/subres[,'alpha']*100, xlab='Sample size', ylab='Percentage', main='percent SE of alphaTilde', type='b')
-abline(h=0, lty=2, lwd=2)
-plot(subres$n, sqrt(subres[, 'betaTilde Variance'])/subres[,'beta']*100, xlab='Sample size', ylab='Percentage', main='percent SE of betaTilde', type='b')
-abline(h=0, lty=2, lwd=2)
-```
-
-
-## Assessing estimators in the homework
-
-* I left more interesting problems for you to do in the homework.
-* There, you will compare two estimators for the same parameter, and pick which one you think is better.
-
-
-## MxIF example: Estimate {.flexbox .vcenter}
-
-The estimates in the real data are $\hat\mu=$``r round(mean(bc), 1)``, $\tilde\alpha=$``r round( mean(bc)^2/var(bc), 1)``, and $\tilde\beta=$``r round(mean(bc)/var(bc), 3)``.
-
-```{r, echo=TRUE, fig.height=5, fig.width=6}
-
-
-bc = readRDS('betaCatenin.rds')
-alphaTilde = mean(bc)^2/var(bc)
-betaTilde = mean(bc)/var(bc)
-
-
-x = seq(from=min(bc), to=max(bc), length.out=1000)
-y = dgamma(x, shape=alphaTilde, rate=betaTilde)
-hist(bc, main='Beta Catenin Histogram', freq=FALSE, xlab='Marker count', ylim=range(y))
-points(x, y, type='l')
-```
-
 
 
 
