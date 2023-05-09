@@ -138,6 +138,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#mean" id="toc-mean" class="nav-link" data-scroll-target="#mean">Mean</a></li>
   <li><a href="#variance" id="toc-variance" class="nav-link" data-scroll-target="#variance">Variance</a></li>
   <li><a href="#jointly-distributed-random-variables" id="toc-jointly-distributed-random-variables" class="nav-link" data-scroll-target="#jointly-distributed-random-variables">Jointly distributed random variables</a></li>
+  <li><a href="#conditional-probabilities" id="toc-conditional-probabilities" class="nav-link" data-scroll-target="#conditional-probabilities">Conditional probabilities</a></li>
+  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence">Independence</a></li>
   </ul></li>
   <li><a href="#connecting-data-and-probability-with-a-random-sample" id="toc-connecting-data-and-probability-with-a-random-sample" class="nav-link" data-scroll-target="#connecting-data-and-probability-with-a-random-sample">Connecting data and probability with a random sample</a>
   <ul class="collapse">
@@ -146,8 +148,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#estimates" id="toc-estimates" class="nav-link" data-scroll-target="#estimates">Estimates</a></li>
   <li><a href="#estimators" id="toc-estimators" class="nav-link" data-scroll-target="#estimators">Estimators</a></li>
-  <li><a href="#bias-variance-and-mse-of-the-proportion-estimator" id="toc-bias-variance-and-mse-of-the-proportion-estimator" class="nav-link" data-scroll-target="#bias-variance-and-mse-of-the-proportion-estimator">Bias, variance, and MSE of the proportion estimator</a></li>
-  <li><a href="#nsduh-example-of-bias-variance-and-mse" id="toc-nsduh-example-of-bias-variance-and-mse" class="nav-link" data-scroll-target="#nsduh-example-of-bias-variance-and-mse">NSDUH: example of bias, variance, and MSE</a></li>
   <li><a href="#parameters-estimators-estimates" id="toc-parameters-estimators-estimates" class="nav-link" data-scroll-target="#parameters-estimators-estimates">Parameters, Estimators, Estimates</a></li>
   <li><a href="#practice" id="toc-practice" class="nav-link" data-scroll-target="#practice">Practice</a></li>
   </ul>
@@ -322,7 +322,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="class2_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="288"></p>
+<p><img src="class2_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="768"></p>
 <p></p><figcaption class="figure-caption">Density functions.</figcaption><p></p>
 </figure>
 </div>
@@ -372,8 +372,8 @@ f_X(x) = \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2}
 <li><p>In our dataset the mean is <span class="math inline">\hat \mu =</span> 30.66, and the standard deviation is <span class="math inline">\hat\sigma =</span> 6.1.</p></li>
 <li><p>We can use <span class="math inline">f_X(x)</span> to compute probabilities that a person’s BMI lies in a particular range.</p>
 <ul>
-<li>Probability less than or equal to “healthy” – <span class="math inline">\mathbb{P}(X \le x) = \int^{25}_0 f_X(x)dx</span></li>
-<li>Probability in “healthy range” – <span class="math inline">\mathbb{P}(X \le x) = \int^{25}_{18} f_X(x)dx</span></li>
+<li>Probability less than or equal to “healthy” – <span class="math inline">\mathbb{P}(X \le 25) = \int^{25}_0 f_X(x)dx</span></li>
+<li>Probability in “healthy range” – <span class="math inline">\mathbb{P}(18 &lt; X \le 25) = \int^{25}_{18} f_X(x)dx</span></li>
 </ul></li>
 </ul>
 </section>
@@ -496,8 +496,9 @@ f(x) = F(x+\Delta x) - F(x),
 <ul>
 <li>The mean might be a nicer way to compare our scores.</li>
 </ul>
-<p>The mean is the most common expected value <span class="math display">
-\mathbb{E} X = \int_{\mathcal{X}} x p(x) dx = \sum_{x}x p(x).
+<p>The mean is the most common expected value</p>
+<p><span class="math display">
+\mathbb{E} X = \int_{-\inf}^\inf x p(x) dx = \sum_{x}x p(x).
 </span></p>
 <ul>
 <li>The integral notation is in the sense of “real analysis” type integrals that can refer to sums or integrals. This is to emphasize that the definition is the same with continuous or discrete random variables.</li>
@@ -557,14 +558,15 @@ f(x) = F(x+\Delta x) - F(x),
 </tbody>
 </table>
 <ul>
-<li><p><span class="math inline">\mathbb{E}X</span> is a nonrandom value, called a <em>parameter</em>.</p></li>
-<li><p>A parameter is something that describes a feature of the distribution of a random variable.</p></li>
-<li><p>For the Bernoulli distribution, <span class="math inline">p</span>.</p></li>
-<li><p>For multinomial, it’s the vector of probabilities.</p></li>
-<li><p>For the normal distribution <span class="math display">
-\mathbb{E} X = \int_{-\inf}^\inf x \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \mu.
-</span></p></li>
-<li><p>Properties include</p>
+<li><span class="math inline">\mathbb{E}X</span> is a nonrandom value, called a <em>parameter</em>.</li>
+<li>A parameter is something that describes a feature of the distribution of a random variable.</li>
+<li>For the Bernoulli distribution, <span class="math inline">p</span>.</li>
+<li>For multinomial, it’s the vector of probabilities.</li>
+<li>For the normal distribution</li>
+</ul>
+<p><span class="math display">\mathbb{E} X = \int_{-\infty}^\infty x \frac{1}{\sqrt{2\pi} \sigma} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \mu.</span></p>
+<ul>
+<li>Properties include
 <ul>
 <li><span class="math inline">\mathbb{E}\{ aX + b Y\} = \{ a\mathbb{E}X + b \mathbb{E}Y\}</span>, for constant values <span class="math inline">a</span> and <span class="math inline">b</span>.</li>
 </ul></li>
@@ -573,15 +575,21 @@ f(x) = F(x+\Delta x) - F(x),
 <section id="variance" class="level3">
 <h3 class="anchored" data-anchor-id="variance">Variance</h3>
 <ul>
-<li><p>Another common expectation is the variance <span class="math display">
-\text{Var}(X) = \mathbb{E} (X - \E X)^2 = \E X^2 - (\E X)^2
-</span></p></li>
+<li>Another common expectation is the variance</li>
+</ul>
+<p><span class="math display">
+\text{Var}(X) = \mathbb{E} (X - \mathbb{E}X)^2 = \mathbb{E} X^2 - (\mathbb{E} X)^2
+</span></p>
+<ul>
 <li><p>In words, it is the average squared distance of the random variable from its expected value.</p></li>
 <li><p>It is a measure of the amount of spread of a random variable</p></li>
-<li><p>For the normal distribution <span class="math display">
-\mathrm{Var}( X ) = \int_{-\inf}^\inf (x-\mu)^2 \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \sigma^2.
-</span></p></li>
-<li><p>Properties</p>
+<li><p>For the normal distribution</p></li>
+</ul>
+<p><span class="math display">
+\mathrm{Var}( X ) = \int_{-\infty}^\infty (x-\mu)^2 \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \sigma^2.
+</span></p>
+<ul>
+<li>Properties
 <ul>
 <li><span class="math inline">\mathrm{Var}(bX-a) = b^2 \mathrm{Var}(X)</span>.</li>
 </ul></li>
@@ -647,14 +655,177 @@ f(x) = F(x+\Delta x) - F(x),
 <h4 class="anchored" data-anchor-id="z-normalization">Z-normalization</h4>
 <ul>
 <li>Given what we know about properties of mean and variance, we can standardize random variables</li>
-<li>Assume <span class="math inline">\mathbb{E} X =\mu</span> and <span class="math inline">\mathrm{Var}(X) = \sigma^2</span>. What is the mean and variance of? [ (X-)/ ]</li>
-<li>This is often applied to data using estimates</li>
+<li>Assume <span class="math inline">\mathbb{E} X =\mu</span> and <span class="math inline">\mathrm{Var}(X) = \sigma^2</span>. What is the mean and variance of? <span class="math display">
+(X-\mu)/\sigma
+</span></li>
+<li>This is often applied to data using estimates <span class="math display">
+z_i = (x_i - \bar x)/s
+</span></li>
+<li>It makes your data mean zero and variance/SD equal to 1.</li>
 </ul>
-<p>Conditional probabilities (still using sets and real-world examples) Biomedical data examples: Categorical Example: Probabilities for categorical data Continuous Example: Probabilities for continuous data</p>
 </section>
 </section>
 <section id="jointly-distributed-random-variables" class="level3">
 <h3 class="anchored" data-anchor-id="jointly-distributed-random-variables">Jointly distributed random variables</h3>
+<p><em>Jointly distributed random variables describe the probability of two things occurring. </em> In the insurance dataset, we can consider the probability of having a certain number of children living in a certain area.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>childByRegion <span class="ot">=</span> <span class="fu">table</span>(insurance<span class="sc">$</span>region, insurance<span class="sc">$</span>children)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>childByRegion <span class="ot">=</span> childByRegion<span class="sc">/</span><span class="fu">sum</span>(childByRegion)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">round</span>(childByRegion, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">northeast</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">northwest</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">southeast</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">southwest</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.01</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li><p>Let <span class="math inline">X</span> be a random variable denoting number of children</p>
+<ul>
+<li>Is it categorical/continuous/ordinal?</li>
+</ul></li>
+<li><p>Let <span class="math inline">Y</span> be a random variable denoting region</p>
+<ul>
+<li>Is it categorical/continuous/ordinal?</li>
+</ul></li>
+<li><p>joint distribution is a function of both variables <span class="math inline">\mathbb{P}(X=x, Y=y) = f(x,y)</span>.</p></li>
+<li><p>Questions about regional differences and number of children can be determined from the table</p></li>
+<li><p>What is the probability of having zero kids and living in the east?</p></li>
+<li><p>What is the probability of having zero kids?</p></li>
+</ul>
+</section>
+<section id="conditional-probabilities" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-probabilities">Conditional probabilities</h3>
+<ul>
+<li>Conditional probabilities are to express statements dependent on something happening.</li>
+<li>Conditional probabilities are written <span class="math inline">\mathbb{P}(X=x \mid Y=y)</span>
+<ul>
+<li>What is the probability of having three or more kids given living in the southeast? <span class="math inline">\mathbb{P}(X\ge 3 \mid Y=\text{``southeast"} )</span></li>
+<li>What is the probability of living in the Northeast if you have one child?</li>
+</ul></li>
+<li>Conditional probability can be computed from the joint distribution <span class="math inline">\mathbb{P}(X=x\mid Y=y) = \mathbb{P}(X=x, Y=y)/\mathbb{P}(Y=y)</span></li>
+</ul>
+</section>
+<section id="independence" class="level3">
+<h3 class="anchored" data-anchor-id="independence">Independence</h3>
+<ul>
+<li>Two random variables are independent if they factor <span class="math inline">\mathbb{P}(X=x, Y=y) = \mathbb{P}(X=x)\mathbb{P}(Y=y)</span> for all possible values of <span class="math inline">x</span> and <span class="math inline">y</span>.</li>
+<li>Intuitively, this means that fixing one variable doesn’t affect the distribution of the other.</li>
+<li>Another way to express it is that <span class="math inline">\mathbb{P}(X=x\mid Y=y) = \mathbb{P}(X=x)</span>.</li>
+<li>The table is pretty close to independent.</li>
+</ul>
+<p>If the table above were perfectly independent, it might look like this:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rs <span class="ot">=</span> <span class="fu">rowSums</span>(childByRegion)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>cs <span class="ot">=</span> <span class="fu">colSums</span>(childByRegion)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">round</span>(<span class="fu">outer</span>(rs, cs), <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">northeast</td>
+<td style="text-align: right;">0.104</td>
+<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">0.043</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.003</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">northwest</td>
+<td style="text-align: right;">0.104</td>
+<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">0.044</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.003</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">southeast</td>
+<td style="text-align: right;">0.117</td>
+<td style="text-align: right;">0.066</td>
+<td style="text-align: right;">0.049</td>
+<td style="text-align: right;">0.032</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.004</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">southwest</td>
+<td style="text-align: right;">0.104</td>
+<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">0.044</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.003</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </section>
 </section>
 <section id="connecting-data-and-probability-with-a-random-sample" class="level2">
@@ -698,84 +869,20 @@ f(x) = F(x+\Delta x) - F(x),
 </section>
 <section id="estimates" class="level2">
 <h2 class="anchored" data-anchor-id="estimates">Estimates</h2>
-<p>Note, an <strong>estimate</strong> is a function of the observed sample and it is nonrandom (Why is it non random?). We often use lowercase letters to make that clear [ x = n^{-1} _{i=1}^n x_i. ]</p>
+<p>Note, an <strong>estimate</strong> is a function of the observed sample and it is nonrandom (Why is it non random?). We often use lowercase letters to make that clear <span class="math display">
+\bar x = n^{-1} \sum_{i=1}^n x_i.
+</span></p>
 </section>
 <section id="estimators" class="level2">
 <h2 class="anchored" data-anchor-id="estimators">Estimators</h2>
-<p>An <strong>estimator</strong> is a function of a random sample. The goal (usually) is to estimate a parameter of interest (here, <span class="math inline">p</span>). Let’s consider the estimator [ p = X = n^{-1} _{i=1}^n X_i, ] which we know is pretty reasonable since <span class="math inline">\E \bar X = p</span>.</p>
+<p>An <strong>estimator</strong> is a function of a random sample. The goal (usually) is to estimate a parameter of interest (here, <span class="math inline">p</span>). Let’s consider the estimator <span class="math display">
+\hat p = \bar X = n^{-1} \sum_{i=1}^n X_i,
+</span> which we know is pretty reasonable since <span class="math inline">\mathbb{E} \bar X = p</span>.</p>
 <ul>
 <li>We can study the properties of estimators to learn about how they behave.</li>
 <li>If we like an estimator we can compute an estimate using our sample.</li>
 <li>We can use features of our estimator to make probabilistic statements about what might happen if we repeat our study. <strong>Dataset-to-dataset variability</strong></li>
 </ul>
-</section>
-<section id="bias-variance-and-mse-of-the-proportion-estimator" class="level2">
-<h2 class="anchored" data-anchor-id="bias-variance-and-mse-of-the-proportion-estimator">Bias, variance, and MSE of the proportion estimator</h2>
-<ul>
-<li>The bias of the proportion estimator (used to estimate the proportion of people who regularly drink alcohol) is: [ ( p - p) = 0 ]</li>
-<li>The variance of the estimator is [ <span class="math display">\begin{align*}
-\text{Var}(\hat p)
-&amp; = n^{-2} \sum_{i=1}^n\text{Var}(X_i) \\
-&amp; = n^{-1} p(1-p)
-\end{align*}</span> ]</li>
-<li>The MSE is the same as the variance since <span class="math inline">\hat p</span> is unbiased.</li>
-</ul>
-<p>We will come back to this example to construct confidence intervals in the next lecture.</p>
-</section>
-<section id="nsduh-example-of-bias-variance-and-mse" class="level2">
-<h2 class="anchored" data-anchor-id="nsduh-example-of-bias-variance-and-mse">NSDUH: example of bias, variance, and MSE</h2>
-<ul>
-<li>In NSDUH data</li>
-</ul>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>puf <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="st">'nsduh/puf.rds'</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">mean</span>(puf<span class="sc">$</span>alcmon<span class="sc">==</span><span class="st">'yes'</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Show what Bias and Variance mean in NSDUH data using simulations</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>nstudies <span class="ot">=</span> <span class="dv">100000</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">1000</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>phats <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>, nstudies)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(study <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nstudies){</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># random sample</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">=</span> <span class="fu">rbinom</span>(<span class="at">n =</span> n, <span class="at">prob =</span> p, <span class="at">size=</span><span class="dv">1</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># estimate phat</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  phats[study] <span class="ot">=</span> <span class="fu">mean</span>(x)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># mean of phat across the simulations</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(phats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4514003</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(phats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="class2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="288"></p>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variance of phat across the simulations</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(phats) <span class="co"># for n=100 this was 0.002527289</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0002474907</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># what the variance should be equal to</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>p <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">/</span>n</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0002476392</code></pre>
-</div>
-</div>
 </section>
 <section id="parameters-estimators-estimates" class="level2">
 <h2 class="anchored" data-anchor-id="parameters-estimators-estimates">Parameters, Estimators, Estimates</h2>

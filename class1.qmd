@@ -37,7 +37,7 @@ Let's spend some time learning about the other people in the class.
 2. What are your current academic year and school?
 3. Why interested in Biostatistics?
 4. What are your other interests, academic and/or fun?
-5. What are your internship projects projects?
+5. What are your internship projects?
   * Who are you working with?
   * What are you working on?
   
@@ -352,7 +352,7 @@ boxplot( ircigfm ~ age, data=nsduh, ylab='No days smoking', main='Cig by Age', o
 
 ## Practice (15 min)
 
-Below are some questions related to some of the material we've covered so far. The dataset we'll look at in an insurance dataset looking at amount of charges as a function of health and demographic features.
+Below are some questions related to some of the material we've covered so far. We'll look at an insurance dataset with the amount of charges as a function of health and demographic features.
 
 
 * For each of the variables in the table below describe which are continuous, ordinal, or categorical. They might be one or more of these things.

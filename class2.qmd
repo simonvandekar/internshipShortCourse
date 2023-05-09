@@ -111,7 +111,7 @@ $Y=$Number of tries | $\mathbb{P}(Y)$  |
 The PDF (probability density function) is the derivative of the CDF and often denoted with a lower case letter $f(x)$.
 For discrete random variables the PDF is call the PMF (probability mass function).
 
-```{r, echo=FALSE, fig.cap='Density functions.'}
+```{r, echo=FALSE, fig.cap='Density functions.', fig.width=8, fig.height=2}
 layout(matrix(1:4, nrow=1))
 x = seq(-3, 3, length.out=1000)
 plot(x, dnorm(x), type='l', main='Normal(0,1)', ylab='P(X=x)')
@@ -155,8 +155,8 @@ $$
 
 * In our dataset the mean is $\hat \mu =$ `r round(mean(insurance$bmi), 2)`, and the standard deviation is $\hat\sigma =$ `r round(sd(insurance$bmi), 2)`.
 * We can use $f_X(x)$ to compute probabilities that a person's BMI lies in a particular range.
-  + Probability less than or equal to "healthy" -- $\mathbb{P}(X \le x) = \int^{25}_0 f_X(x)dx$
-  + Probability in "healthy range" -- $\mathbb{P}(X \le x) = \int^{25}_{18} f_X(x)dx$
+  + Probability less than or equal to "healthy" -- $\mathbb{P}(X \le 25) = \int^{25}_0 f_X(x)dx$
+  + Probability in "healthy range" -- $\mathbb{P}(18 < X \le 25) = \int^{25}_{18} f_X(x)dx$
 
 ### Cumulative Distribution Function (CDF)
 
@@ -246,8 +246,9 @@ main = c()
 * The mean might be a nicer way to compare our scores.
 
 The mean is the most common expected value
+
 $$
-\mathbb{E} X = \int_{\mathcal{X}} x p(x) dx = \sum_{x}x p(x).
+\mathbb{E} X = \int_{-\inf}^\inf x p(x) dx = \sum_{x}x p(x).
 $$
 
 * The integral notation is in the sense of "real analysis" type integrals that can refer to sums or integrals. This is to emphasize that the definition is the same with continuous or discrete random variables.
@@ -266,9 +267,8 @@ $y=$Number of tries | $P(Y=y|\text{Simon})$  |  $P(Y=y|\text{Lillie})$ | $y\time
 * For the Bernoulli distribution, $p$.
 * For multinomial, it's the vector of probabilities.
 * For the normal distribution
-$$
-\mathbb{E} X = \int_{-\inf}^\inf x \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \mu.
-$$
+
+$$\mathbb{E} X = \int_{-\infty}^\infty x \frac{1}{\sqrt{2\pi} \sigma} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \mu.$$
 
 * Properties include
   + $\mathbb{E}\{ aX + b Y\} = \{ a\mathbb{E}X + b \mathbb{E}Y\}$, for constant values $a$ and $b$.
@@ -277,15 +277,18 @@ $$
 ### Variance
 
 * Another common expectation is the variance
+
 $$
-\text{Var}(X) = \mathbb{E} (X - \E X)^2 = \E X^2 - (\E X)^2
+\text{Var}(X) = \mathbb{E} (X - \mathbb{E}X)^2 = \mathbb{E} X^2 - (\mathbb{E} X)^2
 $$
+
 * In words, it is the average squared distance of the random variable from its expected value.
 * It is a measure of the amount of spread of a random variable
 
 * For the normal distribution
+
 $$
-\mathrm{Var}( X ) = \int_{-\inf}^\inf (x-\mu)^2 \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \sigma^2.
+\mathrm{Var}( X ) = \int_{-\infty}^\infty (x-\mu)^2 \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \sigma^2.
 $$
 
 
@@ -308,23 +311,60 @@ $y=$Number of tries | $P(Y=y|\text{Simon})$  |  $P(Y=y|\text{Lillie})$ | $y\time
 
 * Given what we know about properties of mean and variance, we can standardize random variables
 * Assume $\mathbb{E} X =\mu$ and $\mathrm{Var}(X) = \sigma^2$. What is the mean and variance of?
-\[
+$$
 (X-\mu)/\sigma
-\]
+$$
 * This is often applied to data using estimates
+$$
+z_i = (x_i - \bar x)/s
+$$
+* It makes your data mean zero and variance/SD equal to 1.
 
 
-
-Conditional probabilities (still using sets and real-world examples)
-Biomedical data examples:
-Categorical
-Example:
-Probabilities for categorical data
-Continuous
-Example:
-Probabilities for continuous data
 
 ### Jointly distributed random variables
+
+*Jointly distributed random variables describe the probability of two things occurring.
+* In the insurance dataset, we can consider the probability of having a certain number of children living in a certain area.
+
+```{r}
+childByRegion = table(insurance$region, insurance$children)
+childByRegion = childByRegion/sum(childByRegion)
+knitr::kable(round(childByRegion, 2))
+```
+
+* Let $X$ be a random variable denoting number of children
+  + Is it categorical/continuous/ordinal?
+* Let $Y$ be a random variable denoting region
+  + Is it categorical/continuous/ordinal?
+* joint distribution is a function of both variables $\mathbb{P}(X=x, Y=y) = f(x,y)$.
+
+* Questions about regional differences and number of children can be determined from the table
+* What is the probability of having zero kids and living in the east?
+* What is the probability of having zero kids?
+
+
+### Conditional probabilities
+
+* Conditional probabilities are to express statements dependent on something happening.
+* Conditional probabilities are written $\mathbb{P}(X=x \mid Y=y)$
+  + What is the probability of having three or more kids given living in the southeast? $\mathbb{P}(X\ge 3 \mid Y=\text{``southeast"} )$
+  + What is the probability of living in the Northeast if you have one child?
+* Conditional probability can be computed from the joint distribution $\mathbb{P}(X=x\mid Y=y) = \mathbb{P}(X=x, Y=y)/\mathbb{P}(Y=y)$
+
+### Independence
+
+* Two random variables are independent if they factor $\mathbb{P}(X=x, Y=y) = \mathbb{P}(X=x)\mathbb{P}(Y=y)$ for all possible values of $x$ and $y$.
+* Intuitively, this means that fixing one variable doesn't affect the distribution of the other.
+* Another way to express it is that $\mathbb{P}(X=x\mid Y=y) = \mathbb{P}(X=x)$.
+* The table is pretty close to independent.
+
+If the table above were perfectly independent, it might look like this:
+```{r}
+rs = rowSums(childByRegion)
+cs = colSums(childByRegion)
+knitr::kable(round(outer(rs, cs), 3))
+```
 
 
 ## Connecting data and probability with a random sample
@@ -362,78 +402,24 @@ For now, let's work with the question, "What is the proportion of people in the 
 ## Estimates
 
 Note, an **estimate** is a function of the observed sample and it is nonrandom (Why is it non random?). We often use lowercase letters to make that clear
-\[
+$$
 \bar x = n^{-1} \sum_{i=1}^n x_i.
-\]
+$$
 
 ## Estimators
 
 An **estimator** is a function of a random sample.
 The goal (usually) is to estimate a parameter of interest (here, $p$).
 Let's consider the estimator
-\[
+$$
 \hat p = \bar X = n^{-1} \sum_{i=1}^n X_i,
-\]
-which we know is pretty reasonable since $\E \bar X = p$.
+$$
+which we know is pretty reasonable since $\mathbb{E} \bar X = p$.
 
  * We can study the properties of estimators to learn about how they behave.
  * If we like an estimator we can compute an estimate using our sample.
  * We can use features of our estimator to make probabilistic statements about what might happen if we repeat our study. **Dataset-to-dataset variability**
  
-
-
-
-## Bias, variance, and MSE of the proportion estimator
-
-* The bias of the proportion estimator (used to estimate the proportion of people who regularly drink alcohol) is:
-\[
-\E( \hat p - p) = 0
-\]
-* The variance of the estimator is
-\[
-\begin{align*}
-\text{Var}(\hat p)
- & = n^{-2} \sum_{i=1}^n\text{Var}(X_i) \\
- & = n^{-1} p(1-p)
-\end{align*}
-\]
-* The MSE is the same as the variance since $\hat p$ is unbiased.
-
-We will come back to this example to construct confidence intervals in the next lecture.
-
-
-## NSDUH: example of bias, variance, and MSE
-
-* In NSDUH data
-
-```{r}
-
-puf = readRDS('nsduh/puf.rds')
-p = mean(puf$alcmon=='yes')
-
-
-
-# Show what Bias and Variance mean in NSDUH data using simulations
-nstudies = 100000
-n = 1000
-phats = rep(NA, nstudies)
-for(study in 1:nstudies){
-  # random sample
-  x = rbinom(n = n, prob = p, size=1)
-  # estimate phat
-  phats[study] = mean(x)
-}
-
-# mean of phat across the simulations
-mean(phats)
-hist(phats)
-# variance of phat across the simulations
-var(phats) # for n=100 this was 0.002527289
-# what the variance should be equal to
-p * (1-p)/n
-```
-
-
 
 ## Parameters, Estimators, Estimates
 
