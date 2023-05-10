@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Simon Vandekar">
+
+<title>Class 3</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="class3_files/libs/clipboard/clipboard.min.js"></script>
+<script src="class3_files/libs/quarto-html/quarto.js"></script>
+<script src="class3_files/libs/quarto-html/popper.min.js"></script>
+<script src="class3_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="class3_files/libs/quarto-html/anchor.min.js"></script>
+<link href="class3_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="class3_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="class3_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="class3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="class3_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives">Objectives:</a></li>
+  <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">Recap</a>
+  <ul class="collapse">
+  <li><a href="#pdfs" id="toc-pdfs" class="nav-link" data-scroll-target="#pdfs">PDFs</a></li>
+  <li><a href="#cumulative-distribution-function-cdf" id="toc-cumulative-distribution-function-cdf" class="nav-link" data-scroll-target="#cumulative-distribution-function-cdf">Cumulative Distribution Function (CDF)</a></li>
+  <li><a href="#mean" id="toc-mean" class="nav-link" data-scroll-target="#mean">Mean</a></li>
+  <li><a href="#variance" id="toc-variance" class="nav-link" data-scroll-target="#variance">Variance</a></li>
+  <li><a href="#aside-mean-and-variance-for-random-variables-and-datasets" id="toc-aside-mean-and-variance-for-random-variables-and-datasets" class="nav-link" data-scroll-target="#aside-mean-and-variance-for-random-variables-and-datasets">Aside: Mean and variance for random variables and datasets</a></li>
+  <li><a href="#jointly-distributed-random-variables" id="toc-jointly-distributed-random-variables" class="nav-link" data-scroll-target="#jointly-distributed-random-variables">Jointly distributed random variables</a></li>
+  <li><a href="#conditional-probabilities" id="toc-conditional-probabilities" class="nav-link" data-scroll-target="#conditional-probabilities">Conditional probabilities</a></li>
+  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence">Independence</a></li>
+  <li><a href="#joint-random-variables-in-the-insurance-dataset" id="toc-joint-random-variables-in-the-insurance-dataset" class="nav-link" data-scroll-target="#joint-random-variables-in-the-insurance-dataset">Joint random variables in the insurance dataset</a></li>
+  </ul></li>
+  <li><a href="#connecting-data-and-probability-with-a-random-sample" id="toc-connecting-data-and-probability-with-a-random-sample" class="nav-link" data-scroll-target="#connecting-data-and-probability-with-a-random-sample">Connecting data and probability with a random sample</a>
+  <ul class="collapse">
+  <li><a href="#statistics-is-a-way-to-learn-about-the-world-from-a-data-set" id="toc-statistics-is-a-way-to-learn-about-the-world-from-a-data-set" class="nav-link" data-scroll-target="#statistics-is-a-way-to-learn-about-the-world-from-a-data-set">Statistics is a way to learn about the world from a data set</a></li>
+  <li><a href="#mathematically" id="toc-mathematically" class="nav-link" data-scroll-target="#mathematically">Mathematically</a></li>
+  </ul></li>
+  <li><a href="#some-common-statistical-jargon-so-far" id="toc-some-common-statistical-jargon-so-far" class="nav-link" data-scroll-target="#some-common-statistical-jargon-so-far">Some common statistical jargon so far</a></li>
+  <li><a href="#practice" id="toc-practice" class="nav-link" data-scroll-target="#practice">Practice</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Class 3</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Simon Vandekar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="objectives" class="level2">
+<h2 class="anchored" data-anchor-id="objectives">Objectives:</h2>
+<ol type="1">
+<li>Learn some more basic concepts about probabilities</li>
+<li>Learn to use probability to think about data</li>
+</ol>
+</section>
+<section id="recap" class="level2">
+<h2 class="anchored" data-anchor-id="recap">Recap</h2>
+<ul>
+<li>We talked about PMFs, PDFs, probability, and a lot of notation.</li>
+</ul>
+<section id="pdfs" class="level3">
+<h3 class="anchored" data-anchor-id="pdfs">PDFs</h3>
+<section id="body-mass-index" class="level4">
+<h4 class="anchored" data-anchor-id="body-mass-index">Body mass index</h4>
+<p>From the <code>insurance</code> dataset</p>
+<ul>
+<li><p>BMI is a continuous random variable, <span class="math display">
+\mathrm{BMI} = \mathrm{weight}/\mathrm{height}^2
+</span></p></li>
+<li><p>Here’s a plot from the insurance dataset.</p></li>
+<li><p>It looks approximately normally distributed (not quite).</p></li>
+<li><p>I’ve drawn the normal density on top</p></li>
+</ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RESI)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'clubSandwich':
+  method    from    
+  bread.mlm sandwich</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>lims <span class="ot">=</span> <span class="fu">hist</span>(insurance<span class="sc">$</span>bmi, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">08</span>), <span class="at">main=</span><span class="st">'BMI Histogram'</span>, <span class="at">xlab=</span><span class="st">'BMI'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">seq</span>(<span class="fu">min</span>(lims<span class="sc">$</span>mids), <span class="fu">max</span>(lims<span class="sc">$</span>mids), <span class="at">length.out=</span><span class="dv">100</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="fu">mean</span>(insurance<span class="sc">$</span>bmi),<span class="at">sd=</span><span class="fu">sd</span>(insurance<span class="sc">$</span>bmi)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="288"></p>
+</div>
+</div>
+<ul>
+<li><p>The normal distribution is <span class="math display">
+f_X(x) = \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2}
+</span></p></li>
+<li><p>In our dataset the mean is <span class="math inline">\hat \mu =</span> 30.66, and the standard deviation is <span class="math inline">\hat\sigma =</span> 6.1.</p></li>
+<li><p>We can use <span class="math inline">f_X(x)</span> to compute probabilities that a person’s BMI lies in a particular range.</p>
+<ul>
+<li>Probability less than or equal to “healthy” – <span class="math inline">\mathbb{P}(X \le 25) = \int^{25}_0 f_X(x)dx</span></li>
+<li>Probability in “healthy range” – <span class="math inline">\mathbb{P}(18 &lt; X \le 25) = \int^{25}_{18} f_X(x)dx</span></li>
+</ul></li>
+<li><p>The normal distribution is just an approximation.</p>
+<ul>
+<li>Normal distribution is defined from <span class="math inline">(-\infty, \infty)</span></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="cumulative-distribution-function-cdf" class="level3">
+<h3 class="anchored" data-anchor-id="cumulative-distribution-function-cdf">Cumulative Distribution Function (CDF)</h3>
+<p>The cumulative distribution function (CDF), <span class="math inline">F_X(x)</span>, for a random variable <span class="math inline">X</span> is defined as <span class="math display">
+F_X(x) = \mathbb{P}(X \le x).
+</span> Here are some examples.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="class3_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="768"></p>
+<p></p><figcaption class="figure-caption">Some distribution functions.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>What are some features that you recognize about these distribution functions?</li>
+</ul>
+<p>For discrete random variables the derivative of the CDF does not exist because it is a step function, but the probability mass function is the amount the CDF jumps up at that location, heuristically we can define it as <span class="math display">
+f(x) = F(x+\Delta x) - F(x),
+</span> for an infinitesimal value <span class="math inline">\Delta x</span>.</p>
+<section id="bmi-example-continued" class="level4">
+<h4 class="anchored" data-anchor-id="bmi-example-continued">BMI example continued</h4>
+<ul>
+<li>CDF can be thought of as a percentile function – you plug in a BMI value and get out the probability that someone in the population is less than that value.</li>
+<li>Use this <a href="https://dqydj.com/bmi-percentile-calculator-united-states/">link</a> to compute the probabilities of being
+<ul>
+<li>Underweight</li>
+<li>Healthy weight</li>
+<li>Overweight</li>
+<li>Obese</li>
+</ul></li>
+<li><strong>Hint:</strong> you’ll have to use some calculus rules to compute the probabilities.</li>
+</ul>
+</section>
+<section id="wordle-cdf-example" class="level4">
+<h4 class="anchored" data-anchor-id="wordle-cdf-example">Wordle CDF example</h4>
+<ul>
+<li>Let’s compare the CDFs of my score and my partner’s score.</li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 36%">
+<col style="width: 31%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">y=</span>Number of tries</th>
+<th style="text-align: center;"><span class="math inline">P(Y=y|\text{Simon})</span></th>
+<th style="text-align: center;"><span class="math inline">P(Y=y|\text{Lillie})</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td style="text-align: center;">0.03</td>
+<td style="text-align: center;">0.05</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td style="text-align: center;">0.28</td>
+<td style="text-align: center;">0.24</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">0.44</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td style="text-align: center;">0.18</td>
+<td style="text-align: center;">0.19</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td style="text-align: center;">0.11</td>
+<td style="text-align: center;">0.08</td>
+</tr>
+</tbody>
+</table>
+<!-- <center> -->
+<!-- ![Wordle results](figures/wordle.jpg){#id .class width=25%} -->
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>wordle1 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">17</span>, <span class="dv">25</span>, <span class="dv">11</span>, <span class="dv">7</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>wordle2 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">9</span>, <span class="dv">16</span>, <span class="dv">7</span>, <span class="dv">3</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>wordle1 <span class="ot">=</span> <span class="fu">cumsum</span>(wordle1<span class="sc">/</span><span class="fu">sum</span>(wordle1))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>wordle2 <span class="ot">=</span> <span class="fu">cumsum</span>(wordle2<span class="sc">/</span><span class="fu">sum</span>(wordle2))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">7</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="fu">c</span>(<span class="dv">0</span>,wordle1, <span class="dv">1</span>), <span class="at">main=</span><span class="st">'Wordle CDFs'</span>, <span class="at">type=</span><span class="st">'s'</span>, <span class="at">ylab=</span><span class="st">'P(X&lt;=x)'</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(x, <span class="fu">c</span>(<span class="dv">0</span>,wordle2, <span class="dv">1</span>), <span class="at">type=</span><span class="st">'s'</span>, <span class="at">col=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="288"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> <span class="fu">c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>What is the interpretation of this graph?</li>
+<li>Who is doing better (getting the word in fewer guesses)?</li>
+</ul>
+</section>
+</section>
+<section id="mean" class="level3">
+<h3 class="anchored" data-anchor-id="mean">Mean</h3>
+<ul>
+<li>The mean might be a nicer way to compare our scores.</li>
+</ul>
+<p>The mean is the most common expected value</p>
+<p><span class="math display">
+\mathbb{E} X = \int_{-\infty}^\infty x p(x) dx = \sum_{x}x p(x).
+</span></p>
+<ul>
+<li>The integral notation is in the sense of “real analysis” type integrals that can refer to sums or integrals. This is to emphasize that the definition is the same with continuous or discrete random variables.</li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">y=</span>Number of tries</th>
+<th style="text-align: center;"><span class="math inline">P(Y=y|\text{Simon})</span></th>
+<th style="text-align: center;"><span class="math inline">P(Y=y|\text{Lillie})</span></th>
+<th style="text-align: center;"><span class="math inline">y\times P(Y=y|\text{Lillie or Simon})</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td style="text-align: center;">0.03</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td style="text-align: center;">0.28</td>
+<td style="text-align: center;">0.24</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">0.44</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td style="text-align: center;">0.18</td>
+<td style="text-align: center;">0.19</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td style="text-align: center;">0.11</td>
+<td style="text-align: center;">0.08</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><span class="math inline">\mathbb{E}X</span> is a nonrandom value, called a <em>parameter</em>.</li>
+<li>A parameter is something that describes a feature of the distribution of a random variable.</li>
+<li>For the Bernoulli distribution, <span class="math inline">p</span>.</li>
+<li>For multinomial, it’s the vector of probabilities.</li>
+<li>For the normal distribution</li>
+</ul>
+<p><span class="math display">\mathbb{E} X = \int_{-\infty}^\infty x \frac{1}{\sqrt{2\pi} \sigma} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \mu.</span></p>
+<ul>
+<li>Properties include
+<ul>
+<li><span class="math inline">\mathbb{E}\{ aX + b Y\} = \{ a\mathbb{E}X + b \mathbb{E}Y\}</span>, for constant values <span class="math inline">a</span> and <span class="math inline">b</span>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="variance" class="level3">
+<h3 class="anchored" data-anchor-id="variance">Variance</h3>
+<ul>
+<li>Another common expectation is the variance</li>
+</ul>
+<p><span class="math display">
+\text{Var}(X) = \mathbb{E} (X - \mathbb{E}X)^2 = \mathbb{E} X^2 - (\mathbb{E} X)^2
+</span></p>
+<ul>
+<li><p>In words, it is the average squared distance of the random variable from its expected value.</p></li>
+<li><p>It is a measure of the amount of spread of a random variable</p></li>
+<li><p>For the normal distribution</p></li>
+</ul>
+<p><span class="math display">
+\mathrm{Var}( X ) = \int_{-\infty}^\infty (x-\mu)^2 \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \sigma^2.
+</span></p>
+<ul>
+<li>Properties
+<ul>
+<li><span class="math inline">\mathrm{Var}(bX-a) = b^2 \mathrm{Var}(X)</span>.</li>
+</ul></li>
+</ul>
+<section id="wordle-example" class="level4">
+<h4 class="anchored" data-anchor-id="wordle-example">Wordle example</h4>
+<table class="table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">y=</span>Number of tries</th>
+<th style="text-align: center;"><span class="math inline">P(Y=y|\text{Simon})</span></th>
+<th style="text-align: center;"><span class="math inline">P(Y=y|\text{Lillie})</span></th>
+<th style="text-align: center;"><span class="math inline">y\times P(Y=y|\text{Lillie or Simon})</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td style="text-align: center;">0.03</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td style="text-align: center;">0.28</td>
+<td style="text-align: center;">0.24</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">0.44</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td style="text-align: center;">0.18</td>
+<td style="text-align: center;">0.19</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td style="text-align: center;">0.11</td>
+<td style="text-align: center;">0.08</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="z-normalization" class="level4">
+<h4 class="anchored" data-anchor-id="z-normalization">Z-normalization</h4>
+<ul>
+<li>Given what we know about properties of mean and variance, we can standardize random variables</li>
+<li>Assume <span class="math inline">\mathbb{E} X =\mu</span> and <span class="math inline">\mathrm{Var}(X) = \sigma^2</span>. What is the mean and variance of? <span class="math display">
+(X-\mu)/\sigma
+</span></li>
+<li>This is often applied to data using estimates <span class="math display">
+z_i = (x_i - \bar x)/s
+</span></li>
+<li>It makes your data mean zero and variance/SD equal to 1.</li>
+</ul>
+</section>
+</section>
+<section id="aside-mean-and-variance-for-random-variables-and-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="aside-mean-and-variance-for-random-variables-and-datasets">Aside: Mean and variance for random variables and datasets</h3>
+<ul>
+<li><p>The mean and variance formulas are very similar between datasets and random variables.</p>
+<ul>
+<li>Mean (for discrete random variable):</li>
+</ul>
+<p><span class="math display">
+\mathbb{E} X = \sum_{x} x p(x)\\
+\bar x = \frac{1}{n}\sum_{i=1}^n x_i
+</span></p>
+<ul>
+<li>Variance (also for a discrete random variable)</li>
+</ul>
+<p><span class="math display">
+\mathrm{Var}(X) = \mathbb{E}\{(X - \mathbb{E}X)^2\} = \sum_x (x - \mathbb{E}X)^2 p(x) \\
+s^2 = \frac{1}{(n-1)}\sum_{i=1}^n (x_i - \bar x)^2
+</span></p></li>
+<li><p>This is just something to keep in mind when we are thinking about connecting the math we’re using to real data</p></li>
+</ul>
+</section>
+<section id="jointly-distributed-random-variables" class="level3">
+<h3 class="anchored" data-anchor-id="jointly-distributed-random-variables">Jointly distributed random variables</h3>
+<p><em>Jointly distributed random variables describe the probability of two things occurring. </em> In the insurance dataset, we can consider the probability of having a certain number of children living in a certain area.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>childByRegion <span class="ot">=</span> <span class="fu">table</span>(insurance<span class="sc">$</span>region, insurance<span class="sc">$</span>children)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>childByRegion <span class="ot">=</span> childByRegion<span class="sc">/</span><span class="fu">sum</span>(childByRegion)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">round</span>(childByRegion, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">northeast</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">northwest</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">southeast</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">southwest</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.01</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li><p>Let <span class="math inline">X</span> be a random variable denoting number of children</p>
+<ul>
+<li>Is it categorical/continuous/ordinal?</li>
+</ul></li>
+<li><p>Let <span class="math inline">Y</span> be a random variable denoting region</p>
+<ul>
+<li>Is it categorical/continuous/ordinal?</li>
+</ul></li>
+<li><p>joint distribution is a function of both variables <span class="math inline">\mathbb{P}(X=x, Y=y) = f(x,y)</span>.</p></li>
+<li><p>Questions about regional differences and number of children can be determined from the table</p></li>
+<li><p>What is the probability of having zero kids and living in the east?</p></li>
+<li><p>What is the probability of having zero kids?</p></li>
+</ul>
+</section>
+<section id="conditional-probabilities" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-probabilities">Conditional probabilities</h3>
+<ul>
+<li>Conditional probabilities are to express statements dependent on something happening.</li>
+<li>Conditional probabilities are written <span class="math inline">\mathbb{P}(X=x \mid Y=y)</span>
+<ul>
+<li>What is the probability of having three or more kids given living in the southeast? <span class="math inline">\mathbb{P}(X\ge 3 \mid Y=\text{``southeast"} )</span></li>
+<li>What is the probability of living in the Northeast if you have one child?</li>
+</ul></li>
+<li>Conditional probability can be computed from the joint distribution <span class="math inline">\mathbb{P}(X=x\mid Y=y) = \mathbb{P}(X=x, Y=y)/\mathbb{P}(Y=y)</span></li>
+</ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>condTab <span class="ot">=</span> <span class="fu">sweep</span>(childByRegion, <span class="dv">1</span>, <span class="fu">rowSums</span>(childByRegion), <span class="at">FUN =</span> <span class="st">'/'</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">round</span>(condTab, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">northeast</td>
+<td style="text-align: right;">0.45</td>
+<td style="text-align: right;">0.24</td>
+<td style="text-align: right;">0.16</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">northwest</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">0.23</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">0.14</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">southeast</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.02</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">southwest</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;">0.24</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.02</td>
+</tr>
+</tbody>
+</table>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(condTab, <span class="at">main=</span><span class="st">'Conditional probabilities'</span>, <span class="at">ylab=</span><span class="st">'Probability'</span>, <span class="at">xlab=</span><span class="st">'Number of children'</span>, <span class="at">beside=</span>T, <span class="at">col=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(condTab)])</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(condTab)], <span class="at">legend=</span><span class="fu">rownames</span>(condTab), <span class="at">bty=</span><span class="st">'n'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="288"></p>
+</div>
+</div>
+</section>
+<section id="independence" class="level3">
+<h3 class="anchored" data-anchor-id="independence">Independence</h3>
+<ul>
+<li>Two random variables are independent if they factor <span class="math inline">\mathbb{P}(X=x, Y=y) = \mathbb{P}(X=x)\mathbb{P}(Y=y)</span> for all possible values of <span class="math inline">x</span> and <span class="math inline">y</span>.</li>
+<li>Intuitively, this means that fixing one variable doesn’t affect the distribution of the other.</li>
+<li>Another way to express it is that <span class="math inline">\mathbb{P}(X=x\mid Y=y) = \mathbb{P}(X=x)</span>.</li>
+<li>The table is pretty close to independent.</li>
+</ul>
+<p>If the table above were perfectly independent, it might look like this:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>rs <span class="ot">=</span> <span class="fu">rowSums</span>(childByRegion)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>cs <span class="ot">=</span> <span class="fu">colSums</span>(childByRegion)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>indepTab <span class="ot">=</span> <span class="fu">outer</span>(rs, cs)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">round</span>(indepTab, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">northeast</td>
+<td style="text-align: right;">0.104</td>
+<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">0.043</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.003</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">northwest</td>
+<td style="text-align: right;">0.104</td>
+<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">0.044</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.003</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">southeast</td>
+<td style="text-align: right;">0.117</td>
+<td style="text-align: right;">0.066</td>
+<td style="text-align: right;">0.049</td>
+<td style="text-align: right;">0.032</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.004</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">southwest</td>
+<td style="text-align: right;">0.104</td>
+<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">0.044</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.003</td>
+</tr>
+</tbody>
+</table>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(indepTab, <span class="at">main=</span><span class="st">'Joint probabilities'</span>, <span class="at">ylab=</span><span class="st">'Probability'</span>, <span class="at">xlab=</span><span class="st">'Number of children'</span>, <span class="at">beside=</span>T, <span class="at">col=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(indepTab)])</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(indepTab)], <span class="at">legend=</span><span class="fu">rownames</span>(indepTab), <span class="at">bty=</span><span class="st">'n'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="288"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>condTab <span class="ot">=</span> <span class="fu">sweep</span>(indepTab, <span class="dv">1</span>, <span class="fu">rowSums</span>(childByRegion), <span class="at">FUN =</span> <span class="st">'/'</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(condTab, <span class="at">main=</span><span class="st">'Conditional probabilities'</span>, <span class="at">ylab=</span><span class="st">'Probability'</span>, <span class="at">xlab=</span><span class="st">'Number of children'</span>, <span class="at">beside=</span>T, <span class="at">col=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(condTab)])</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(condTab)], <span class="at">legend=</span><span class="fu">rownames</span>(condTab), <span class="at">bty=</span><span class="st">'n'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="288"></p>
+</div>
+</div>
+</section>
+<section id="joint-random-variables-in-the-insurance-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="joint-random-variables-in-the-insurance-dataset">Joint random variables in the insurance dataset</h3>
+<ul>
+<li>Remember the relationship between age and charges in the insurance data</li>
+</ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RESI)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(insurance[,<span class="st">'age'</span>], insurance<span class="sc">$</span>charges, <span class="at">ylab=</span><span class="st">'Charges'</span>, <span class="at">xlab=</span><span class="st">'Age'</span>, <span class="at">main=</span><span class="fu">paste</span>(<span class="st">'Age'</span>, <span class="st">'and'</span>, <span class="st">'Charges'</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="288"></p>
+</div>
+</div>
+<ul>
+<li>The scatter plot can be thought of as a dataset version of a joint density <span class="math inline">f_{X,Y}(x,y)</span></li>
+<li>We can get the conditional histograms for a few different age groups</li>
+</ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">8</span>,<span class="fl">2.8</span>,<span class="fl">1.8</span>,.<span class="dv">2</span>), <span class="at">mgp=</span><span class="fu">c</span>(<span class="dv">6</span>,.<span class="dv">7</span>,<span class="dv">0</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>nbin <span class="ot">=</span> <span class="dv">15</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>insCat <span class="ot">=</span> <span class="fu">with</span>(insurance, <span class="fu">data.frame</span>(<span class="at">age=</span><span class="fu">cut</span>(age, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fu">min</span>(age), <span class="fu">max</span>(age), <span class="at">length.out=</span><span class="dv">7</span>), <span class="at">include.lowest=</span>T), <span class="at">charges=</span><span class="fu">cut</span>(charges<span class="sc">/</span><span class="dv">1000</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fu">min</span>(charges<span class="sc">/</span><span class="dv">1000</span>), <span class="fu">max</span>(charges<span class="sc">/</span><span class="dv">1000</span>), <span class="at">length.out=</span>nbin), <span class="at">include.lowest=</span>T) ) )</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>condTab <span class="ot">=</span> <span class="fu">do.call</span>(cbind, <span class="fu">by</span>(insCat<span class="sc">$</span>charges, insCat<span class="sc">$</span>age, <span class="cf">function</span>(x){res<span class="ot">=</span><span class="fu">table</span>(x); res<span class="sc">/</span><span class="fu">sum</span>(res)}))</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(condTab, <span class="at">beside=</span><span class="cn">TRUE</span>, <span class="at">col=</span><span class="fu">rep</span>(cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(condTab)], <span class="at">each=</span>nbin<span class="dv">-1</span>),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">names.arg =</span> <span class="fu">rep</span>(<span class="fu">rownames</span>(condTab), <span class="fu">ncol</span>(condTab) ), <span class="at">las=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">'Charges (in thousands)'</span>, <span class="at">main=</span><span class="st">'Conditional frequencies'</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(condTab)], <span class="at">legend=</span><span class="fu">colnames</span>(condTab), <span class="at">bty=</span><span class="st">'n'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">8</span>,<span class="fl">2.8</span>,<span class="fl">1.8</span>,.<span class="dv">2</span>), <span class="at">mgp=</span><span class="fu">c</span>(<span class="dv">6</span>,.<span class="dv">7</span>,<span class="dv">0</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>nbin <span class="ot">=</span> <span class="dv">15</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>jointTab <span class="ot">=</span> <span class="fu">do.call</span>(cbind, <span class="fu">by</span>(insCat<span class="sc">$</span>charges, insCat<span class="sc">$</span>age, <span class="cf">function</span>(x){res<span class="ot">=</span><span class="fu">table</span>(x); res}))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>jointTab <span class="ot">=</span> jointTab<span class="sc">/</span><span class="fu">sum</span>(jointTab)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(jointTab, <span class="at">beside=</span><span class="cn">TRUE</span>, <span class="at">col=</span><span class="fu">rep</span>(cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(jointTab)], <span class="at">each=</span>nbin<span class="dv">-1</span>),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">names.arg =</span> <span class="fu">rep</span>(<span class="fu">rownames</span>(jointTab), <span class="fu">ncol</span>(jointTab) ), <span class="at">las=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">'Charges (in thousands)'</span>, <span class="at">main=</span><span class="st">'Marginal frequencies'</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(jointTab)], <span class="at">legend=</span><span class="fu">colnames</span>(jointTab), <span class="at">bty=</span><span class="st">'n'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">8</span>,<span class="fl">2.8</span>,<span class="fl">1.8</span>,.<span class="dv">2</span>), <span class="at">mgp=</span><span class="fu">c</span>(<span class="dv">6</span>,.<span class="dv">7</span>,<span class="dv">0</span>))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>nbin <span class="ot">=</span> <span class="dv">15</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>test <span class="ot">=</span> <span class="fu">barplot</span>(<span class="fu">t</span>(jointTab), <span class="at">beside=</span><span class="cn">FALSE</span>, <span class="at">col=</span>cols[<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(jointTab), nbin<span class="dv">-1</span>)], <span class="at">las=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">'Charges (in thousands)'</span>, <span class="at">main=</span><span class="st">'Marginal frequencies'</span>, <span class="at">space=</span><span class="dv">0</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(jointTab)], <span class="at">legend=</span><span class="fu">colnames</span>(jointTab), <span class="at">bty=</span><span class="st">'n'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class3_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="connecting-data-and-probability-with-a-random-sample" class="level2">
+<h2 class="anchored" data-anchor-id="connecting-data-and-probability-with-a-random-sample">Connecting data and probability with a random sample</h2>
+<section id="statistics-is-a-way-to-learn-about-the-world-from-a-data-set" class="level3">
+<h3 class="anchored" data-anchor-id="statistics-is-a-way-to-learn-about-the-world-from-a-data-set">Statistics is a way to learn about the world from a data set</h3>
+<p>For now, let’s work with the question, “What is the proportion of people in the United States who smoke cigarettes?”</p>
+<ul>
+<li>We’ll define currently smoking cigarettes as anyone who has smoked at least one in the last 30 days.</li>
+<li>One way to answer this question is to ask everyone in the US whether the smoke.</li>
+<li>Another way is to ask a random sample of people whether they smoke.
+<ul>
+<li>How do we know that the proportion from the random sample is close to the proportion in the population?</li>
+<li>Probability is the tool we use to tie information from our sample to the population we want to learn about.</li>
+</ul></li>
+<li>In this example, we can assume people from the US are sampled randomly and that each person’s answer is <span class="math inline">X_i \sim \text{Be}(p)</span></li>
+<li>If we repeated this for <span class="math inline">n</span> independently sample people, <span class="math inline">X_1, \ldots, X_n</span> is called a random sample.</li>
+</ul>
+<p>There are three objects here:</p>
+<ol type="1">
+<li><span class="math inline">p</span> - the unknown <strong>parameter</strong></li>
+<li><span class="math inline">X_1, \ldots, X_n</span> - the random sample, which can be use to compute an <strong>estimator</strong>.</li>
+<li><span class="math inline">x_1, \ldots, x_n</span> - the observed data, which can be used to compute and <strong>estimate</strong>.</li>
+</ol>
+<p>Let’s see what this looks like in a simulation. A simulation lets us create a very simple fake world, where we know parameters, which we are usually not able to know.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>nsduh <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="st">'nsduh/puf.rds'</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pretend that the NSDUH dataset is the entire population of</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the united states -- There are n=56,897 people in the US.</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nsduh<span class="sc">$</span>cigmon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   no   yes 
+46209 10688 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is the parameter that we usually don't get to see.</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We can only see it here, because we are pretending that</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the NSDUH data is the full population of the US.</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">mean</span>(nsduh<span class="sc">$</span>cigmon<span class="sc">==</span><span class="st">'yes'</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1878482</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The sample size we choose.</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">50</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Capital X represents a random sample from the population.</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This is just a statistical concept that tells us what would</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># happen if we repeated the experiment a whole bunch of times.</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># run X() at the command line multiple times to see that it</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co"># it changes each time</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="cf">function</span>(<span class="at">n=</span><span class="dv">50</span>) <span class="fu">sample</span>(nsduh<span class="sc">$</span>cigmon, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">X</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] no  no  yes no  no  no  no  no  no  no  yes no  no  no  no  no  no  yes no 
+[20] yes no  yes yes no  no  no  no  yes no  yes no  no  no  no  no  no  no  no 
+[39] no  no  no  no  no  no  no  no  no  no  yes no 
+Levels: no yes</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">X</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] no  no  yes no  no  no  yes no  no  no  no  no  no  no  no  no  no  no  no 
+[20] no  no  no  no  yes no  no  no  no  no  yes no  no  no  no  no  no  no  no 
+[39] no  yes no  no  no  no  yes no  yes no  no  no 
+Levels: no yes</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">X</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] no  no  no  no  no  no  no  no  yes no  no  no  no  no  no  no  no  yes no 
+[20] no  no  yes no  no  yes no  no  no  no  no  no  yes no  no  no  no  no  no 
+[39] no  no  no  no  yes no  no  no  no  yes no  no 
+Levels: no yes</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># x is our observed data, it is not random, but we assume it was</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># drawn as a random sample from the population</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">X</span>(n)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] no  no  yes no  yes yes no  no  no  yes no  no  no  no  yes no  no  yes no 
+[20] no  no  no  no  no  yes no  no  no  no  no  no  no  no  no  no  yes no  yes
+[39] no  no  no  no  no  no  no  no  no  yes no  no 
+Levels: no yes</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># it does not change each time</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] no  no  yes no  yes yes no  no  no  yes no  no  no  no  yes no  no  yes no 
+[20] no  no  no  no  no  yes no  no  no  no  no  no  no  no  no  no  yes no  yes
+[39] no  no  no  no  no  no  no  no  no  yes no  no 
+Levels: no yes</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] no  no  yes no  yes yes no  no  no  yes no  no  no  no  yes no  no  yes no 
+[20] no  no  no  no  no  yes no  no  no  no  no  no  no  no  no  no  yes no  yes
+[39] no  no  no  no  no  no  no  no  no  yes no  no 
+Levels: no yes</code></pre>
+</div>
+</div>
+<ul>
+<li>Statistics tries to learn about the parameter <span class="math inline">p</span>, using only the data <span class="math inline">x</span>, by studying the mathematical properties of <span class="math inline">X</span>.</li>
+<li><span class="math inline">X</span> can tell us features about what would happen if we ran an experiment a whole bunch of times.</li>
+</ul>
+</section>
+<section id="mathematically" class="level3">
+<h3 class="anchored" data-anchor-id="mathematically">Mathematically</h3>
+<section id="parameters" class="level4">
+<h4 class="anchored" data-anchor-id="parameters">Parameters</h4>
+<ul>
+<li>Usually a parameter is defined based on the interest of the clinician and from the model for your data.
+<ul>
+<li>In this case, we assumed that each participant has a random probability of smoking with probability <span class="math inline">p</span>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="estimates" class="level4">
+<h4 class="anchored" data-anchor-id="estimates">Estimates</h4>
+<p>Note, an <strong>estimate</strong> is a function of the observed sample and it is nonrandom (Why is it non random?). We often use lowercase letters to make that clear <span class="math display">
+\bar x = n^{-1} \sum_{i=1}^n x_i.
+</span></p>
+</section>
+<section id="estimators" class="level4">
+<h4 class="anchored" data-anchor-id="estimators">Estimators</h4>
+<p>An <strong>estimator</strong> is a function of a random sample. The goal (usually) is to estimate a parameter of interest (here, <span class="math inline">p</span>). Let’s consider the estimator <span class="math display">
+\hat p = \bar X = n^{-1} \sum_{i=1}^n X_i,
+</span> which we determine is pretty reasonable since <span class="math inline">\mathbb{E} \bar X = p</span>.</p>
+<ul>
+<li>We can study the properties of estimators to learn about how they behave.</li>
+<li>If we like an estimator we can compute an <em>estimate</em> using our sample.</li>
+<li>We can use features of our estimator to make probabilistic statements about what might happen if we repeat our study. <strong>Dataset-to-dataset variability</strong></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="some-common-statistical-jargon-so-far" class="level2">
+<h2 class="anchored" data-anchor-id="some-common-statistical-jargon-so-far">Some common statistical jargon so far</h2>
+<p><strong>Types of variables</strong></p>
+<ul>
+<li>Categorical variable - a variable that takes discrete values, such as diagnosis, sex,</li>
+<li>Continuous variable - a variable that can take any values within a range, such as age, blood pressure, brain volume.</li>
+<li>Ordinal variable - a categorical variable that can be ordered, such as age category, Likert scales, Number of days, Number of occurrences.</li>
+<li>Discrete random variable - takes integer values.</li>
+<li>Continuous random variable - takes real values.</li>
+</ul>
+<p><strong>Distribution/Density features</strong></p>
+<ul>
+<li><p>Mode/ Non-modal/Unimodal/ Bimodal - a peak in a density.</p>
+<ul>
+<li>Non-modal - no peak</li>
+<li>Unimodal - one peak</li>
+<li>Bimodal - two peaks</li>
+</ul></li>
+<li><p>Quantile - the <span class="math inline">p</span>th quantile, <span class="math inline">q_p</span> divides the distribution such that <span class="math inline">p</span>% of the data are below <span class="math inline">q_p</span>.</p>
+<ul>
+<li>Median - 50th quantile of a distribution</li>
+</ul></li>
+<li><p>Skew/Skewness - the amount of asymmetry of a distribution</p>
+<ul>
+<li>Symmetric distribution - a distribution with no skew</li>
+</ul></li>
+<li><p>Kurtosis - the heavy tailed-ness of a distribution.</p></li>
+<li><p>Probability Density/Mass Function - function, <span class="math inline">f_X</span>, that represents <span class="math inline">f_X(x) = \mathbb{P}(X=x)</span></p></li>
+<li><p>Cumulative Distribution Function - function, <span class="math inline">F_X</span> that represents <span class="math inline">F_X(x) = \mathbb{P}(X\le x)</span></p></li>
+<li><p><strong>Parameter</strong> – Target unknown feature of a population (nonrandom)</p></li>
+<li><p><strong>Estimate</strong> – Value computed from observed data to approximate the parameter (nonrandom)</p></li>
+<li><p><strong>Estimator</strong> – A function of a random sample to approximate the parameter</p></li>
+</ul>
+</section>
+<section id="practice" class="level2">
+<h2 class="anchored" data-anchor-id="practice">Practice</h2>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

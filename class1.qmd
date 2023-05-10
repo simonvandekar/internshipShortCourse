@@ -134,7 +134,7 @@ abline(a=0, b=1)
 ```
 
 
-## Statistics in medical research (Biostatistics) (20 min)
+## Statistics in medical research (Biostatistics) (SKIPPED THIS SECTION 2023)
 
 **Features of Biostatistics medical research**
 * Improving health and understanding biological mechanisms
@@ -321,97 +321,5 @@ boxplot( ircigfm ~ age, data=nsduh, ylab='No days smoking', main='Cig by Age', o
 
 
 #### Violin plots
-
-## Some common statistical jargon so far
-
-**Types of variables**
-
-* Categorical variable - a variable that takes discrete values, such as diagnosis, sex, 
-* Continuous variable - a variable that can take any values within a range, such as age, blood pressure, brain volume.
-* Ordinal variable - a categorical variable that can be ordered, such as age category, Likert scales, Number of days, Number of occurrences.
-
-**Distribution/Density features**
-
-* Mode/ Non-modal/Unimodal/ Bimodal - a peak in a density.
-   + Non-modal - no peak
-   + Unimodal - one peak
-   + Bimodal - two peaks
-* Quantile - the $p$th quantile, $q_p$ divides the distribution such that $p$% of the data are below $q_p$.
-  + Median - 50th quantile of a distribution
-* Skew/Skewness - the amount of asymmetry of a distribution
-  + Symmetric distribution - a distribution with no skew
-* Kurtosis - the heavy tailed-ness of a distribution.
-
-  
-**Bivariate distribution features**
-
-* Correlation/correlated - two variables are linearly dependent
-* Dependent - two or more variables are related to each other in some way
-* Independent - two variables that are not related to each other
-
-
-## Practice (15 min)
-
-Below are some questions related to some of the material we've covered so far. We'll look at an insurance dataset with the amount of charges as a function of health and demographic features.
-
-
-* For each of the variables in the table below describe which are continuous, ordinal, or categorical. They might be one or more of these things.
-  + Age - 
-  + Sex - 
-  + BMI (body mass index) - 
-  + Children - 
-  + Smoker - 
-  + Region - 
-  + Charges - 
-  
-```{r}
-library(RESI)
-library(reactable)
-reactable(insurance)
-```
-
-
-The table below summarizes the variables in the dataset for nonsmokers smokers. For each of the variables in the table below, comment on the skewness and whether the variables look similar or different between smokers and nonsmokers.
-
-```{r}
-insurance$smoker = factor(insurance$smoker, labels = c('Nonsmoker', 'Smoker'))
-label(insurance$smoker) = 'Smoking Status'
-table1(~ age + bmi + children + sex + region + charges | smoker, data=insurance)
-```
-
-
-
-The plots below summarize each of the variables separately using histograms with densities.
-
-* For each of the histograms below comment on:
-  + Symmetry
-  + Skewness
-  + Mode(s)
-  
-```{r, fig.height=6, fig.width=6}
-par(mfrow=c(2,2))
-invisible(sapply(names(insurance)[sapply(insurance, is.numeric)], function(name){ hist(insurance[,name], xlab=name, main=name, freq=FALSE); lines(density(insurance[,name], adjust=1.5), lwd = 2) } ))
-```
-
-
-For each of the plots comment on the correlation and dependence of the variables with the number of charges.
-
-
-```{r, fig.width=9, fig.height=6}
-par(mfrow=c(2,3))
-xvars = names(insurance)[1:6]
-insurance$sex = factor(insurance$sex)
-insurance$region = factor(insurance$region)
-invisible(sapply(xvars, function(xvar){
-  if(!is.factor(xvar)){
-  plot(insurance[,xvar], insurance$charges, ylab='Charges', xlab=xvar, main=paste(xvar, 'and', 'Charges') )
-  # remove missing values for lowess fit
-  subset = na.omit(insurance[, c(xvar, 'charges')])
-  lines(lowess( subset[,xvar], subset$charges), col='blue', lwd=2)
-  } else {
-   barplot(as.formula(paste('charges ~', xvar)), data=insurance)
-  }
-}))
-```
 
 

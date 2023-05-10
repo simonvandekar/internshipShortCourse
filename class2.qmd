@@ -9,11 +9,12 @@ format:
 ---
 
 ```{r setup, include=FALSE}
+library(table1)
 knitr::knit_hooks$set(GPs=function(before, options, envir){
 if (before){
   cex=1.5
 par(mgp=c(1.7,.7,0), lwd=1.5, lend=2,
-    cex.lab=0.8*cex, cex.axis=0.8*cex, cex.main=0.6*cex,
+    cex.lab=0.8*cex, cex.axis=0.8*cex, cex.main=0.8*cex,
     mar=c(2.8,2.8,1.8,.2), bty='l', oma=c(0,0,0,0), pch=16)}
 })
 knitr::opts_chunk$set(echo = TRUE, fig.height = 3, fig.width = 3, cache=FALSE, GPs=TRUE)
@@ -25,6 +26,99 @@ cols = c('black', RColorBrewer::brewer.pal(9, 'Set1'))
 
 1. Learn some basic concepts about probabilities
 2. Learn to use probability to think about data
+3. But first, we will recap some statistica jargon and practice using it to describe the data.
+
+## Some common statistical jargon so far
+
+**Types of variables**
+
+* Categorical variable - a variable that takes discrete values, such as diagnosis, sex, 
+* Continuous variable - a variable that can take any values within a range, such as age, blood pressure, brain volume.
+* Ordinal variable - a categorical variable that can be ordered, such as age category, Likert scales, Number of days, Number of occurrences.
+
+**Distribution/Density features**
+
+* Mode/ Non-modal/Unimodal/ Bimodal - a peak in a density.
+   + Non-modal - no peak
+   + Unimodal - one peak
+   + Bimodal - two peaks
+* Quantile - the $p$th quantile, $q_p$ divides the distribution such that $p$% of the data are below $q_p$.
+  + Median - 50th quantile of a distribution
+* Skew/Skewness - the amount of asymmetry of a distribution
+  + Symmetric distribution - a distribution with no skew
+* Kurtosis - the heavy tailed-ness of a distribution.
+
+  
+**Bivariate distribution features**
+
+* Correlation/correlated - two variables are linearly dependent
+* Dependent - two or more variables are related to each other in some way
+* Independent - two variables that are not related to each other
+
+
+## Practice (15 min)
+
+Below are some questions related to some of the material we've covered so far. We'll look at an insurance dataset with the amount of charges as a function of health and demographic features.
+
+
+* For each of the variables in the table below describe which are continuous, ordinal, or categorical. They might be one or more of these things.
+  + Age - 
+  + Sex - 
+  + BMI (body mass index) - 
+  + Children - 
+  + Smoker - 
+  + Region - 
+  + Charges - 
+  
+```{r}
+library(RESI)
+library(reactable)
+reactable(insurance)
+```
+
+
+The table below summarizes the variables in the dataset for nonsmokers smokers. For each of the variables in the table below, comment on the skewness and whether the variables look similar or different between smokers and nonsmokers.
+
+```{r}
+insurance$smoker = factor(insurance$smoker, labels = c('Nonsmoker', 'Smoker'))
+label(insurance$smoker) = 'Smoking Status'
+table1(~ age + bmi + children + sex + region + charges | smoker, data=insurance)
+```
+
+
+
+The plots below summarize each of the variables separately using histograms with densities.
+
+* For each of the histograms below comment on:
+  + Symmetry
+  + Skewness
+  + Mode(s)
+  
+```{r, fig.height=6, fig.width=6}
+par(mfrow=c(2,2))
+invisible(sapply(names(insurance)[sapply(insurance, is.numeric)], function(name){ hist(insurance[,name], xlab=name, main=name, freq=FALSE); lines(density(insurance[,name], adjust=1.5), lwd = 2) } ))
+```
+
+
+For each of the plots comment on the correlation and dependence of the variables with the number of charges.
+
+
+```{r, fig.width=9, fig.height=6}
+par(mfrow=c(2,3))
+xvars = names(insurance)[1:6]
+insurance$sex = factor(insurance$sex)
+insurance$region = factor(insurance$region)
+invisible(sapply(xvars, function(xvar){
+  if(!is.factor(xvar)){
+  plot(insurance[,xvar], insurance$charges, ylab='Charges', xlab=xvar, main=paste(xvar, 'and', 'Charges') )
+  # remove missing values for lowess fit
+  subset = na.omit(insurance[, c(xvar, 'charges')])
+  lines(lowess( subset[,xvar], subset$charges), col='blue', lwd=2)
+  } else {
+   barplot(as.formula(paste('charges ~', xvar)), data=insurance)
+  }
+}))
+```
 
 ## Why probability
 
@@ -157,280 +251,7 @@ $$
 * We can use $f_X(x)$ to compute probabilities that a person's BMI lies in a particular range.
   + Probability less than or equal to "healthy" -- $\mathbb{P}(X \le 25) = \int^{25}_0 f_X(x)dx$
   + Probability in "healthy range" -- $\mathbb{P}(18 < X \le 25) = \int^{25}_{18} f_X(x)dx$
-
-### Cumulative Distribution Function (CDF)
-
-The cumulative distribution function (CDF), $F_X(x)$, for a random variable $X$ is a function that satisfies
-$$
-F_X(x) = \mathbb{P}(X \le x).
-$$
-They are usually functions of parameters. Here are some examples.
-
-
-```{r, echo=FALSE, eval=TRUE, fig.cap='Some distribution functions.', fig.width=8, fig.height=2}
-# Example CDFs (Cumulative distribution functions/Distribution functions)
-# F(x) = P(X<=x) \in [0,1]
-# properties: nonegative increasing function, F(-\infty) = 0, F(\infty)=1
-# Multivariate version "Distribution" function
-# Normal
-# Gamma
-# Poisson
-
-layout(matrix(1:4, nrow=1))
-x = seq(-3, 3, length.out=1000)
-plot(x, pnorm(x), type='l', main='Normal(0,1)', ylab='P(X<=x)')
-x = seq(-1, 10, length.out=1000)
-plot(x, pgamma(x, shape=1, rate=1/2), type='l', main='Gamma(1,1/2)', ylab='P(X<=x)')
-x = seq(-1, 15, length.out=1000)
-plot(x, ppois(x, lambda=5), main='Poisson(5)', type='s', ylab='P(X<=x)')
-x = seq(-1, 2, length.out=1000)
-plot(x, pbinom(x, size = 1, prob = 1/4), main='Bern(1/4)', type='s', ylab='P(X<=x)')
-```
-
-* What are some features that you recognize about these distribution functions?
-
-
-For discrete random variables the derivative of the CDF does not exist because it is a step function, but the probability mass function is the amount the CDF jumps up at that location, heuristically we can define it as
-$$
-f(x) = F(x+\Delta x) - F(x),
-$$
-for an infinitesimal value $\Delta x$.
-
-
-#### BMI example continued
-
-* CDF can be thought of as a percentile function -- you plug in a BMI value and get out the probability that someone in the population is less than that value.
-* Use this [link](https://dqydj.com/bmi-percentile-calculator-united-states/) to compute the probabilities of being
-  + Underweight
-  + Healthy weight
-  + Overweight
-  + Obese
-* **Hint:** you'll have to use some calculus rules to compute the probabilities.
-
-
-#### Wordle CDF example
-
-* Let's compare the CDFs of my score and my partner's score.
-
-$y=$Number of tries | $P(Y=y|\text{Simon})$  |  $P(Y=y|\text{Lillie})$ |
-|-------|:----:|:----:|
-| 1 | 0 | 0 
-| 2 | 0.03 | 0.05
-| 3 | 0.28 | 0.24
-| 4 | 0.40 | 0.44
-| 5 | 0.18 | 0.19
-| 6 | 0.11  | 0.08
-
-
-
-<!-- <center> -->
-<!-- ![Wordle results](figures/wordle.jpg){#id .class width=25%} -->
-
-```{r}
-wordle1 = c(0, 2, 17, 25, 11, 7)
-wordle2 = c(0, 2, 9, 16, 7, 3)
-wordle1 = cumsum(wordle1/sum(wordle1))
-wordle2 = cumsum(wordle2/sum(wordle2))
-x = 0:7
-plot(x, c(0,wordle1, 1), main='Wordle CDFs', type='s', ylab='P(X<=x)')
-points(x, c(0,wordle2, 1), type='s', col='red')
-main = c()
-```
-
-* What is the interpretation of this graph?
-* Who is doing better (getting the word in fewer guesses)?
-
-
-### Mean
-
-* The mean might be a nicer way to compare our scores.
-
-The mean is the most common expected value
-
-$$
-\mathbb{E} X = \int_{-\inf}^\inf x p(x) dx = \sum_{x}x p(x).
-$$
-
-* The integral notation is in the sense of "real analysis" type integrals that can refer to sums or integrals. This is to emphasize that the definition is the same with continuous or discrete random variables.
-
-$y=$Number of tries | $P(Y=y|\text{Simon})$  |  $P(Y=y|\text{Lillie})$ | $y\times P(Y=y|\text{Lillie or Simon})$
-|-------|:----:|:----:|:----:|
-| 1 | 0 | 0 |
-| 2 | 0.03 | 0.05|
-| 3 | 0.28 | 0.24|
-| 4 | 0.40 | 0.44|
-| 5 | 0.18 | 0.19|
-| 6 | 0.11  | 0.08|
-
-* $\mathbb{E}X$ is a nonrandom value, called a *parameter*.
-* A parameter is something that describes a feature of the distribution of a random variable.
-* For the Bernoulli distribution, $p$.
-* For multinomial, it's the vector of probabilities.
-* For the normal distribution
-
-$$\mathbb{E} X = \int_{-\infty}^\infty x \frac{1}{\sqrt{2\pi} \sigma} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \mu.$$
-
-* Properties include
-  + $\mathbb{E}\{ aX + b Y\} = \{ a\mathbb{E}X + b \mathbb{E}Y\}$, for constant values $a$ and $b$.
-
-
-### Variance
-
-* Another common expectation is the variance
-
-$$
-\text{Var}(X) = \mathbb{E} (X - \mathbb{E}X)^2 = \mathbb{E} X^2 - (\mathbb{E} X)^2
-$$
-
-* In words, it is the average squared distance of the random variable from its expected value.
-* It is a measure of the amount of spread of a random variable
-
-* For the normal distribution
-
-$$
-\mathrm{Var}( X ) = \int_{-\infty}^\infty (x-\mu)^2 \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \sigma^2.
-$$
-
-
-
-* Properties 
-  + $\mathrm{Var}(bX-a) = b^2 \mathrm{Var}(X)$.
-
-#### Wordle example  
-
-$y=$Number of tries | $P(Y=y|\text{Simon})$  |  $P(Y=y|\text{Lillie})$ | $y\times P(Y=y|\text{Lillie or Simon})$
-|-------|:----:|:----:|:----:|
-| 1 | 0 | 0 |
-| 2 | 0.03 | 0.05|
-| 3 | 0.28 | 0.24|
-| 4 | 0.40 | 0.44|
-| 5 | 0.18 | 0.19|
-| 6 | 0.11  | 0.08|
-
-#### Z-normalization
-
-* Given what we know about properties of mean and variance, we can standardize random variables
-* Assume $\mathbb{E} X =\mu$ and $\mathrm{Var}(X) = \sigma^2$. What is the mean and variance of?
-$$
-(X-\mu)/\sigma
-$$
-* This is often applied to data using estimates
-$$
-z_i = (x_i - \bar x)/s
-$$
-* It makes your data mean zero and variance/SD equal to 1.
-
-
-
-### Jointly distributed random variables
-
-*Jointly distributed random variables describe the probability of two things occurring.
-* In the insurance dataset, we can consider the probability of having a certain number of children living in a certain area.
-
-```{r}
-childByRegion = table(insurance$region, insurance$children)
-childByRegion = childByRegion/sum(childByRegion)
-knitr::kable(round(childByRegion, 2))
-```
-
-* Let $X$ be a random variable denoting number of children
-  + Is it categorical/continuous/ordinal?
-* Let $Y$ be a random variable denoting region
-  + Is it categorical/continuous/ordinal?
-* joint distribution is a function of both variables $\mathbb{P}(X=x, Y=y) = f(x,y)$.
-
-* Questions about regional differences and number of children can be determined from the table
-* What is the probability of having zero kids and living in the east?
-* What is the probability of having zero kids?
-
-
-### Conditional probabilities
-
-* Conditional probabilities are to express statements dependent on something happening.
-* Conditional probabilities are written $\mathbb{P}(X=x \mid Y=y)$
-  + What is the probability of having three or more kids given living in the southeast? $\mathbb{P}(X\ge 3 \mid Y=\text{``southeast"} )$
-  + What is the probability of living in the Northeast if you have one child?
-* Conditional probability can be computed from the joint distribution $\mathbb{P}(X=x\mid Y=y) = \mathbb{P}(X=x, Y=y)/\mathbb{P}(Y=y)$
-
-### Independence
-
-* Two random variables are independent if they factor $\mathbb{P}(X=x, Y=y) = \mathbb{P}(X=x)\mathbb{P}(Y=y)$ for all possible values of $x$ and $y$.
-* Intuitively, this means that fixing one variable doesn't affect the distribution of the other.
-* Another way to express it is that $\mathbb{P}(X=x\mid Y=y) = \mathbb{P}(X=x)$.
-* The table is pretty close to independent.
-
-If the table above were perfectly independent, it might look like this:
-```{r}
-rs = rowSums(childByRegion)
-cs = colSums(childByRegion)
-knitr::kable(round(outer(rs, cs), 3))
-```
-
-
-## Connecting data and probability with a random sample
-
-
-
-### Statistics is a way to learn about the world from a data set
-
-For now, let's work with the question, "What is the proportion of people in the united states who have used alcohol in the last 30 days?"
-
-1. What is my parameter of interest (target parameter)?
-    + Descriptively -- proportion of people who have used alcohol
-    + Mathematically -- call this value $p$ unknown value
-2. What is my population of interest?
-    + Descriptively -- The United States population
-    + Quantitatively -- Theoretical distribution defined by the model below in point 4. $\text{Be}(p)$
-3. What is a data point?
-    + An answer from an individual in the population "yes"/"no" to the survey question. Coded as 1/0.
-4. What model can I use to describe how I get a data point?
-    + Most obvious one is $X_i \sim \text{Be}(p)$, where $p$ is the parameter in point 1.
-
-
-### A random sample for the alcohol question
-
-* A random sample is a collection of independent random variables that represent potential data points.
-* Let $X_i \sim \text{Be}(p)$ for $i=1,\ldots, n$.
-* Our assumption about the population the $X_i$ are drawn from connects the random sample to the parameter of interest.
-* Our dataset is assumed to be a single realization of the process we are assuming.
-
-#### Example
-
-
-
- 
-## Estimates
-
-Note, an **estimate** is a function of the observed sample and it is nonrandom (Why is it non random?). We often use lowercase letters to make that clear
-$$
-\bar x = n^{-1} \sum_{i=1}^n x_i.
-$$
-
-## Estimators
-
-An **estimator** is a function of a random sample.
-The goal (usually) is to estimate a parameter of interest (here, $p$).
-Let's consider the estimator
-$$
-\hat p = \bar X = n^{-1} \sum_{i=1}^n X_i,
-$$
-which we know is pretty reasonable since $\mathbb{E} \bar X = p$.
-
- * We can study the properties of estimators to learn about how they behave.
- * If we like an estimator we can compute an estimate using our sample.
- * We can use features of our estimator to make probabilistic statements about what might happen if we repeat our study. **Dataset-to-dataset variability**
- 
-
-## Parameters, Estimators, Estimates
-
-To reiterate:
-
-* **Parameter** -- Target unknown feature of a population (nonrandom)
-* **Estimate** -- Value computed from observed data to approximate the parameter (nonrandom)
-* **Estimator** -- A function of a random sample to approximate the parameter
-
-In statistics, probability is used to define and describe the behavior of estimators.
-
-
-
-## Practice
+  
+* The normal distribution is just an approximation.
+  + Normal distribution is defined from $(-\infty, \infty)$
+  
