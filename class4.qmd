@@ -1,5 +1,5 @@
 ---
-title: "Class 3"
+title: "Class 4"
 author: "Simon Vandekar"
 toc: true
 format:
@@ -23,234 +23,18 @@ cols = c('black', RColorBrewer::brewer.pal(9, 'Set1'))
 
 ## Objectives:
 
-1. Learn some more basic concepts about probabilities
+1. Learn about jointly distributed random variables
 2. Learn to use probability to think about data
 
-## Recap
-
-* We talked about PMFs, PDFs, probability, and a lot of notation.
-
-### PDFs
-
-#### Body mass index
-
-From the `insurance` dataset
-
-* BMI is a continuous random variable,
-$$
-\mathrm{BMI} = \mathrm{weight}/\mathrm{height}^2
-$$
-
-* Here's a plot from the insurance dataset.
-* It looks approximately normally distributed (not quite).
-* I've drawn the normal density on top
-
-```{r}
-library(RESI)
-lims = hist(insurance$bmi, freq = FALSE, ylim=c(0, .08), main='BMI Histogram', xlab='BMI')
-x = seq(min(lims$mids), max(lims$mids), length.out=100)
-lines(x, dnorm(x, mean = mean(insurance$bmi),sd=sd(insurance$bmi)))
-```
-
-* The normal distribution is 
-$$
-f_X(x) = \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2}
-$$
-
-* In our dataset the mean is $\hat \mu =$ `r round(mean(insurance$bmi), 2)`, and the standard deviation is $\hat\sigma =$ `r round(sd(insurance$bmi), 2)`.
-* We can use $f_X(x)$ to compute probabilities that a person's BMI lies in a particular range.
-  + Probability less than or equal to "healthy" -- $\mathbb{P}(X \le 25) = \int^{25}_0 f_X(x)dx$
-  + Probability in "healthy range" -- $\mathbb{P}(18 < X \le 25) = \int^{25}_{18} f_X(x)dx$
-  
-* The normal distribution is just an approximation.
-  + Normal distribution is defined from $(-\infty, \infty)$
-
-### Cumulative Distribution Function (CDF)
-
-The cumulative distribution function (CDF), $F_X(x)$, for a random variable $X$ is defined as
-$$
-F_X(x) = \mathbb{P}(X \le x).
-$$
-Here are some examples.
 
 
-```{r, echo=FALSE, eval=TRUE, fig.cap='Some distribution functions.', fig.width=8, fig.height=2}
-# Example CDFs (Cumulative distribution functions/Distribution functions)
-# F(x) = P(X<=x) \in [0,1]
-# properties: nonegative increasing function, F(-\infty) = 0, F(\infty)=1
-# Multivariate version "Distribution" function
-# Normal
-# Gamma
-# Poisson
-
-layout(matrix(1:4, nrow=1))
-x = seq(-3, 3, length.out=1000)
-plot(x, pnorm(x), type='l', main='Normal(0,1)', ylab='P(X<=x)')
-x = seq(-1, 10, length.out=1000)
-plot(x, pgamma(x, shape=1, rate=1/2), type='l', main='Gamma(1,1/2)', ylab='P(X<=x)')
-x = seq(-1, 15, length.out=1000)
-plot(x, ppois(x, lambda=5), main='Poisson(5)', type='s', ylab='P(X<=x)')
-x = seq(-1, 2, length.out=1000)
-plot(x, pbinom(x, size = 1, prob = 1/4), main='Bern(1/4)', type='s', ylab='P(X<=x)')
-```
-
-* What are some features that you recognize about these distribution functions?
-
-
-For discrete random variables the derivative of the CDF does not exist because it is a step function, but the probability mass function is the amount the CDF jumps up at that location, heuristically we can define it as
-$$
-f(x) = F(x+\Delta x) - F(x),
-$$
-for an infinitesimal value $\Delta x$.
-
-
-#### BMI example continued
-
-* CDF can be thought of as a percentile function -- you plug in a BMI value and get out the probability that someone in the population is less than that value.
-* Use this [link](https://dqydj.com/bmi-percentile-calculator-united-states/) to compute the probabilities of being
-  + Underweight
-  + Healthy weight
-  + Overweight
-  + Obese
-* **Hint:** you'll have to use some calculus rules to compute the probabilities.
-
-
-#### Wordle CDF example
-
-* Let's compare the CDFs of my score and my partner's score.
-
-$y=$Number of tries | $P(Y=y|\text{Simon})$  |  $P(Y=y|\text{Lillie})$ |
-|-------|:----:|:----:|
-| 1 | 0 | 0 
-| 2 | 0.03 | 0.05
-| 3 | 0.28 | 0.24
-| 4 | 0.40 | 0.44
-| 5 | 0.18 | 0.19
-| 6 | 0.11  | 0.08
-
-
-
-<!-- <center> -->
-<!-- ![Wordle results](figures/wordle.jpg){#id .class width=25%} -->
-
-```{r}
-wordle1 = c(0, 2, 17, 25, 11, 7)
-wordle2 = c(0, 2, 9, 16, 7, 3)
-wordle1 = cumsum(wordle1/sum(wordle1))
-wordle2 = cumsum(wordle2/sum(wordle2))
-x = 0:7
-plot(x, c(0,wordle1, 1), main='Wordle CDFs', type='s', ylab='P(X<=x)')
-points(x, c(0,wordle2, 1), type='s', col='red')
-main = c()
-```
-
-* What is the interpretation of this graph?
-* Who is doing better (getting the word in fewer guesses)?
-
-
-### Mean
-
-* The mean might be a nicer way to compare our scores.
-
-The mean is the most common expected value
-
-$$
-\mathbb{E} X = \int_{-\infty}^\infty x p(x) dx = \sum_{x}x p(x).
-$$
-
-* The integral notation is in the sense of "real analysis" type integrals that can refer to sums or integrals. This is to emphasize that the definition is the same with continuous or discrete random variables.
-
-$y=$Number of tries | $P(Y=y|\text{Simon})$  |  $P(Y=y|\text{Lillie})$ | $y\times P(Y=y|\text{Lillie or Simon})$
-|-------|:----:|:----:|:----:|
-| 1 | 0 | 0 |
-| 2 | 0.03 | 0.05|
-| 3 | 0.28 | 0.24|
-| 4 | 0.40 | 0.44|
-| 5 | 0.18 | 0.19|
-| 6 | 0.11  | 0.08|
-
-* $\mathbb{E}X$ is a nonrandom value, called a *parameter*.
-* A parameter is something that describes a feature of the distribution of a random variable.
-* For the Bernoulli distribution, $p$.
-* For multinomial, it's the vector of probabilities.
-* For the normal distribution
-
-$$\mathbb{E} X = \int_{-\infty}^\infty x \frac{1}{\sqrt{2\pi} \sigma} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \mu.$$
-
-* Properties include
-  + $\mathbb{E}\{ aX + b Y\} = \{ a\mathbb{E}X + b \mathbb{E}Y\}$, for constant values $a$ and $b$.
-
-### Variance
-
-* Another common expectation is the variance
-
-$$
-\text{Var}(X) = \mathbb{E} (X - \mathbb{E}X)^2 = \mathbb{E} X^2 - (\mathbb{E} X)^2
-$$
-
-* In words, it is the average squared distance of the random variable from its expected value.
-* It is a measure of the amount of spread of a random variable
-
-* For the normal distribution
-
-$$
-\mathrm{Var}( X ) = \int_{-\infty}^\infty (x-\mu)^2 \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2} dx = \sigma^2.
-$$
-
-
-
-* Properties 
-  + $\mathrm{Var}(bX-a) = b^2 \mathrm{Var}(X)$.
-
-#### Wordle example  
-
-$y=$Number of tries | $P(Y=y|\text{Simon})$  |  $P(Y=y|\text{Lillie})$ | $y\times P(Y=y|\text{Lillie or Simon})$
-|-------|:----:|:----:|:----:|
-| 1 | 0 | 0 |
-| 2 | 0.03 | 0.05|
-| 3 | 0.28 | 0.24|
-| 4 | 0.40 | 0.44|
-| 5 | 0.18 | 0.19|
-| 6 | 0.11  | 0.08|
-
-#### Z-normalization
-
-* Given what we know about properties of mean and variance, we can standardize random variables
-* Assume $\mathbb{E} X =\mu$ and $\mathrm{Var}(X) = \sigma^2$. What is the mean and variance of?
-$$
-(X-\mu)/\sigma
-$$
-* This is often applied to data using estimates
-$$
-z_i = (x_i - \bar x)/s
-$$
-* It makes your data mean zero and variance/SD equal to 1.
-
-### Aside: Mean and variance for random variables and datasets
-
-* The mean and variance formulas are very similar between datasets and random variables.
-  + Mean (for discrete random variable):
-  
-  $$
-  \mathbb{E} X = \sum_{x} x p(x)\\
-  \bar x = \frac{1}{n}\sum_{i=1}^n x_i
-  $$
-
-  + Variance (also for a discrete random variable)
-  
-  $$
-  \mathrm{Var}(X) = \mathbb{E}\{(X - \mathbb{E}X)^2\} = \sum_x (x - \mathbb{E}X)^2 p(x) \\
-  s^2 = \frac{1}{(n-1)}\sum_{i=1}^n (x_i - \bar x)^2
-  $$
-
-* This is just something to keep in mind when we are thinking about connecting the math we're using to real data
-
-### Jointly distributed random variables
+## Jointly distributed random variables
 
 *Jointly distributed random variables describe the probability of two things occurring.
 * In the insurance dataset, we can consider the probability of having a certain number of children living in a certain area.
 
 ```{r}
+library(RESI) # contains insurance dataset
 childByRegion = table(insurance$region, insurance$children)
 childByRegion = childByRegion/sum(childByRegion)
 knitr::kable(round(childByRegion, 2))
@@ -339,7 +123,7 @@ nbin = 15
 jointTab = do.call(cbind, by(insCat$charges, insCat$age, function(x){res=table(x); res}))
 jointTab = jointTab/sum(jointTab)
 barplot(jointTab, beside=TRUE, col=rep(cols[1:ncol(jointTab)], each=nbin-1),
-        names.arg = rep(rownames(jointTab), ncol(jointTab) ), las=2, xlab='Charges (in thousands)', main='Marginal frequencies')
+        names.arg = rep(rownames(jointTab), ncol(jointTab) ), las=2, xlab='Charges (in thousands)', main='Joint frequencies')
 legend('topright', fill=cols[1:ncol(jointTab)], legend=colnames(jointTab), bty='n')
 ```
 
