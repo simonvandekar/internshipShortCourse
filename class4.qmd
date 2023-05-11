@@ -8,6 +8,7 @@ format:
     html-math-method: katex
 ---
 
+
 ```{r setup, include=FALSE}
 knitr::knit_hooks$set(GPs=function(before, options, envir){
 if (before){
