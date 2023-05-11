@@ -25,7 +25,11 @@ cols = c('black', RColorBrewer::brewer.pal(9, 'Set1'))
 
 1. Learn about jointly distributed random variables
 2. Learn to use probability to think about data
+3. Learn to construct a confidence interval and test statistic
 
+## Review of some stuff
+
+* Let's find the mean and variance of a Bernoulli random variable.
 
 
 ## Jointly distributed random variables
@@ -50,6 +54,11 @@ knitr::kable(round(childByRegion, 2))
 * What is the probability of having zero kids and living in the east?
 * What is the probability of having zero kids?
 
+### Marginal probabilites
+
+* Marginal probabilities are the probability of something occurring for one of the random variables, ignoring the other one.
+* It's called marginal, because you just add all the probabilities in the row or column and write it in the margin.
+
 
 ### Conditional probabilities
 
@@ -67,6 +76,11 @@ barplot(condTab, main='Conditional probabilities', ylab='Probability', xlab='Num
 legend('topright', fill=cols[1:nrow(condTab)], legend=rownames(condTab), bty='n' )
 
 ```
+
+### Conditional expectations
+
+* One you have conditional probabilities, you can do all the same stuff with it that you would do with a regular random variable
+* For example, $\mathbb{E}(X \mid Y) = \sum_{x} x f_{X\mid Y}(x \mid y)$
 
 
 ### Independence
@@ -223,7 +237,79 @@ which we determine is pretty reasonable since $\mathbb{E} \bar X = p$.
  * We can study the properties of estimators to learn about how they behave.
  * If we like an estimator we can compute an *estimate* using our sample.
  * We can use features of our estimator to make probabilistic statements about what might happen if we repeat our study. **Dataset-to-dataset variability**
+ 
+ We can start to think about properties of the estimator to understand what it looks like if I were to repeat a study a whole bunch of times
+ 
+ * What is the mean of the estimator?
+ * What is the variance of the estimator?
+ 
+ Why do we care about this? Because we want to know the probability that our estimator is close to the value in the population.
+ 
+ 
+```{r, fig.width=8}
+n=50
+# p is the unknown parameter.
+p = mean(nsduh$cigmon=='yes')
+# this is the data we collected, it was a random sample from the population
+x = X(n)
+# this is the proportion of smokers we observed
+phatObs = mean(x=='yes')
+# this is an estimate the variance of the estimator phat
+Var_phat = phatObs * (1-phatObs)/n
 
+
+
+# How can we tell where p is if we don't get to see it?
+
+
+# We can't know for sure, but we can see how often the random variable version of phat is close to p
+nstudies = 100
+phats = rep(NA, nstudies)
+for(i in 1:nstudies){
+  phats[i] = mean(X(n)=='yes')
+}
+plot(c(phatObs, phats), xlab='Different studies', ylab='phat', ylim=c(0,1), col=c(cols[2], rep(cols[1], nstudies)) )
+abline(h=p, lty=2)
+
+# because phatObs was created the same way as the phat
+```
+
+
+
+## Constructing a confidence interval
+
+To construct a basic confidence interval, we need a few things
+
+1. The Central Limit Theorem
+2. The mean and variance of the parameter estimator
+3. Estimates of the parameter and variance of the parameter
+
+### Preliminary: The normal distribution
+
+![[Link](https://fortuitousconcatenation.blogspot.com/2008/11/echo-z-scores-and-percentiles.html)](figures/normal_distribution.png)
+
+Things about the normal distribution:
+
+* Standard normal $Z\sim N(0,1)$ often denoted with a $Z$.
+* PDF often denoted by $\phi(z)$.
+* CDF often denoted by $\Phi(z)$.
+* For $Y \sim N(\mu, \sigma^2)$, $(Y-\mu)/\sigma \sim N(0, 1)$  (often called Z-normalization).
+* $\P(\lvert Z \rvert\le 1.96) = \Phi(1.96) - \Phi(-1.96) \approx 0.95$.
+* $\P( Z \le 1.64) = \Phi(1.64) \approx 0.95$.
+
+
+### The Central Limit Theorem
+**The Central Limit Theorem (Durrett, pg. 124):** Let $X_1, X_2, \ldots$ be iid with $\E X_i = \mu$ and $\text{Var}(X_i) = \sigma^2 \in (0, \infty)$.
+
+If $\bar X_n = n^{-1} \sum_{i=1}^n X_i$, then
+\[
+n^{1/2}(\bar X_n - \mu)/\sigma \to_D X,
+\]
+where $X \sim N(0,1)$.
+
+Comments:
+
+* We need the variance to be finite (stronger assumptions than LLN)
 
 ## Some common statistical jargon so far
 

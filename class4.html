@@ -126,9 +126,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives">Objectives:</a></li>
+  <li><a href="#review-of-some-stuff" id="toc-review-of-some-stuff" class="nav-link" data-scroll-target="#review-of-some-stuff">Review of some stuff</a></li>
   <li><a href="#jointly-distributed-random-variables" id="toc-jointly-distributed-random-variables" class="nav-link" data-scroll-target="#jointly-distributed-random-variables">Jointly distributed random variables</a>
   <ul class="collapse">
+  <li><a href="#marginal-probabilites" id="toc-marginal-probabilites" class="nav-link" data-scroll-target="#marginal-probabilites">Marginal probabilites</a></li>
   <li><a href="#conditional-probabilities" id="toc-conditional-probabilities" class="nav-link" data-scroll-target="#conditional-probabilities">Conditional probabilities</a></li>
+  <li><a href="#conditional-expectations" id="toc-conditional-expectations" class="nav-link" data-scroll-target="#conditional-expectations">Conditional expectations</a></li>
   <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence">Independence</a></li>
   <li><a href="#joint-random-variables-in-the-insurance-dataset" id="toc-joint-random-variables-in-the-insurance-dataset" class="nav-link" data-scroll-target="#joint-random-variables-in-the-insurance-dataset">Joint random variables in the insurance dataset</a></li>
   </ul></li>
@@ -136,6 +139,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#statistics-is-a-way-to-learn-about-the-world-from-a-data-set" id="toc-statistics-is-a-way-to-learn-about-the-world-from-a-data-set" class="nav-link" data-scroll-target="#statistics-is-a-way-to-learn-about-the-world-from-a-data-set">Statistics is a way to learn about the world from a data set</a></li>
   <li><a href="#mathematically" id="toc-mathematically" class="nav-link" data-scroll-target="#mathematically">Mathematically</a></li>
+  </ul></li>
+  <li><a href="#constructing-a-confidence-interval" id="toc-constructing-a-confidence-interval" class="nav-link" data-scroll-target="#constructing-a-confidence-interval">Constructing a confidence interval</a>
+  <ul class="collapse">
+  <li><a href="#preliminary-the-normal-distribution" id="toc-preliminary-the-normal-distribution" class="nav-link" data-scroll-target="#preliminary-the-normal-distribution">Preliminary: The normal distribution</a></li>
+  <li><a href="#the-central-limit-theorem" id="toc-the-central-limit-theorem" class="nav-link" data-scroll-target="#the-central-limit-theorem">The Central Limit Theorem</a></li>
   </ul></li>
   <li><a href="#some-common-statistical-jargon-so-far" id="toc-some-common-statistical-jargon-so-far" class="nav-link" data-scroll-target="#some-common-statistical-jargon-so-far">Some common statistical jargon so far</a></li>
   </ul>
@@ -171,7 +179,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol type="1">
 <li>Learn about jointly distributed random variables</li>
 <li>Learn to use probability to think about data</li>
+<li>Learn to construct a confidence interval and test statistic</li>
 </ol>
+</section>
+<section id="review-of-some-stuff" class="level2">
+<h2 class="anchored" data-anchor-id="review-of-some-stuff">Review of some stuff</h2>
+<ul>
+<li>Let’s find the mean and variance of a Bernoulli random variable.</li>
+</ul>
 </section>
 <section id="jointly-distributed-random-variables" class="level2">
 <h2 class="anchored" data-anchor-id="jointly-distributed-random-variables">Jointly distributed random variables</h2>
@@ -260,6 +275,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>What is the probability of having zero kids and living in the east?</p></li>
 <li><p>What is the probability of having zero kids?</p></li>
 </ul>
+<section id="marginal-probabilites" class="level3">
+<h3 class="anchored" data-anchor-id="marginal-probabilites">Marginal probabilites</h3>
+<ul>
+<li>Marginal probabilities are the probability of something occurring for one of the random variables, ignoring the other one.</li>
+<li>It’s called marginal, because you just add all the probabilities in the row or column and write it in the margin.</li>
+</ul>
+</section>
 <section id="conditional-probabilities" class="level3">
 <h3 class="anchored" data-anchor-id="conditional-probabilities">Conditional probabilities</h3>
 <ul>
@@ -339,6 +361,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="class4_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="288"></p>
 </div>
 </div>
+</section>
+<section id="conditional-expectations" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-expectations">Conditional expectations</h3>
+<ul>
+<li>One you have conditional probabilities, you can do all the same stuff with it that you would do with a regular random variable</li>
+<li>For example, <span class="math inline">\mathbb{E}(X \mid Y) = \sum_{x} x f_{X\mid Y}(x \mid y)</span></li>
+</ul>
 </section>
 <section id="independence" class="level3">
 <h3 class="anchored" data-anchor-id="independence">Independence</h3>
@@ -646,7 +675,84 @@ Levels: no yes</code></pre>
 <li>If we like an estimator we can compute an <em>estimate</em> using our sample.</li>
 <li>We can use features of our estimator to make probabilistic statements about what might happen if we repeat our study. <strong>Dataset-to-dataset variability</strong></li>
 </ul>
+<p>We can start to think about properties of the estimator to understand what it looks like if I were to repeat a study a whole bunch of times</p>
+<ul>
+<li>What is the mean of the estimator?</li>
+<li>What is the variance of the estimator?</li>
+</ul>
+<p>Why do we care about this? Because we want to know the probability that our estimator is close to the value in the population.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="dv">50</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p is the unknown parameter.</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">mean</span>(nsduh<span class="sc">$</span>cigmon<span class="sc">==</span><span class="st">'yes'</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># this is the data we collected, it was a random sample from the population</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">X</span>(n)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># this is the proportion of smokers we observed</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>phatObs <span class="ot">=</span> <span class="fu">mean</span>(x<span class="sc">==</span><span class="st">'yes'</span>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="co"># this is an estimate the variance of the estimator phat</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>Var_phat <span class="ot">=</span> phatObs <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>phatObs)<span class="sc">/</span>n</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="co"># How can we tell where p is if we don't get to see it?</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="co"># We can't know for sure, but we can see how often the random variable version of phat is close to p</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>nstudies <span class="ot">=</span> <span class="dv">100</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>phats <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>, nstudies)</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nstudies){</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>  phats[i] <span class="ot">=</span> <span class="fu">mean</span>(<span class="fu">X</span>(n)<span class="sc">==</span><span class="st">'yes'</span>)</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(phatObs, phats), <span class="at">xlab=</span><span class="st">'Different studies'</span>, <span class="at">ylab=</span><span class="st">'phat'</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">col=</span><span class="fu">c</span>(cols[<span class="dv">2</span>], <span class="fu">rep</span>(cols[<span class="dv">1</span>], nstudies)) )</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>p, <span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class4_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="768"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># because phatObs was created the same way as the phat</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </section>
+</section>
+</section>
+<section id="constructing-a-confidence-interval" class="level2">
+<h2 class="anchored" data-anchor-id="constructing-a-confidence-interval">Constructing a confidence interval</h2>
+<p>To construct a basic confidence interval, we need a few things</p>
+<ol type="1">
+<li>The Central Limit Theorem</li>
+<li>The mean and variance of the parameter estimator</li>
+<li>Estimates of the parameter and variance of the parameter</li>
+</ol>
+<section id="preliminary-the-normal-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="preliminary-the-normal-distribution">Preliminary: The normal distribution</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/normal_distribution.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption"><a href="https://fortuitousconcatenation.blogspot.com/2008/11/echo-z-scores-and-percentiles.html">Link</a></figcaption><p></p>
+</figure>
+</div>
+<p>Things about the normal distribution:</p>
+<ul>
+<li>Standard normal <span class="math inline">Z\sim N(0,1)</span> often denoted with a <span class="math inline">Z</span>.</li>
+<li>PDF often denoted by <span class="math inline">\phi(z)</span>.</li>
+<li>CDF often denoted by <span class="math inline">\Phi(z)</span>.</li>
+<li>For <span class="math inline">Y \sim N(\mu, \sigma^2)</span>, <span class="math inline">(Y-\mu)/\sigma \sim N(0, 1)</span> (often called Z-normalization).</li>
+<li><span class="math inline">\P(\lvert Z \rvert\le 1.96) = \Phi(1.96) - \Phi(-1.96) \approx 0.95</span>.</li>
+<li><span class="math inline">\P( Z \le 1.64) = \Phi(1.64) \approx 0.95</span>.</li>
+</ul>
+</section>
+<section id="the-central-limit-theorem" class="level3">
+<h3 class="anchored" data-anchor-id="the-central-limit-theorem">The Central Limit Theorem</h3>
+<p><strong>The Central Limit Theorem (Durrett, pg. 124):</strong> Let <span class="math inline">X_1, X_2, \ldots</span> be iid with <span class="math inline">\E X_i = \mu</span> and <span class="math inline">\text{Var}(X_i) = \sigma^2 \in (0, \infty)</span>.</p>
+<p>If <span class="math inline">\bar X_n = n^{-1} \sum_{i=1}^n X_i</span>, then [ n^{1/2}(X_n - )/_D X, ] where <span class="math inline">X \sim N(0,1)</span>.</p>
+<p>Comments:</p>
+<ul>
+<li>We need the variance to be finite (stronger assumptions than LLN)</li>
+</ul>
 </section>
 </section>
 <section id="some-common-statistical-jargon-so-far" class="level2">
