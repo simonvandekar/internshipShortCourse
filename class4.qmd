@@ -28,7 +28,7 @@ cols = c('black', RColorBrewer::brewer.pal(9, 'Set1'))
 2. Learn to use probability to think about data
 3. Learn to construct a confidence interval and test statistic
 
-## Review of some stuff
+## Review of mean and expectation
 
 * Let's find the mean and variance of a Bernoulli random variable.
 
