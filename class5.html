@@ -87,16 +87,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
-<script src="class4_files/libs/clipboard/clipboard.min.js"></script>
-<script src="class4_files/libs/quarto-html/quarto.js"></script>
-<script src="class4_files/libs/quarto-html/popper.min.js"></script>
-<script src="class4_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="class4_files/libs/quarto-html/anchor.min.js"></script>
-<link href="class4_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="class4_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="class4_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="class4_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="class4_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="class5_files/libs/clipboard/clipboard.min.js"></script>
+<script src="class5_files/libs/quarto-html/quarto.js"></script>
+<script src="class5_files/libs/quarto-html/popper.min.js"></script>
+<script src="class5_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="class5_files/libs/quarto-html/anchor.min.js"></script>
+<link href="class5_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="class5_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="class5_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="class5_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="class5_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -139,6 +139,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#statistics-is-a-way-to-learn-about-the-world-from-a-data-set" id="toc-statistics-is-a-way-to-learn-about-the-world-from-a-data-set" class="nav-link" data-scroll-target="#statistics-is-a-way-to-learn-about-the-world-from-a-data-set">Statistics is a way to learn about the world from a data set</a></li>
   <li><a href="#mathematically" id="toc-mathematically" class="nav-link" data-scroll-target="#mathematically">Mathematically</a></li>
+  </ul></li>
+  <li><a href="#constructing-a-confidence-interval" id="toc-constructing-a-confidence-interval" class="nav-link" data-scroll-target="#constructing-a-confidence-interval">Constructing a confidence interval</a>
+  <ul class="collapse">
+  <li><a href="#preliminary-the-normal-distribution" id="toc-preliminary-the-normal-distribution" class="nav-link" data-scroll-target="#preliminary-the-normal-distribution">Preliminary: The normal distribution</a></li>
+  <li><a href="#the-central-limit-theorem" id="toc-the-central-limit-theorem" class="nav-link" data-scroll-target="#the-central-limit-theorem">The Central Limit Theorem</a></li>
   </ul></li>
   <li><a href="#some-common-statistical-jargon-so-far" id="toc-some-common-statistical-jargon-so-far" class="nav-link" data-scroll-target="#some-common-statistical-jargon-so-far">Some common statistical jargon so far</a></li>
   </ul>
@@ -353,7 +358,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(condTab)], <span class="at">legend=</span><span class="fu">rownames</span>(condTab), <span class="at">bty=</span><span class="st">'n'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="class4_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="288"></p>
+<p><img src="class5_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="288"></p>
 </div>
 </div>
 </section>
@@ -440,7 +445,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(indepTab)], <span class="at">legend=</span><span class="fu">rownames</span>(indepTab), <span class="at">bty=</span><span class="st">'n'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="class4_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="288"></p>
+<p><img src="class5_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="288"></p>
 </div>
 <details>
 <summary>Code</summary>
@@ -449,7 +454,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(condTab)], <span class="at">legend=</span><span class="fu">rownames</span>(condTab), <span class="at">bty=</span><span class="st">'n'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="class4_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="288"></p>
+<p><img src="class5_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="288"></p>
 </div>
 </div>
 </section>
@@ -465,7 +470,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(insurance[,<span class="st">'age'</span>], insurance<span class="sc">$</span>charges, <span class="at">ylab=</span><span class="st">'Charges'</span>, <span class="at">xlab=</span><span class="st">'Age'</span>, <span class="at">main=</span><span class="fu">paste</span>(<span class="st">'Age'</span>, <span class="st">'and'</span>, <span class="st">'Charges'</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="class4_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="288"></p>
+<p><img src="class5_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="288"></p>
 </div>
 </div>
 <ul>
@@ -484,7 +489,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(condTab)], <span class="at">legend=</span><span class="fu">colnames</span>(condTab), <span class="at">bty=</span><span class="st">'n'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="class4_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="1440"></p>
+<p><img src="class5_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="1440"></p>
 </div>
 </div>
 <div class="cell">
@@ -499,7 +504,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(jointTab)], <span class="at">legend=</span><span class="fu">colnames</span>(jointTab), <span class="at">bty=</span><span class="st">'n'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="class4_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="1440"></p>
+<p><img src="class5_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="1440"></p>
 </div>
 </div>
 <div class="cell">
@@ -511,7 +516,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(jointTab)], <span class="at">legend=</span><span class="fu">colnames</span>(jointTab), <span class="at">bty=</span><span class="st">'n'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="class4_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="1440"></p>
+<p><img src="class5_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="1440"></p>
 </div>
 </div>
 </section>
@@ -704,7 +709,7 @@ Levels: no yes</code></pre>
 <span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>p, <span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="class4_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="768"></p>
+<p><img src="class5_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="768"></p>
 </div>
 <details>
 <summary>Code</summary>
@@ -739,7 +744,7 @@ Levels: no yes</code></pre>
 <span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>p, <span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="class4_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="768"></p>
+<p><img src="class5_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="768"></p>
 </div>
 <details>
 <summary>Code</summary>
@@ -747,6 +752,42 @@ Levels: no yes</code></pre>
 </details>
 </div>
 </section>
+</section>
+</section>
+<section id="constructing-a-confidence-interval" class="level2">
+<h2 class="anchored" data-anchor-id="constructing-a-confidence-interval">Constructing a confidence interval</h2>
+<p>To construct a basic confidence interval, we need a few things</p>
+<ol type="1">
+<li>The Central Limit Theorem</li>
+<li>The mean and variance of the parameter estimator</li>
+<li>Estimates of the parameter and variance of the parameter</li>
+</ol>
+<section id="preliminary-the-normal-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="preliminary-the-normal-distribution">Preliminary: The normal distribution</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/normal_distribution.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption"><a href="https://fortuitousconcatenation.blogspot.com/2008/11/echo-z-scores-and-percentiles.html">Link</a></figcaption><p></p>
+</figure>
+</div>
+<p>Things about the normal distribution:</p>
+<ul>
+<li>Standard normal <span class="math inline">Z\sim N(0,1)</span> often denoted with a <span class="math inline">Z</span>.</li>
+<li>PDF often denoted by <span class="math inline">\phi(z)</span>.</li>
+<li>CDF often denoted by <span class="math inline">\Phi(z)</span>.</li>
+<li>For <span class="math inline">Y \sim N(\mu, \sigma^2)</span>, <span class="math inline">(Y-\mu)/\sigma \sim N(0, 1)</span> (often called Z-normalization).</li>
+<li><span class="math inline">\P(\lvert Z \rvert\le 1.96) = \Phi(1.96) - \Phi(-1.96) \approx 0.95</span>.</li>
+<li><span class="math inline">\P( Z \le 1.64) = \Phi(1.64) \approx 0.95</span>.</li>
+</ul>
+</section>
+<section id="the-central-limit-theorem" class="level3">
+<h3 class="anchored" data-anchor-id="the-central-limit-theorem">The Central Limit Theorem</h3>
+<p><strong>The Central Limit Theorem (Durrett, pg. 124):</strong> Let <span class="math inline">X_1, X_2, \ldots</span> be iid with <span class="math inline">\E X_i = \mu</span> and <span class="math inline">\text{Var}(X_i) = \sigma^2 \in (0, \infty)</span>.</p>
+<p>If <span class="math inline">\bar X_n = n^{-1} \sum_{i=1}^n X_i</span>, then [ n^{1/2}(X_n - )/_D X, ] where <span class="math inline">X \sim N(0,1)</span>.</p>
+<p>Comments:</p>
+<ul>
+<li>We need the variance to be finite (stronger assumptions than LLN)</li>
+</ul>
 </section>
 </section>
 <section id="some-common-statistical-jargon-so-far" class="level2">
