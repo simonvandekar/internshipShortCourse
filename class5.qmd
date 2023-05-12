@@ -201,7 +201,14 @@ For example we might ask "Are insurance charges larger in smokers than nonsmoker
 
 * In this case, the parameter that we're interested in is the difference in charges between smokers and nonsmokers.
 * $\delta = \mu_S - \mu_}$
-  
+* We didn't show this, but often, the CLT implies
+$$
+T = \frac{(\hat \delta - \delta)}{\mathrm{Var}(\hat \delta)} \sim N(0,1)
+$$
+
+* Hypothesis testing determines "null" and "alternative" hypotheses
+  + Null is the uninteresting result -- smokers and nonsmokers have the same mean charges
+* Null is often denote $H_0: \delta = 0$ (no difference in charges)
 
 ## Some common statistical jargon so far
 
