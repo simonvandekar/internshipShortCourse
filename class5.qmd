@@ -200,7 +200,7 @@ knitr::kable(round(data.frame(mean=mu, LCI=CI[1], UCI=CI[2]), 2) )
 For example we might ask "Are insurance charges larger in smokers than nonsmokers?"
 
 * In this case, the parameter that we're interested in is the difference in charges between smokers and nonsmokers.
-* $\delta = \mu_S - \mu_}$
+* $\delta = \mu_S - \mu_N$
 * We didn't show this, but often, the CLT implies
 $$
 T = \frac{(\hat \delta - \delta)}{\mathrm{Var}(\hat \delta)} \sim N(0,1)
