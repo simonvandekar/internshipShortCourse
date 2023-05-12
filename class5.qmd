@@ -1,5 +1,5 @@
 ---
-title: "Class 4"
+title: "Class 5"
 author: "Simon Vandekar"
 toc: true
 format:
@@ -24,283 +24,11 @@ cols = c('black', RColorBrewer::brewer.pal(9, 'Set1'))
 
 ## Objectives:
 
-1. Learn about jointly distributed random variables
-2. Learn to use probability to think about data
-3. Learn to construct a confidence interval and test statistic
+1. Learn to construct and interpret a confidence interval and test statistic
+2. Learn to compute and interpret $p$-values
 
-## Review of mean and expectation
+## RECAP!
 
-* Let's find the mean and variance of a Bernoulli random variable.
-
-
-## Jointly distributed random variables
-
-*Jointly distributed random variables describe the probability of two things occurring.
-* In the insurance dataset, we can consider the probability of having a certain number of children living in a certain area.
-
-```{r}
-library(RESI) # contains insurance dataset
-childByRegion = table(insurance$region, insurance$children)
-childByRegion = childByRegion/sum(childByRegion)
-knitr::kable(round(childByRegion, 2))
-```
-
-* Let $X$ be a random variable denoting number of children
-  + Is it categorical/continuous/ordinal?
-* Let $Y$ be a random variable denoting region
-  + Is it categorical/continuous/ordinal?
-* joint distribution is a function of both variables $\mathbb{P}(X=x, Y=y) = f(x,y)$.
-
-* Questions about regional differences and number of children can be determined from the table
-* What is the probability of having zero kids and living in the east?
-* What is the probability of having zero kids?
-
-### Marginal probabilites
-
-* Marginal probabilities are the probability of something occurring for one of the random variables, ignoring the other one.
-* It's called marginal, because you just add all the probabilities in the row or column and write it in the margin.
-
-
-### Conditional probabilities
-
-* Conditional probabilities are to express statements dependent on something happening.
-* Conditional probabilities are written $\mathbb{P}(X=x \mid Y=y)$
-  + What is the probability of having three or more kids given living in the southeast? $\mathbb{P}(X\ge 3 \mid Y=\text{``southeast"} )$
-  + What is the probability of living in the Northeast if you have one child?
-* Conditional probability can be computed from the joint distribution $\mathbb{P}(X=x\mid Y=y) = \mathbb{P}(X=x, Y=y)/\mathbb{P}(Y=y)$
-
-```{r}
-condTab = sweep(childByRegion, 1, rowSums(childByRegion), FUN = '/')
-knitr::kable(round(condTab, 2))
-
-barplot(condTab, main='Conditional probabilities', ylab='Probability', xlab='Number of children', beside=T, col=cols[1:nrow(condTab)])
-legend('topright', fill=cols[1:nrow(condTab)], legend=rownames(condTab), bty='n' )
-
-```
-
-### Conditional expectations
-
-* One you have conditional probabilities, you can do all the same stuff with it that you would do with a regular random variable
-* For example, $\mathbb{E}(X \mid Y) = \sum_{x} x f_{X\mid Y}(x \mid y)$
-
-
-### Independence
-
-* Two random variables are independent if they factor $\mathbb{P}(X=x, Y=y) = \mathbb{P}(X=x)\mathbb{P}(Y=y)$ for all possible values of $x$ and $y$.
-* Intuitively, this means that fixing one variable doesn't affect the distribution of the other.
-* Another way to express it is that $\mathbb{P}(X=x\mid Y=y) = \mathbb{P}(X=x)$.
-* The table is pretty close to independent.
-
-If the table above were perfectly independent, it might look like this:
-```{r}
-rs = rowSums(childByRegion)
-cs = colSums(childByRegion)
-indepTab = outer(rs, cs)
-knitr::kable(round(indepTab, 3))
-
-barplot(indepTab, main='Joint probabilities', ylab='Probability', xlab='Number of children', beside=T, col=cols[1:nrow(indepTab)])
-legend('topright', fill=cols[1:nrow(indepTab)], legend=rownames(indepTab), bty='n' )
-
-condTab = sweep(indepTab, 1, rowSums(childByRegion), FUN = '/')
-barplot(condTab, main='Conditional probabilities', ylab='Probability', xlab='Number of children', beside=T, col=cols[1:nrow(condTab)])
-legend('topright', fill=cols[1:nrow(condTab)], legend=rownames(condTab), bty='n' )
-
-```
-
-
-### Joint random variables in the insurance dataset
-
-* Remember the relationship between age and charges in the insurance data 
-
-```{r}
-library(RESI)
-plot(insurance[,'age'], insurance$charges, ylab='Charges', xlab='Age', main=paste('Age', 'and', 'Charges') )
-```
-
-* The scatter plot can be thought of as a dataset version of a joint density $f_{X,Y}(x,y)$
-* We can get the conditional histograms for a few different age groups
-
-```{r, fig.width=15, fig.height=5}
-par(mar=c(8,2.8,1.8,.2), mgp=c(6,.7,0))
-nbin = 15
-insCat = with(insurance, data.frame(age=cut(age, breaks = seq(min(age), max(age), length.out=7), include.lowest=T), charges=cut(charges/1000, breaks = seq(min(charges/1000), max(charges/1000), length.out=nbin), include.lowest=T) ) )
-condTab = do.call(cbind, by(insCat$charges, insCat$age, function(x){res=table(x); res/sum(res)}))
-barplot(condTab, beside=TRUE, col=rep(cols[1:ncol(condTab)], each=nbin-1),
-        names.arg = rep(rownames(condTab), ncol(condTab) ), las=2, xlab='Charges (in thousands)', main='Conditional frequencies')
-legend('topright', fill=cols[1:ncol(condTab)], legend=colnames(condTab), bty='n')
-```
-
-
-
-```{r, fig.width=15, fig.height=5}
-par(mar=c(8,2.8,1.8,.2), mgp=c(6,.7,0))
-nbin = 15
-jointTab = do.call(cbind, by(insCat$charges, insCat$age, function(x){res=table(x); res}))
-jointTab = jointTab/sum(jointTab)
-barplot(jointTab, beside=TRUE, col=rep(cols[1:ncol(jointTab)], each=nbin-1),
-        names.arg = rep(rownames(jointTab), ncol(jointTab) ), las=2, xlab='Charges (in thousands)', main='Joint frequencies')
-legend('topright', fill=cols[1:ncol(jointTab)], legend=colnames(jointTab), bty='n')
-```
-
-
-```{r, fig.width=15, fig.height=5}
-par(mar=c(8,2.8,1.8,.2), mgp=c(6,.7,0))
-nbin = 15
-test = barplot(t(jointTab), beside=FALSE, col=cols[rep(1:ncol(jointTab), nbin-1)], las=2, xlab='Charges (in thousands)', main='Marginal frequencies', space=0)
-legend('topright', fill=cols[1:ncol(jointTab)], legend=colnames(jointTab), bty='n')
-```
-
-## Connecting data and probability with a random sample
-
-
-
-### Statistics is a way to learn about the world from a data set
-
-For now, let's work with the question, "What is the proportion of people in the United States who smoke cigarettes?"
-
-* We'll define currently smoking cigarettes as anyone who has smoked at least one in the last 30 days.
-* One way to answer this question is to ask everyone in the US whether the smoke.
-* Another way is to ask a random sample of people whether they smoke.
-  + How do we know that the proportion from the random sample is close to the proportion in the population?
-  + Probability is the tool we use to tie information from our sample to the population we want to learn about.
-* In this example, we can assume people from the US are sampled randomly and that each person's answer is $X_i \sim \text{Be}(p)$
-* If we repeated this for $n$ independently sample people, $X_1, \ldots, X_n$ is called a random sample.
-
-There are three objects here:
-
-1. $p$ - the unknown **parameter**
-2. $X_1, \ldots, X_n$ - the random sample, which can be use to compute an **estimator**.
-3. $x_1, \ldots, x_n$ - the observed data, which can be used to compute and **estimate**.
-
-Let's see what this looks like in a simulation. A simulation lets us create a very simple fake world, where we know parameters, which we are usually not able to know.
-
-```{r}
-nsduh = readRDS('nsduh/puf.rds')
-
-# Pretend that the NSDUH dataset is the entire population of
-# the united states -- There are n=56,897 people in the US.
-table(nsduh$cigmon)
-# This is the parameter that we usually don't get to see.
-# We can only see it here, because we are pretending that
-# the NSDUH data is the full population of the US.
-p = mean(nsduh$cigmon=='yes')
-p
-# The sample size we choose.
-n = 50
-# Capital X represents a random sample from the population.
-# This is just a statistical concept that tells us what would
-# happen if we repeated the experiment a whole bunch of times.
-#
-# run X() at the command line multiple times to see that it
-# it changes each time
-X = function(n=50) sample(nsduh$cigmon, n, replace = TRUE)
-X(n)
-X(n)
-X(n)
-# x is our observed data, it is not random, but we assume it was
-# drawn as a random sample from the population
-x = X(n)
-x
-# it does not change each time
-x
-x
-```
-
-* Statistics tries to learn about the parameter $p$, using only the data $x$, by studying the mathematical properties of $X$.
-* $X$ can tell us features about what would happen if we ran an experiment a whole bunch of times.
-
-
-
-### Mathematically
-
-#### Parameters
-
-* Usually a parameter is defined based on the interest of the clinician and from the model for your data.
-  + In this case, we assumed that each participant has a random probability of smoking with probability $p$.
-
-#### Estimates
-
-Note, an **estimate** is a function of the observed sample and it is nonrandom (Why is it non random?). We often use lowercase letters to make that clear
-$$
-\bar x = n^{-1} \sum_{i=1}^n x_i.
-$$
-
-#### Estimators
-
-An **estimator** is a function of a random sample.
-The goal (usually) is to estimate a parameter of interest (here, $p$).
-Let's consider the estimator
-$$
-\hat p = \bar X = n^{-1} \sum_{i=1}^n X_i,
-$$
-which we determine is pretty reasonable since $\mathbb{E} \bar X = p$.
-
- * We can study the properties of estimators to learn about how they behave.
- * If we like an estimator we can compute an *estimate* using our sample.
- * We can use features of our estimator to make probabilistic statements about what might happen if we repeat our study. **Dataset-to-dataset variability**
- 
- We can start to think about properties of the estimator to understand what it looks like if I were to repeat a study a whole bunch of times
- 
- * What is the mean of the estimator?
- * What is the variance of the estimator?
- 
- Why do we care about this? Because we want to know the probability that our estimator is close to the value in the population.
- 
- 
-```{r, fig.width=8}
-n=50
-# p is the unknown parameter.
-p = mean(nsduh$cigmon=='yes')
-# this is the data we collected, it was a random sample from the population
-x = X(n)
-# this is the proportion of smokers we observed
-phatObs = mean(x=='yes')
-# this is an estimate the variance of the estimator phat
-Var_phat = phatObs * (1-phatObs)/n
-
-
-
-# How can we tell where p is if we don't get to see it?
-
-
-# We can't know for sure, but we can see how often the random variable version of phat is close to p
-nstudies = 100
-phats = rep(NA, nstudies)
-for(i in 1:nstudies){
-  phats[i] = mean(X(n)=='yes')
-}
-plot(c(phatObs, phats), xlab='Different studies', ylab='phat', ylim=c(0,1), col=c(cols[2], rep(cols[1], nstudies)) )
-abline(h=p, lty=2)
-
-# because phatObs was created the same way as the phat
-```
-```{r, fig.width=8}
-n=500
-# p is the unknown parameter.
-p = mean(nsduh$cigmon=='yes')
-# this is the data we collected, it was a random sample from the population
-x = X(n)
-# this is the proportion of smokers we observed
-phatObs = mean(x=='yes')
-# this is an estimate the variance of the estimator phat
-Var_phat = phatObs * (1-phatObs)/n
-
-
-
-# How can we tell where p is if we don't get to see it?
-
-
-# We can't know for sure, but we can see how often the random variable version of phat is close to p
-nstudies = 100
-phats = rep(NA, nstudies)
-for(i in 1:nstudies){
-  phats[i] = mean(X(n)=='yes')
-}
-plot(c(phatObs, phats), xlab='Different studies', ylab='phat', ylim=c(0,1), col=c(cols[2], rep(cols[1], nstudies)) )
-abline(h=p, lty=2)
-
-# because phatObs was created the same way as the phat
-```
 
 
 ## Constructing a confidence interval
@@ -326,17 +54,154 @@ Things about the normal distribution:
 
 
 ### The Central Limit Theorem
-**The Central Limit Theorem (Durrett, pg. 124):** Let $X_1, X_2, \ldots$ be iid with $\E X_i = \mu$ and $\text{Var}(X_i) = \sigma^2 \in (0, \infty)$.
+**The Central Limit Theorem (Durrett, pg. 124):** Let $X_1, X_2, \ldots$ be iid with $\mathbb{E} X_i = \mu$ and $\text{Var}(X_i) = \sigma^2 \in (0, \infty)$.
 
 If $\bar X_n = n^{-1} \sum_{i=1}^n X_i$, then
-\[
+$$
 n^{1/2}(\bar X_n - \mu)/\sigma \to_D X,
-\]
+$$
 where $X \sim N(0,1)$.
 
 Comments:
 
 * We need the variance to be finite (stronger assumptions than LLN)
+* In words the central limit theorem means that no matter what the distribution of the data are, the mean will always me normally distributed in large samples.
+* More specifically, $(\bar X - \mu)/\sigma$ will be standard normal
+
+
+## Conceptual overview
+
+* This is to illustrate the CLT numbers using some example data to answer the question, "What is the proportion of people in the United States who smoke cigarettes?"
+* We're again pretending that the NSDUH dataset is the entire population of the US.
+
+```{r, echo=TRUE, fig.height=6, fig.width=12}
+# read in data
+nsduh = readRDS('nsduh/puf.rds')
+# ever tried cigarettes indicator
+triedCigs = nsduh$cigmon
+# make it a Bernoulli random variable
+triedCigs = ifelse(triedCigs=='yes', 1, 0)
+
+mu = mean(triedCigs)
+sigma = sqrt(var(triedCigs))
+
+ns = c(5, 10, 50, 100, 200, 300, 400, 500)
+
+# for each sample size, we performing 100 studies
+studies = 1:100
+
+layout(matrix(1:8, nrow=2, byrow=TRUE))
+for(n in ns){
+  # Each person in the class is performing a study of smoking
+  studies = lapply(studies, function(studies) sample(triedCigs, size=n))
+  names(studies) = studies
+  
+  # get the mean for each person's study
+  studyMeans = sapply(studies, mean)
+  stdMeans = sqrt(n)*(studyMeans - mu)/sigma
+  # histogram of the study means
+  hist(stdMeans, xlim = c(-3,3), breaks=10, main=paste0('n=', n))
+}
+```
+
+
+
+## Constructing confidence intervals
+
+* We can use the normal distribution to compute confidence intervals
+* Confidence intervals are an interval obtained from a random sample that contains the true value of the parameter with a given probability.
+$$
+P\{L(X_1, \ldots, X_n) \le p < U(X_1, \ldots, X_n) \} = 1-\alpha,
+$$
+for a given value $\alpha \in (0,1)$.
+
+* Note what things are random here (the end points). The parameter is fixed.
+* It comes from the fact that $(\bar X - \mu)/\sigma \sim N(0,1)$ (approximately).
+* The interpretation is that the procedure that creates the CI captures the true parameter $1-\alpha$\% of the time.
+
+
+## Dataset-to-dataset variability
+
+
+```{r, fig.width=9, fig.height=3, echo=TRUE}
+mu = 1
+sigma = 0.8
+n = 50
+nsim = 100
+alpha = 0.05
+CIs = data.frame(mean=rep(NA, nsim), lower=rep(NA, nsim), upper=rep(NA, nsim))
+for(sim in 1:nsim){
+  # draw a random sample
+  X = rnorm(n, mean=mu, sd=sigma)
+  stdev = sd(X)
+  # construct the confidence interval
+  CIs[sim, ] = c(mean(X), mean(X) + c(-1,1)*qnorm(1-alpha/2)*stdev/sqrt(n))
+}
+CIs$gotcha = ifelse(CIs$lower<=mu & CIs$upper>=mu, 1, 2)
+# range(c(CIs$lower, CIs$upper))
+plot(1:nsim, CIs$mean, pch=19, ylim = c(0,2), main=paste(nsim, 'Studies'), col=CIs$gotcha, ylab='Estimated means and CIs', xlab='Studies' )
+segments(x0=1:nsim, y0=CIs$lower, y1=CIs$upper, col=CIs$gotcha)
+abline(h=mu, lty=2 )
+
+```
+
+
+### Computing a confidence interval in real data
+
+* We can compute confidence intervals more generally (not just for proportions or means)
+
+### Examples
+
+```{r}
+library(RESI)
+var = 'bmi'
+mu = mean(insurance[,var])
+CI =  mu + qnorm(c(0.025, 0.975)) * sd(insurance[,var])/sqrt(length(insurance[,var]))
+hist(insurance[,var], main=var, xlab=var)
+abline(v=mu)
+abline(v=CI, lty=2)
+knitr::kable(round(data.frame(mean=mu, LCI=CI[1], UCI=CI[2]) ), 2)
+```
+
+```{r}
+library(RESI)
+var = 'children'
+mu = mean(insurance[,var])
+CI = mu + qnorm(c(0.025, 0.975)) * sd(insurance[,var])/sqrt(length(insurance[,var]))
+hist(insurance[,var], main=var, xlab=var)
+abline(v=mu)
+abline(v=CI, lty=2)
+knitr::kable(round(data.frame(mean=mu, LCI=CI[1], UCI=CI[2]), 2) )
+```
+
+### Reporting confidence intervals research
+
+* They are most often plotted, but can also be reported in tables/text, such as mean [L, U].
+* We're talking about estimating means, but CIs can be used to study associations of multiple variables.
+
+![[McHugo et al., 2021](https://www.cambridge.org/core/journals/psychological-medicine/article/abs/anterior-hippocampal-dysfunction-in-early-psychosis-a-2year-followup-study/3543B5054E6BA8D11E0C336E783E9432)](figures/confidence_interval)
+
+
+![Difference is task activation](figures/brain_activation)
+
+
+![Confidence intervals for continuous variables.](figures/CIs_meta.png)
+
+![Regression table studying reduction in pain following a treatment.](figures/CI_table)
+
+### Hypothesis testing
+
+* Confidence intervals are useful for identifying where/what kinds of questions.
+* Hypothesis test are for asking yes/no types of questions like
+  + "Do two or more treatments differ in their disease rate?"
+  + "Is age associated with brain size?"
+  
+  
+For example we might ask "Are insurance charges larger in smokers than nonsmokers?"
+
+* In this case, the parameter that we're interested in is the difference in charges between smokers and nonsmokers.
+* $\delta = \mu_S - \mu_}$
+  
 
 ## Some common statistical jargon so far
 

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Simon Vandekar">
 
-<title>Class 4</title>
+<title>Class 5</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -126,24 +126,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives">Objectives:</a></li>
-  <li><a href="#review-of-mean-and-expectation" id="toc-review-of-mean-and-expectation" class="nav-link" data-scroll-target="#review-of-mean-and-expectation">Review of mean and expectation</a></li>
-  <li><a href="#jointly-distributed-random-variables" id="toc-jointly-distributed-random-variables" class="nav-link" data-scroll-target="#jointly-distributed-random-variables">Jointly distributed random variables</a>
-  <ul class="collapse">
-  <li><a href="#marginal-probabilites" id="toc-marginal-probabilites" class="nav-link" data-scroll-target="#marginal-probabilites">Marginal probabilites</a></li>
-  <li><a href="#conditional-probabilities" id="toc-conditional-probabilities" class="nav-link" data-scroll-target="#conditional-probabilities">Conditional probabilities</a></li>
-  <li><a href="#conditional-expectations" id="toc-conditional-expectations" class="nav-link" data-scroll-target="#conditional-expectations">Conditional expectations</a></li>
-  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence">Independence</a></li>
-  <li><a href="#joint-random-variables-in-the-insurance-dataset" id="toc-joint-random-variables-in-the-insurance-dataset" class="nav-link" data-scroll-target="#joint-random-variables-in-the-insurance-dataset">Joint random variables in the insurance dataset</a></li>
-  </ul></li>
-  <li><a href="#connecting-data-and-probability-with-a-random-sample" id="toc-connecting-data-and-probability-with-a-random-sample" class="nav-link" data-scroll-target="#connecting-data-and-probability-with-a-random-sample">Connecting data and probability with a random sample</a>
-  <ul class="collapse">
-  <li><a href="#statistics-is-a-way-to-learn-about-the-world-from-a-data-set" id="toc-statistics-is-a-way-to-learn-about-the-world-from-a-data-set" class="nav-link" data-scroll-target="#statistics-is-a-way-to-learn-about-the-world-from-a-data-set">Statistics is a way to learn about the world from a data set</a></li>
-  <li><a href="#mathematically" id="toc-mathematically" class="nav-link" data-scroll-target="#mathematically">Mathematically</a></li>
-  </ul></li>
+  <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">RECAP!</a></li>
   <li><a href="#constructing-a-confidence-interval" id="toc-constructing-a-confidence-interval" class="nav-link" data-scroll-target="#constructing-a-confidence-interval">Constructing a confidence interval</a>
   <ul class="collapse">
   <li><a href="#preliminary-the-normal-distribution" id="toc-preliminary-the-normal-distribution" class="nav-link" data-scroll-target="#preliminary-the-normal-distribution">Preliminary: The normal distribution</a></li>
   <li><a href="#the-central-limit-theorem" id="toc-the-central-limit-theorem" class="nav-link" data-scroll-target="#the-central-limit-theorem">The Central Limit Theorem</a></li>
+  </ul></li>
+  <li><a href="#conceptual-overview" id="toc-conceptual-overview" class="nav-link" data-scroll-target="#conceptual-overview">Conceptual overview</a></li>
+  <li><a href="#constructing-confidence-intervals" id="toc-constructing-confidence-intervals" class="nav-link" data-scroll-target="#constructing-confidence-intervals">Constructing confidence intervals</a></li>
+  <li><a href="#dataset-to-dataset-variability" id="toc-dataset-to-dataset-variability" class="nav-link" data-scroll-target="#dataset-to-dataset-variability">Dataset-to-dataset variability</a>
+  <ul class="collapse">
+  <li><a href="#computing-a-confidence-interval-in-real-data" id="toc-computing-a-confidence-interval-in-real-data" class="nav-link" data-scroll-target="#computing-a-confidence-interval-in-real-data">Computing a confidence interval in real data</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
+  <li><a href="#reporting-confidence-intervals-research" id="toc-reporting-confidence-intervals-research" class="nav-link" data-scroll-target="#reporting-confidence-intervals-research">Reporting confidence intervals research</a></li>
+  <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing">Hypothesis testing</a></li>
   </ul></li>
   <li><a href="#some-common-statistical-jargon-so-far" id="toc-some-common-statistical-jargon-so-far" class="nav-link" data-scroll-target="#some-common-statistical-jargon-so-far">Some common statistical jargon so far</a></li>
   </ul>
@@ -153,7 +149,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Class 4</h1>
+<h1 class="title">Class 5</h1>
 </div>
 
 
@@ -177,582 +173,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="objectives" class="level2">
 <h2 class="anchored" data-anchor-id="objectives">Objectives:</h2>
 <ol type="1">
-<li>Learn about jointly distributed random variables</li>
-<li>Learn to use probability to think about data</li>
-<li>Learn to construct a confidence interval and test statistic</li>
+<li>Learn to construct and interpret a confidence interval and test statistic</li>
+<li>Learn to compute and interpret <span class="math inline">p</span>-values</li>
 </ol>
 </section>
-<section id="review-of-mean-and-expectation" class="level2">
-<h2 class="anchored" data-anchor-id="review-of-mean-and-expectation">Review of mean and expectation</h2>
-<ul>
-<li>Let’s find the mean and variance of a Bernoulli random variable.</li>
-</ul>
-</section>
-<section id="jointly-distributed-random-variables" class="level2">
-<h2 class="anchored" data-anchor-id="jointly-distributed-random-variables">Jointly distributed random variables</h2>
-<p><em>Jointly distributed random variables describe the probability of two things occurring. </em> In the insurance dataset, we can consider the probability of having a certain number of children living in a certain area.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RESI) <span class="co"># contains insurance dataset</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Registered S3 method overwritten by 'clubSandwich':
-  method    from    
-  bread.mlm sandwich</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>childByRegion <span class="ot">=</span> <span class="fu">table</span>(insurance<span class="sc">$</span>region, insurance<span class="sc">$</span>children)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>childByRegion <span class="ot">=</span> childByRegion<span class="sc">/</span><span class="fu">sum</span>(childByRegion)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">round</span>(childByRegion, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<table class="table table-sm table-striped">
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: right;">0</th>
-<th style="text-align: right;">1</th>
-<th style="text-align: right;">2</th>
-<th style="text-align: right;">3</th>
-<th style="text-align: right;">4</th>
-<th style="text-align: right;">5</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">northeast</td>
-<td style="text-align: right;">0.11</td>
-<td style="text-align: right;">0.06</td>
-<td style="text-align: right;">0.04</td>
-<td style="text-align: right;">0.03</td>
-<td style="text-align: right;">0.01</td>
-<td style="text-align: right;">0.00</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">northwest</td>
-<td style="text-align: right;">0.10</td>
-<td style="text-align: right;">0.06</td>
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.03</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">southeast</td>
-<td style="text-align: right;">0.12</td>
-<td style="text-align: right;">0.07</td>
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.03</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">southwest</td>
-<td style="text-align: right;">0.10</td>
-<td style="text-align: right;">0.06</td>
-<td style="text-align: right;">0.04</td>
-<td style="text-align: right;">0.03</td>
-<td style="text-align: right;">0.01</td>
-<td style="text-align: right;">0.01</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<ul>
-<li><p>Let <span class="math inline">X</span> be a random variable denoting number of children</p>
-<ul>
-<li>Is it categorical/continuous/ordinal?</li>
-</ul></li>
-<li><p>Let <span class="math inline">Y</span> be a random variable denoting region</p>
-<ul>
-<li>Is it categorical/continuous/ordinal?</li>
-</ul></li>
-<li><p>joint distribution is a function of both variables <span class="math inline">\mathbb{P}(X=x, Y=y) = f(x,y)</span>.</p></li>
-<li><p>Questions about regional differences and number of children can be determined from the table</p></li>
-<li><p>What is the probability of having zero kids and living in the east?</p></li>
-<li><p>What is the probability of having zero kids?</p></li>
-</ul>
-<section id="marginal-probabilites" class="level3">
-<h3 class="anchored" data-anchor-id="marginal-probabilites">Marginal probabilites</h3>
-<ul>
-<li>Marginal probabilities are the probability of something occurring for one of the random variables, ignoring the other one.</li>
-<li>It’s called marginal, because you just add all the probabilities in the row or column and write it in the margin.</li>
-</ul>
-</section>
-<section id="conditional-probabilities" class="level3">
-<h3 class="anchored" data-anchor-id="conditional-probabilities">Conditional probabilities</h3>
-<ul>
-<li>Conditional probabilities are to express statements dependent on something happening.</li>
-<li>Conditional probabilities are written <span class="math inline">\mathbb{P}(X=x \mid Y=y)</span>
-<ul>
-<li>What is the probability of having three or more kids given living in the southeast? <span class="math inline">\mathbb{P}(X\ge 3 \mid Y=\text{``southeast"} )</span></li>
-<li>What is the probability of living in the Northeast if you have one child?</li>
-</ul></li>
-<li>Conditional probability can be computed from the joint distribution <span class="math inline">\mathbb{P}(X=x\mid Y=y) = \mathbb{P}(X=x, Y=y)/\mathbb{P}(Y=y)</span></li>
-</ul>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>condTab <span class="ot">=</span> <span class="fu">sweep</span>(childByRegion, <span class="dv">1</span>, <span class="fu">rowSums</span>(childByRegion), <span class="at">FUN =</span> <span class="st">'/'</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">round</span>(condTab, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<table class="table table-sm table-striped">
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: right;">0</th>
-<th style="text-align: right;">1</th>
-<th style="text-align: right;">2</th>
-<th style="text-align: right;">3</th>
-<th style="text-align: right;">4</th>
-<th style="text-align: right;">5</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">northeast</td>
-<td style="text-align: right;">0.45</td>
-<td style="text-align: right;">0.24</td>
-<td style="text-align: right;">0.16</td>
-<td style="text-align: right;">0.12</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">0.01</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">northwest</td>
-<td style="text-align: right;">0.41</td>
-<td style="text-align: right;">0.23</td>
-<td style="text-align: right;">0.20</td>
-<td style="text-align: right;">0.14</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">0.00</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">southeast</td>
-<td style="text-align: right;">0.43</td>
-<td style="text-align: right;">0.26</td>
-<td style="text-align: right;">0.18</td>
-<td style="text-align: right;">0.10</td>
-<td style="text-align: right;">0.01</td>
-<td style="text-align: right;">0.02</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">southwest</td>
-<td style="text-align: right;">0.42</td>
-<td style="text-align: right;">0.24</td>
-<td style="text-align: right;">0.18</td>
-<td style="text-align: right;">0.11</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">0.02</td>
-</tr>
-</tbody>
-</table>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(condTab, <span class="at">main=</span><span class="st">'Conditional probabilities'</span>, <span class="at">ylab=</span><span class="st">'Probability'</span>, <span class="at">xlab=</span><span class="st">'Number of children'</span>, <span class="at">beside=</span>T, <span class="at">col=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(condTab)])</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(condTab)], <span class="at">legend=</span><span class="fu">rownames</span>(condTab), <span class="at">bty=</span><span class="st">'n'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="class5_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="288"></p>
-</div>
-</div>
-</section>
-<section id="conditional-expectations" class="level3">
-<h3 class="anchored" data-anchor-id="conditional-expectations">Conditional expectations</h3>
-<ul>
-<li>One you have conditional probabilities, you can do all the same stuff with it that you would do with a regular random variable</li>
-<li>For example, <span class="math inline">\mathbb{E}(X \mid Y) = \sum_{x} x f_{X\mid Y}(x \mid y)</span></li>
-</ul>
-</section>
-<section id="independence" class="level3">
-<h3 class="anchored" data-anchor-id="independence">Independence</h3>
-<ul>
-<li>Two random variables are independent if they factor <span class="math inline">\mathbb{P}(X=x, Y=y) = \mathbb{P}(X=x)\mathbb{P}(Y=y)</span> for all possible values of <span class="math inline">x</span> and <span class="math inline">y</span>.</li>
-<li>Intuitively, this means that fixing one variable doesn’t affect the distribution of the other.</li>
-<li>Another way to express it is that <span class="math inline">\mathbb{P}(X=x\mid Y=y) = \mathbb{P}(X=x)</span>.</li>
-<li>The table is pretty close to independent.</li>
-</ul>
-<p>If the table above were perfectly independent, it might look like this:</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rs <span class="ot">=</span> <span class="fu">rowSums</span>(childByRegion)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>cs <span class="ot">=</span> <span class="fu">colSums</span>(childByRegion)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>indepTab <span class="ot">=</span> <span class="fu">outer</span>(rs, cs)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">round</span>(indepTab, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<table class="table table-sm table-striped">
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: right;">0</th>
-<th style="text-align: right;">1</th>
-<th style="text-align: right;">2</th>
-<th style="text-align: right;">3</th>
-<th style="text-align: right;">4</th>
-<th style="text-align: right;">5</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">northeast</td>
-<td style="text-align: right;">0.104</td>
-<td style="text-align: right;">0.059</td>
-<td style="text-align: right;">0.043</td>
-<td style="text-align: right;">0.028</td>
-<td style="text-align: right;">0.005</td>
-<td style="text-align: right;">0.003</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">northwest</td>
-<td style="text-align: right;">0.104</td>
-<td style="text-align: right;">0.059</td>
-<td style="text-align: right;">0.044</td>
-<td style="text-align: right;">0.029</td>
-<td style="text-align: right;">0.005</td>
-<td style="text-align: right;">0.003</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">southeast</td>
-<td style="text-align: right;">0.117</td>
-<td style="text-align: right;">0.066</td>
-<td style="text-align: right;">0.049</td>
-<td style="text-align: right;">0.032</td>
-<td style="text-align: right;">0.005</td>
-<td style="text-align: right;">0.004</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">southwest</td>
-<td style="text-align: right;">0.104</td>
-<td style="text-align: right;">0.059</td>
-<td style="text-align: right;">0.044</td>
-<td style="text-align: right;">0.029</td>
-<td style="text-align: right;">0.005</td>
-<td style="text-align: right;">0.003</td>
-</tr>
-</tbody>
-</table>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(indepTab, <span class="at">main=</span><span class="st">'Joint probabilities'</span>, <span class="at">ylab=</span><span class="st">'Probability'</span>, <span class="at">xlab=</span><span class="st">'Number of children'</span>, <span class="at">beside=</span>T, <span class="at">col=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(indepTab)])</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(indepTab)], <span class="at">legend=</span><span class="fu">rownames</span>(indepTab), <span class="at">bty=</span><span class="st">'n'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="class5_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="288"></p>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>condTab <span class="ot">=</span> <span class="fu">sweep</span>(indepTab, <span class="dv">1</span>, <span class="fu">rowSums</span>(childByRegion), <span class="at">FUN =</span> <span class="st">'/'</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(condTab, <span class="at">main=</span><span class="st">'Conditional probabilities'</span>, <span class="at">ylab=</span><span class="st">'Probability'</span>, <span class="at">xlab=</span><span class="st">'Number of children'</span>, <span class="at">beside=</span>T, <span class="at">col=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(condTab)])</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(condTab)], <span class="at">legend=</span><span class="fu">rownames</span>(condTab), <span class="at">bty=</span><span class="st">'n'</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="class5_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="288"></p>
-</div>
-</div>
-</section>
-<section id="joint-random-variables-in-the-insurance-dataset" class="level3">
-<h3 class="anchored" data-anchor-id="joint-random-variables-in-the-insurance-dataset">Joint random variables in the insurance dataset</h3>
-<ul>
-<li>Remember the relationship between age and charges in the insurance data</li>
-</ul>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RESI)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(insurance[,<span class="st">'age'</span>], insurance<span class="sc">$</span>charges, <span class="at">ylab=</span><span class="st">'Charges'</span>, <span class="at">xlab=</span><span class="st">'Age'</span>, <span class="at">main=</span><span class="fu">paste</span>(<span class="st">'Age'</span>, <span class="st">'and'</span>, <span class="st">'Charges'</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="class5_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="288"></p>
-</div>
-</div>
-<ul>
-<li>The scatter plot can be thought of as a dataset version of a joint density <span class="math inline">f_{X,Y}(x,y)</span></li>
-<li>We can get the conditional histograms for a few different age groups</li>
-</ul>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">8</span>,<span class="fl">2.8</span>,<span class="fl">1.8</span>,.<span class="dv">2</span>), <span class="at">mgp=</span><span class="fu">c</span>(<span class="dv">6</span>,.<span class="dv">7</span>,<span class="dv">0</span>))</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>nbin <span class="ot">=</span> <span class="dv">15</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>insCat <span class="ot">=</span> <span class="fu">with</span>(insurance, <span class="fu">data.frame</span>(<span class="at">age=</span><span class="fu">cut</span>(age, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fu">min</span>(age), <span class="fu">max</span>(age), <span class="at">length.out=</span><span class="dv">7</span>), <span class="at">include.lowest=</span>T), <span class="at">charges=</span><span class="fu">cut</span>(charges<span class="sc">/</span><span class="dv">1000</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fu">min</span>(charges<span class="sc">/</span><span class="dv">1000</span>), <span class="fu">max</span>(charges<span class="sc">/</span><span class="dv">1000</span>), <span class="at">length.out=</span>nbin), <span class="at">include.lowest=</span>T) ) )</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>condTab <span class="ot">=</span> <span class="fu">do.call</span>(cbind, <span class="fu">by</span>(insCat<span class="sc">$</span>charges, insCat<span class="sc">$</span>age, <span class="cf">function</span>(x){res<span class="ot">=</span><span class="fu">table</span>(x); res<span class="sc">/</span><span class="fu">sum</span>(res)}))</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(condTab, <span class="at">beside=</span><span class="cn">TRUE</span>, <span class="at">col=</span><span class="fu">rep</span>(cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(condTab)], <span class="at">each=</span>nbin<span class="dv">-1</span>),</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">names.arg =</span> <span class="fu">rep</span>(<span class="fu">rownames</span>(condTab), <span class="fu">ncol</span>(condTab) ), <span class="at">las=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">'Charges (in thousands)'</span>, <span class="at">main=</span><span class="st">'Conditional frequencies'</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(condTab)], <span class="at">legend=</span><span class="fu">colnames</span>(condTab), <span class="at">bty=</span><span class="st">'n'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="class5_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="1440"></p>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">8</span>,<span class="fl">2.8</span>,<span class="fl">1.8</span>,.<span class="dv">2</span>), <span class="at">mgp=</span><span class="fu">c</span>(<span class="dv">6</span>,.<span class="dv">7</span>,<span class="dv">0</span>))</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>nbin <span class="ot">=</span> <span class="dv">15</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>jointTab <span class="ot">=</span> <span class="fu">do.call</span>(cbind, <span class="fu">by</span>(insCat<span class="sc">$</span>charges, insCat<span class="sc">$</span>age, <span class="cf">function</span>(x){res<span class="ot">=</span><span class="fu">table</span>(x); res}))</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>jointTab <span class="ot">=</span> jointTab<span class="sc">/</span><span class="fu">sum</span>(jointTab)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(jointTab, <span class="at">beside=</span><span class="cn">TRUE</span>, <span class="at">col=</span><span class="fu">rep</span>(cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(jointTab)], <span class="at">each=</span>nbin<span class="dv">-1</span>),</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">names.arg =</span> <span class="fu">rep</span>(<span class="fu">rownames</span>(jointTab), <span class="fu">ncol</span>(jointTab) ), <span class="at">las=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">'Charges (in thousands)'</span>, <span class="at">main=</span><span class="st">'Joint frequencies'</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(jointTab)], <span class="at">legend=</span><span class="fu">colnames</span>(jointTab), <span class="at">bty=</span><span class="st">'n'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="class5_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="1440"></p>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">8</span>,<span class="fl">2.8</span>,<span class="fl">1.8</span>,.<span class="dv">2</span>), <span class="at">mgp=</span><span class="fu">c</span>(<span class="dv">6</span>,.<span class="dv">7</span>,<span class="dv">0</span>))</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>nbin <span class="ot">=</span> <span class="dv">15</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>test <span class="ot">=</span> <span class="fu">barplot</span>(<span class="fu">t</span>(jointTab), <span class="at">beside=</span><span class="cn">FALSE</span>, <span class="at">col=</span>cols[<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(jointTab), nbin<span class="dv">-1</span>)], <span class="at">las=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">'Charges (in thousands)'</span>, <span class="at">main=</span><span class="st">'Marginal frequencies'</span>, <span class="at">space=</span><span class="dv">0</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">'topright'</span>, <span class="at">fill=</span>cols[<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(jointTab)], <span class="at">legend=</span><span class="fu">colnames</span>(jointTab), <span class="at">bty=</span><span class="st">'n'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="class5_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="1440"></p>
-</div>
-</div>
-</section>
-</section>
-<section id="connecting-data-and-probability-with-a-random-sample" class="level2">
-<h2 class="anchored" data-anchor-id="connecting-data-and-probability-with-a-random-sample">Connecting data and probability with a random sample</h2>
-<section id="statistics-is-a-way-to-learn-about-the-world-from-a-data-set" class="level3">
-<h3 class="anchored" data-anchor-id="statistics-is-a-way-to-learn-about-the-world-from-a-data-set">Statistics is a way to learn about the world from a data set</h3>
-<p>For now, let’s work with the question, “What is the proportion of people in the United States who smoke cigarettes?”</p>
-<ul>
-<li>We’ll define currently smoking cigarettes as anyone who has smoked at least one in the last 30 days.</li>
-<li>One way to answer this question is to ask everyone in the US whether the smoke.</li>
-<li>Another way is to ask a random sample of people whether they smoke.
-<ul>
-<li>How do we know that the proportion from the random sample is close to the proportion in the population?</li>
-<li>Probability is the tool we use to tie information from our sample to the population we want to learn about.</li>
-</ul></li>
-<li>In this example, we can assume people from the US are sampled randomly and that each person’s answer is <span class="math inline">X_i \sim \text{Be}(p)</span></li>
-<li>If we repeated this for <span class="math inline">n</span> independently sample people, <span class="math inline">X_1, \ldots, X_n</span> is called a random sample.</li>
-</ul>
-<p>There are three objects here:</p>
-<ol type="1">
-<li><span class="math inline">p</span> - the unknown <strong>parameter</strong></li>
-<li><span class="math inline">X_1, \ldots, X_n</span> - the random sample, which can be use to compute an <strong>estimator</strong>.</li>
-<li><span class="math inline">x_1, \ldots, x_n</span> - the observed data, which can be used to compute and <strong>estimate</strong>.</li>
-</ol>
-<p>Let’s see what this looks like in a simulation. A simulation lets us create a very simple fake world, where we know parameters, which we are usually not able to know.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>nsduh <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="st">'nsduh/puf.rds'</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pretend that the NSDUH dataset is the entire population of</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the united states -- There are n=56,897 people in the US.</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nsduh<span class="sc">$</span>cigmon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-   no   yes 
-46209 10688 </code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is the parameter that we usually don't get to see.</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We can only see it here, because we are pretending that</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the NSDUH data is the full population of the US.</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">mean</span>(nsduh<span class="sc">$</span>cigmon<span class="sc">==</span><span class="st">'yes'</span>)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1878482</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The sample size we choose.</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">50</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Capital X represents a random sample from the population.</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This is just a statistical concept that tells us what would</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># happen if we repeated the experiment a whole bunch of times.</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># run X() at the command line multiple times to see that it</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># it changes each time</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="cf">function</span>(<span class="at">n=</span><span class="dv">50</span>) <span class="fu">sample</span>(nsduh<span class="sc">$</span>cigmon, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="fu">X</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] no  no  yes no  no  no  no  no  no  no  yes no  no  no  no  no  no  yes no 
-[20] yes no  yes yes no  no  no  no  yes no  yes no  no  no  no  no  no  no  no 
-[39] no  no  no  no  no  no  no  no  no  no  yes no 
-Levels: no yes</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">X</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] no  no  yes no  no  no  yes no  no  no  no  no  no  no  no  no  no  no  no 
-[20] no  no  no  no  yes no  no  no  no  no  yes no  no  no  no  no  no  no  no 
-[39] no  yes no  no  no  no  yes no  yes no  no  no 
-Levels: no yes</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">X</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] no  no  no  no  no  no  no  no  yes no  no  no  no  no  no  no  no  yes no 
-[20] no  no  yes no  no  yes no  no  no  no  no  no  yes no  no  no  no  no  no 
-[39] no  no  no  no  yes no  no  no  no  yes no  no 
-Levels: no yes</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># x is our observed data, it is not random, but we assume it was</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># drawn as a random sample from the population</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">X</span>(n)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] no  no  yes no  yes yes no  no  no  yes no  no  no  no  yes no  no  yes no 
-[20] no  no  no  no  no  yes no  no  no  no  no  no  no  no  no  no  yes no  yes
-[39] no  no  no  no  no  no  no  no  no  yes no  no 
-Levels: no yes</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># it does not change each time</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] no  no  yes no  yes yes no  no  no  yes no  no  no  no  yes no  no  yes no 
-[20] no  no  no  no  no  yes no  no  no  no  no  no  no  no  no  no  yes no  yes
-[39] no  no  no  no  no  no  no  no  no  yes no  no 
-Levels: no yes</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] no  no  yes no  yes yes no  no  no  yes no  no  no  no  yes no  no  yes no 
-[20] no  no  no  no  no  yes no  no  no  no  no  no  no  no  no  no  yes no  yes
-[39] no  no  no  no  no  no  no  no  no  yes no  no 
-Levels: no yes</code></pre>
-</div>
-</div>
-<ul>
-<li>Statistics tries to learn about the parameter <span class="math inline">p</span>, using only the data <span class="math inline">x</span>, by studying the mathematical properties of <span class="math inline">X</span>.</li>
-<li><span class="math inline">X</span> can tell us features about what would happen if we ran an experiment a whole bunch of times.</li>
-</ul>
-</section>
-<section id="mathematically" class="level3">
-<h3 class="anchored" data-anchor-id="mathematically">Mathematically</h3>
-<section id="parameters" class="level4">
-<h4 class="anchored" data-anchor-id="parameters">Parameters</h4>
-<ul>
-<li>Usually a parameter is defined based on the interest of the clinician and from the model for your data.
-<ul>
-<li>In this case, we assumed that each participant has a random probability of smoking with probability <span class="math inline">p</span>.</li>
-</ul></li>
-</ul>
-</section>
-<section id="estimates" class="level4">
-<h4 class="anchored" data-anchor-id="estimates">Estimates</h4>
-<p>Note, an <strong>estimate</strong> is a function of the observed sample and it is nonrandom (Why is it non random?). We often use lowercase letters to make that clear <span class="math display">
-\bar x = n^{-1} \sum_{i=1}^n x_i.
-</span></p>
-</section>
-<section id="estimators" class="level4">
-<h4 class="anchored" data-anchor-id="estimators">Estimators</h4>
-<p>An <strong>estimator</strong> is a function of a random sample. The goal (usually) is to estimate a parameter of interest (here, <span class="math inline">p</span>). Let’s consider the estimator <span class="math display">
-\hat p = \bar X = n^{-1} \sum_{i=1}^n X_i,
-</span> which we determine is pretty reasonable since <span class="math inline">\mathbb{E} \bar X = p</span>.</p>
-<ul>
-<li>We can study the properties of estimators to learn about how they behave.</li>
-<li>If we like an estimator we can compute an <em>estimate</em> using our sample.</li>
-<li>We can use features of our estimator to make probabilistic statements about what might happen if we repeat our study. <strong>Dataset-to-dataset variability</strong></li>
-</ul>
-<p>We can start to think about properties of the estimator to understand what it looks like if I were to repeat a study a whole bunch of times</p>
-<ul>
-<li>What is the mean of the estimator?</li>
-<li>What is the variance of the estimator?</li>
-</ul>
-<p>Why do we care about this? Because we want to know the probability that our estimator is close to the value in the population.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="dv">50</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p is the unknown parameter.</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">mean</span>(nsduh<span class="sc">$</span>cigmon<span class="sc">==</span><span class="st">'yes'</span>)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># this is the data we collected, it was a random sample from the population</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">X</span>(n)</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># this is the proportion of smokers we observed</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>phatObs <span class="ot">=</span> <span class="fu">mean</span>(x<span class="sc">==</span><span class="st">'yes'</span>)</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="co"># this is an estimate the variance of the estimator phat</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>Var_phat <span class="ot">=</span> phatObs <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>phatObs)<span class="sc">/</span>n</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="co"># How can we tell where p is if we don't get to see it?</span></span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="co"># We can't know for sure, but we can see how often the random variable version of phat is close to p</span></span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>nstudies <span class="ot">=</span> <span class="dv">100</span></span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>phats <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>, nstudies)</span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nstudies){</span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>  phats[i] <span class="ot">=</span> <span class="fu">mean</span>(<span class="fu">X</span>(n)<span class="sc">==</span><span class="st">'yes'</span>)</span>
-<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(phatObs, phats), <span class="at">xlab=</span><span class="st">'Different studies'</span>, <span class="at">ylab=</span><span class="st">'phat'</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">col=</span><span class="fu">c</span>(cols[<span class="dv">2</span>], <span class="fu">rep</span>(cols[<span class="dv">1</span>], nstudies)) )</span>
-<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>p, <span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="class5_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="768"></p>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># because phatObs was created the same way as the phat</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="dv">500</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p is the unknown parameter.</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">mean</span>(nsduh<span class="sc">$</span>cigmon<span class="sc">==</span><span class="st">'yes'</span>)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># this is the data we collected, it was a random sample from the population</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">X</span>(n)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="co"># this is the proportion of smokers we observed</span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>phatObs <span class="ot">=</span> <span class="fu">mean</span>(x<span class="sc">==</span><span class="st">'yes'</span>)</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co"># this is an estimate the variance of the estimator phat</span></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>Var_phat <span class="ot">=</span> phatObs <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>phatObs)<span class="sc">/</span>n</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="co"># How can we tell where p is if we don't get to see it?</span></span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="co"># We can't know for sure, but we can see how often the random variable version of phat is close to p</span></span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>nstudies <span class="ot">=</span> <span class="dv">100</span></span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>phats <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>, nstudies)</span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nstudies){</span>
-<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>  phats[i] <span class="ot">=</span> <span class="fu">mean</span>(<span class="fu">X</span>(n)<span class="sc">==</span><span class="st">'yes'</span>)</span>
-<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(phatObs, phats), <span class="at">xlab=</span><span class="st">'Different studies'</span>, <span class="at">ylab=</span><span class="st">'phat'</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">col=</span><span class="fu">c</span>(cols[<span class="dv">2</span>], <span class="fu">rep</span>(cols[<span class="dv">1</span>], nstudies)) )</span>
-<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>p, <span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="class5_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="768"></p>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># because phatObs was created the same way as the phat</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-</section>
+<section id="recap" class="level2">
+<h2 class="anchored" data-anchor-id="recap">RECAP!</h2>
 </section>
 <section id="constructing-a-confidence-interval" class="level2">
 <h2 class="anchored" data-anchor-id="constructing-a-confidence-interval">Constructing a confidence interval</h2>
@@ -782,11 +208,236 @@ Levels: no yes</code></pre>
 </section>
 <section id="the-central-limit-theorem" class="level3">
 <h3 class="anchored" data-anchor-id="the-central-limit-theorem">The Central Limit Theorem</h3>
-<p><strong>The Central Limit Theorem (Durrett, pg. 124):</strong> Let <span class="math inline">X_1, X_2, \ldots</span> be iid with <span class="math inline">\E X_i = \mu</span> and <span class="math inline">\text{Var}(X_i) = \sigma^2 \in (0, \infty)</span>.</p>
-<p>If <span class="math inline">\bar X_n = n^{-1} \sum_{i=1}^n X_i</span>, then [ n^{1/2}(X_n - )/_D X, ] where <span class="math inline">X \sim N(0,1)</span>.</p>
+<p><strong>The Central Limit Theorem (Durrett, pg. 124):</strong> Let <span class="math inline">X_1, X_2, \ldots</span> be iid with <span class="math inline">\mathbb{E} X_i = \mu</span> and <span class="math inline">\text{Var}(X_i) = \sigma^2 \in (0, \infty)</span>.</p>
+<p>If <span class="math inline">\bar X_n = n^{-1} \sum_{i=1}^n X_i</span>, then <span class="math display">
+n^{1/2}(\bar X_n - \mu)/\sigma \to_D X,
+</span> where <span class="math inline">X \sim N(0,1)</span>.</p>
 <p>Comments:</p>
 <ul>
 <li>We need the variance to be finite (stronger assumptions than LLN)</li>
+<li>In words the central limit theorem means that no matter what the distribution of the data are, the mean will always me normally distributed in large samples.</li>
+<li>More specifically, <span class="math inline">(\bar X - \mu)/\sigma</span> will be standard normal</li>
+</ul>
+</section>
+</section>
+<section id="conceptual-overview" class="level2">
+<h2 class="anchored" data-anchor-id="conceptual-overview">Conceptual overview</h2>
+<ul>
+<li>This is to illustrate the CLT numbers using some example data to answer the question, “What is the proportion of people in the United States who smoke cigarettes?”</li>
+<li>We’re again pretending that the NSDUH dataset is the entire population of the US.</li>
+</ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>nsduh <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="st">'nsduh/puf.rds'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ever tried cigarettes indicator</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>triedCigs <span class="ot">=</span> nsduh<span class="sc">$</span>cigmon</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># make it a Bernoulli random variable</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>triedCigs <span class="ot">=</span> <span class="fu">ifelse</span>(triedCigs<span class="sc">==</span><span class="st">'yes'</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">=</span> <span class="fu">mean</span>(triedCigs)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="fu">var</span>(triedCigs))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ns <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">500</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># for each sample size, we performing 100 studies</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>studies <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">nrow=</span><span class="dv">2</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>))</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(n <span class="cf">in</span> ns){</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Each person in the class is performing a study of smoking</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  studies <span class="ot">=</span> <span class="fu">lapply</span>(studies, <span class="cf">function</span>(studies) <span class="fu">sample</span>(triedCigs, <span class="at">size=</span>n))</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(studies) <span class="ot">=</span> studies</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get the mean for each person's study</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  studyMeans <span class="ot">=</span> <span class="fu">sapply</span>(studies, mean)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  stdMeans <span class="ot">=</span> <span class="fu">sqrt</span>(n)<span class="sc">*</span>(studyMeans <span class="sc">-</span> mu)<span class="sc">/</span>sigma</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># histogram of the study means</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(stdMeans, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>), <span class="at">breaks=</span><span class="dv">10</span>, <span class="at">main=</span><span class="fu">paste0</span>(<span class="st">'n='</span>, n))</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class5_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+</section>
+<section id="constructing-confidence-intervals" class="level2">
+<h2 class="anchored" data-anchor-id="constructing-confidence-intervals">Constructing confidence intervals</h2>
+<ul>
+<li><p>We can use the normal distribution to compute confidence intervals</p></li>
+<li><p>Confidence intervals are an interval obtained from a random sample that contains the true value of the parameter with a given probability. <span class="math display">
+P\{L(X_1, \ldots, X_n) \le p &lt; U(X_1, \ldots, X_n) \} = 1-\alpha,
+</span> for a given value <span class="math inline">\alpha \in (0,1)</span>.</p></li>
+<li><p>Note what things are random here (the end points). The parameter is fixed.</p></li>
+<li><p>It comes from the fact that <span class="math inline">(\bar X - \mu)/\sigma \sim N(0,1)</span> (approximately).</p></li>
+<li><p>The interpretation is that the procedure that creates the CI captures the true parameter <span class="math inline">1-\alpha</span>% of the time.</p></li>
+</ul>
+</section>
+<section id="dataset-to-dataset-variability" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-to-dataset-variability">Dataset-to-dataset variability</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">=</span> <span class="fl">0.8</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">50</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">=</span> <span class="dv">100</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">=</span> <span class="fl">0.05</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>CIs <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">mean=</span><span class="fu">rep</span>(<span class="cn">NA</span>, nsim), <span class="at">lower=</span><span class="fu">rep</span>(<span class="cn">NA</span>, nsim), <span class="at">upper=</span><span class="fu">rep</span>(<span class="cn">NA</span>, nsim))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(sim <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim){</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># draw a random sample</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">=</span> <span class="fu">rnorm</span>(n, <span class="at">mean=</span>mu, <span class="at">sd=</span>sigma)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  stdev <span class="ot">=</span> <span class="fu">sd</span>(X)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># construct the confidence interval</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  CIs[sim, ] <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">mean</span>(X), <span class="fu">mean</span>(X) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>)<span class="sc">*</span>stdev<span class="sc">/</span><span class="fu">sqrt</span>(n))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>CIs<span class="sc">$</span>gotcha <span class="ot">=</span> <span class="fu">ifelse</span>(CIs<span class="sc">$</span>lower<span class="sc">&lt;=</span>mu <span class="sc">&amp;</span> CIs<span class="sc">$</span>upper<span class="sc">&gt;=</span>mu, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># range(c(CIs$lower, CIs$upper))</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span>nsim, CIs<span class="sc">$</span>mean, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>), <span class="at">main=</span><span class="fu">paste</span>(nsim, <span class="st">'Studies'</span>), <span class="at">col=</span>CIs<span class="sc">$</span>gotcha, <span class="at">ylab=</span><span class="st">'Estimated means and CIs'</span>, <span class="at">xlab=</span><span class="st">'Studies'</span> )</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(<span class="at">x0=</span><span class="dv">1</span><span class="sc">:</span>nsim, <span class="at">y0=</span>CIs<span class="sc">$</span>lower, <span class="at">y1=</span>CIs<span class="sc">$</span>upper, <span class="at">col=</span>CIs<span class="sc">$</span>gotcha)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>mu, <span class="at">lty=</span><span class="dv">2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class5_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="864"></p>
+</div>
+</div>
+<section id="computing-a-confidence-interval-in-real-data" class="level3">
+<h3 class="anchored" data-anchor-id="computing-a-confidence-interval-in-real-data">Computing a confidence interval in real data</h3>
+<ul>
+<li>We can compute confidence intervals more generally (not just for proportions or means)</li>
+</ul>
+</section>
+<section id="examples" class="level3">
+<h3 class="anchored" data-anchor-id="examples">Examples</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RESI)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'clubSandwich':
+  method    from    
+  bread.mlm sandwich</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>var <span class="ot">=</span> <span class="st">'bmi'</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">=</span> <span class="fu">mean</span>(insurance[,var])</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>CI <span class="ot">=</span>  mu <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">*</span> <span class="fu">sd</span>(insurance[,var])<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(insurance[,var]))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(insurance[,var], <span class="at">main=</span>var, <span class="at">xlab=</span>var)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>mu)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>CI, <span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class5_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="288"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">round</span>(<span class="fu">data.frame</span>(<span class="at">mean=</span>mu, <span class="at">LCI=</span>CI[<span class="dv">1</span>], <span class="at">UCI=</span>CI[<span class="dv">2</span>]) ), <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">LCI</th>
+<th style="text-align: right;">UCI</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">31</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RESI)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>var <span class="ot">=</span> <span class="st">'children'</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">=</span> <span class="fu">mean</span>(insurance[,var])</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>CI <span class="ot">=</span> mu <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">*</span> <span class="fu">sd</span>(insurance[,var])<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(insurance[,var]))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(insurance[,var], <span class="at">main=</span>var, <span class="at">xlab=</span>var)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>mu)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>CI, <span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="class5_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="288"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">round</span>(<span class="fu">data.frame</span>(<span class="at">mean=</span>mu, <span class="at">LCI=</span>CI[<span class="dv">1</span>], <span class="at">UCI=</span>CI[<span class="dv">2</span>]), <span class="dv">2</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">LCI</th>
+<th style="text-align: right;">UCI</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1.09</td>
+<td style="text-align: right;">1.03</td>
+<td style="text-align: right;">1.16</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="reporting-confidence-intervals-research" class="level3">
+<h3 class="anchored" data-anchor-id="reporting-confidence-intervals-research">Reporting confidence intervals research</h3>
+<ul>
+<li>They are most often plotted, but can also be reported in tables/text, such as mean [L, U].</li>
+<li>We’re talking about estimating means, but CIs can be used to study associations of multiple variables.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/confidence_interval.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption"><a href="https://www.cambridge.org/core/journals/psychological-medicine/article/abs/anterior-hippocampal-dysfunction-in-early-psychosis-a-2year-followup-study/3543B5054E6BA8D11E0C336E783E9432">McHugo et al., 2021</a></figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/brain_activation.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Difference is task activation</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/CIs_meta.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Confidence intervals for continuous variables.</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/CI_table.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Regression table studying reduction in pain following a treatment.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="hypothesis-testing" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis testing</h3>
+<ul>
+<li>Confidence intervals are useful for identifying where/what kinds of questions.</li>
+<li>Hypothesis test are for asking yes/no types of questions like
+<ul>
+<li>“Do two or more treatments differ in their disease rate?”</li>
+<li>“Is age associated with brain size?”</li>
+</ul></li>
+</ul>
+<p>For example we might ask “Are insurance charges larger in smokers than nonsmokers?”</p>
+<ul>
+<li>In this case, the parameter that we’re interested in is the difference in charges between smokers and nonsmokers.</li>
+<li><span class="math inline">\delta = \mu_S - \mu_}</span></li>
 </ul>
 </section>
 </section>
