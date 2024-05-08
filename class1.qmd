@@ -93,13 +93,45 @@ Credit: [Wikipedia](https://en.wikipedia.org/wiki/Monty_Hall_problem)
 * This problem relates to $p$-values and multiple hypothesis testing in Biostatistics.
 
 ### Bayesian flipping probabilities leading to unintuitive results.
-Dog COVID example
+
+
+* Scent dog detection example [Jendrny et al, 2020](https://bmcinfectdis.biomedcentral.com/articles/10.1186/s12879-020-05281-3)
+* These are the estimates of accuracy for the dogs identifying nCov presence
+
+|       | Positive Test | Negative Test| 
+| :------------- | :----------: | -----------: |
+| nCov Absent   | 4% | 96% |
+|  nCov Present | 83% |  17%  |
+
+
+* Let's say a dog barks at an airport visitor. Bayesian statistics tries to understand the probability that the person is actually nCov positive using Bayes theorem
+\[
+\P(\text{nCov} | + ) = \frac{\P(+ \mid \text{nCov} ) \P(\text{nCov}) }{\P(+ \mid \text{nCov} ) \P(\text{nCov}) + \P(+ \mid \text{no nCov} ) \P(\text{no nCov})}
+\]
+* The person testing positive for COVID is the data point. The person having COVID for real is the parameter.
+* The probability someone comes into the airport with nCov is unknown.
+* We can specify this probability from prior data.
+    + The number of current cases is 9,165,744 [Worldometer](https://www.worldometers.info/coronavirus/country/us/#graph-cases-daily).
+    + The US population is (approximately) 333,000,000 [US population clock](https://www.census.gov/popclock/)
+    + Thus we can approximate $\P(\text{nCov}) = 9,165,744/333,000,000 = 0.0275$.
+* We can then compute the probability that someone is sick, given that the the dog barked
+\[
+\P(\text{nCov} | + ) = \frac{0.83 \times 0.0275 }{0.83 \times 0.0275 + 0.04 \times (1-0.275)} \approx 0.37
+\]
+* There's less than 50% chance the person actually has nCov given the test is positive.
+* This is because the false positive rate is high enough and the COVID is rare enough that the majority of people who test positive are false positives.
+* Obviously, a decision still needs to be made about what to do with the person.
+
+Fundamental difference in interpretation:
+
+* Parameter is "random."
+* Probability represents our belief about the unknown value.
 
 ### Regression to the mean
 
 * Regression to the mean comes up a lot in sports [TDS](https://towardsdatascience.com/regression-to-the-mean-and-its-implications-648660c9bf76):
 
-> The LA Dodgers, Los Angeles' resident baseball team, appeared on the cover of Sports Illustratedss August 28, 2017 issue following a run of tremendous form. They had won 71% of their games and were on pace to tie the record for the most wins in a season. The cover came with the caption "Best. Team. Ever?"
+> The LA Dodgers, Los Angeles' resident baseball team, appeared on the cover of Sports Illustrated August 28, 2017 issue following a run of tremendous form. They had won 71% of their games and were on pace to tie the record for the most wins in a season. The cover came with the caption "Best. Team. Ever?"
 
 > The team then went on to lose 17 of their next 22 games, and would eventually lose in the World Series to the Houston Astros. This is just one example of the notorious Sports Illustrated cover jinx, an urban legend that apparently causes teams and athletes who appear on the cover to immediately experience a run of bad form.
 
@@ -134,26 +166,29 @@ abline(a=0, b=1)
 ```
 
 
-## Statistics in medical research (Biostatistics) (SKIPPED THIS SECTION 2023)
+## Statistics in medical research (Biostatistics) 
 
 **Features of Biostatistics medical research**
+
 * Improving health and understanding biological mechanisms
-* Prediction/diagnosis clinical translation (often with machine learning)
+* Prediction/diagnosis clinical translation (sometimes with machine learning)
 * Collaboration on team with MDs, biologists, psychologists, epidemiologists, informaticians, etc.
 * Developing new statistical tools to address challenges in medical research!
 
 **Biostatisticians' role on the research team**
+
 * It is easy to fit statistical or machine learning models to data and get results.
 * It is difficult to understand how study design or analysis procedures may bias the results.
 * Organizing study results in a sensible structure.
 * Biostatistics offers tools necessary to reason through and understand the analysis procedures.
 
-### Example: Circularity analysis
+### Example: Circularity analysis (SKIPPED THIS SECTION 2024)
 
 * Circularity analysis is a **bad** practice where the same data are used for variable selection and for prediction.
 * Circularity analysis remains a challenge in brain imaging studies [Kriegeskorte et al., 2010](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2949251/)
 
 A circular analysis:
+
 * Let's say I have measurements of brain activity across 100 brain regions and I want to know, which are associated with diagnosis (e.g. bipolar disorder) and to predict diagnosis using the brain imaging data
 * First, I fit a bunch of models to select important features
 
@@ -185,7 +220,7 @@ knitr::kable(rf$confusion)
 #summary(glm(diagnosis ~ x, family=binomial))
 ```
 
-* The out-of-sample prediction error is 38%, indicating (100-38)% - 62% accuracy in predicting bipolar disorder from the brain imaging data.
+* The out-of-sample prediction error is 38%, indicating (100-38)% = 62% accuracy in predicting bipolar disorder from the brain imaging data.
 * While this accuracy isn't great, the true accuracy should be 50% (random chance) -- all of the data I showed were fake and there was not association.
 * **Circularity analysis** is a common mistake in high-dimensional biomedical data.
 * Biostatistical concepts help us to describe this error mathematically and understand how use methods to avoid it.

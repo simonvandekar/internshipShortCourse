@@ -49,8 +49,8 @@ Things about the normal distribution:
 * PDF often denoted by $\phi(z)$.
 * CDF often denoted by $\Phi(z)$.
 * For $Y \sim N(\mu, \sigma^2)$, $(Y-\mu)/\sigma \sim N(0, 1)$  (often called Z-normalization).
-* $\P(\lvert Z \rvert\le 1.96) = \Phi(1.96) - \Phi(-1.96) \approx 0.95$.
-* $\P( Z \le 1.64) = \Phi(1.64) \approx 0.95$.
+* $\mathbb{P}(\lvert Z \rvert\le 1.96) = \Phi(1.96) - \Phi(-1.96) \approx 0.95$.
+* $\mathbb{P}( Z \le 1.64) = \Phi(1.64) \approx 0.95$.
 
 
 ### The Central Limit Theorem
@@ -209,6 +209,15 @@ $$
 * Hypothesis testing determines "null" and "alternative" hypotheses
   + Null is the uninteresting result -- smokers and nonsmokers have the same mean charges
 * Null is often denote $H_0: \delta = 0$ (no difference in charges)
+
+
+```{r}
+library(RESI)
+
+t.test(charges~smoker, data=insurance)
+```
+
+
 
 ## Some common statistical jargon so far
 
