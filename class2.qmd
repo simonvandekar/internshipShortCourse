@@ -60,6 +60,8 @@ cols = c('black', RColorBrewer::brewer.pal(9, 'Set1'))
 
 Below are some questions related to some of the material we've covered so far. We'll look at an insurance dataset with the amount of charges as a function of health and demographic features.
 
+Insurance companies are often interested in predicting charges so that they can know who high-risk individuals are based on easily measurable demographic information.
+
 
 * For each of the variables in the table below describe which are continuous, ordinal, or categorical. They might be one or more of these things.
   + Age - 
@@ -120,17 +122,23 @@ invisible(sapply(xvars, function(xvar){
 }))
 ```
 
+
+## Practice with plotting
+
+* It looks like for some of the plots above, there are multiple modes or clusters. Which ones? What could be driving these different clusters?
+* Create a scatter plot coloring the points for age and charges and BMI and charges by smoking status, to see if smokers fall in a particular cluster.
+
 ## Why probability
 
 * Probability is the language of statistics.
 * It is how we can understand data and evaluate the quantitative methods we use.
 
-## Properties of probability
-Examples
-Coin flip
-Dice roll
+## Important tools in probability
+
+
 Dependence/Independence
-Continuous example
+Discrete random variables
+Continuous random variables
 Expected values/Averages
 CDF, PDF
 
@@ -138,62 +146,75 @@ CDF, PDF
 ###	Coin flips and diagnoses
 
 * Something that takes only two values can be described with a Bernoulli random variable.
-  + Coin flip
-  + Diagnosis: schizophrenia, COVID+ or not
+  + yes/no categories, e.g. smoking
+  + Diagnosis: schizophrenia or not, COVID+ or not
   
 | Bernoulli values $x$ | probabilities |
 | ----------- | ----------- |
-| 0 (tails)    |    1-p   |
-| 1 (heads)   |   p    |
+| 0 (nonsmoker)    |    1-p   |
+| 1 (smoker)   |   p    |
 
 * What is a sensible value for $p$ for the different Bernoulli variables above?
 
 
 ### Random variables and probability notation
-* For $X\sim \text{Be}(\pi)$: X is distributed as ($\sim$ means "is distributed as") [Bernoulli](https://en.wikipedia.org/wiki/Bernoulli_distribution), with parameter $p \in (0,1)$, e.g. $p=0.25$.
+* For $X\sim \text{Be}(p)$: X is distributed as ($\sim$ means "is distributed as") [Bernoulli](https://en.wikipedia.org/wiki/Bernoulli_distribution), with parameter $p \in (0,1)$, e.g. $p=0.25$.
 * Blackboard or capital P is probability, $\mathbb{P}(X=x)$, means the probability the random variable $X$ is equal to the nonrandom value $x$.
 * $\mathbb{P}(X = x) = p^x(1-p)^{(1-x)}$. That is the probability mass function (PMF) of a Bernoulli random variable
 * Common notation is $f_X(x)$ is the PMF of the random variable $X$. In this case $f_X(x):=p^x(1-p)^{(1-x)}$.
 * $:=$ notation means "is defined by."
 * A random variable does not have a value in itself... We don't usually talk about $X=0.5$, but $\mathbb{P}(X=0.5)$.
 
-### Probability axioms
+Some questions: 
 
-We have an intuitive understanding of the basic axioms of probability.
+* For $X\sim \text{Be}(p)$, what is the probability that $X$ is 100?
+* What is the probability $X$ is 0.5?
 
-* An event $E$ is something that can occur, e.g. head or tails.
-* $F$ is the collection of all events e.g. $F = \{ \{0\}, \{1\} \}$.
-* Let $\Omega = {0,1}$ be union of all possible events
+### Random sample to estimate smoking proportion
 
-The (Kolmogorov) axioms are
+* Let's say the smoking status of each person in the `insurance` dataset is a random sample from $X_i \sim \text{Be}(p)$, for $i=1, \ldots, 1338$.
+* How can we estimate what $p$ is?
 
-1. $\mathbb{P}(X\in E) \ge 0$ -- probability is positive.
-2. $\mathbb{P}(X\in \Omega) = 1$ -- probabilities sum to 1 (a person has COVID, or they don't). 
-3. For disjoint sets $E_1 \cap E_2 = \varnothing$, $\mathbb{P}(E_1 \cup E_2) = \mathbb{P}(E_1) + \mathbb{P}(E_2)$.
 
-All the other properties of probability can be derived using these three axioms.
+<!-- ### Probability axioms -->
 
-### Wordle using the multinomial distribution
+<!-- We have an intuitive understanding of the basic axioms of probability. -->
 
-* Multinomial can be used for distributions with multiple categories.
+<!-- * An event $E$ is something that can occur, e.g. head or tails. -->
+<!-- * $F$ is the collection of all events e.g. $F = \{ \{0\}, \{1\} \}$. -->
+<!-- * Let $\Omega = {0,1}$ be union of all possible events -->
+
+<!-- The (Kolmogorov) axioms are -->
+
+<!-- 1. $\mathbb{P}(X\in E) \ge 0$ -- probability is positive. -->
+<!-- 2. $\mathbb{P}(X\in \Omega) = 1$ -- probabilities sum to 1 (a person has COVID, or they don't).  -->
+<!-- 3. For disjoint sets $E_1 \cap E_2 = \varnothing$, $\mathbb{P}(E_1 \cup E_2) = \mathbb{P}(E_1) + \mathbb{P}(E_2)$. -->
+
+<!-- All the other properties of probability can be derived using these three axioms. -->
+
+### Multiple groups, Multinomial distribution
+
+* The multinomial can be used for distributions with multiple categories.
   + Die rolls, Wordle number of guesses
   + Likert scales (e.g. [PANSS](https://en.wikipedia.org/wiki/Positive_and_Negative_Syndrome_Scale) in schizophrenia), Tanner staging (puberty; 1-5), Cancer staging (0-4)
-* The probability of getting the Wordle in a certain number of guesses.
-* Also 6 (or one more) possible values.
-* Same family of distribution as the die, except with different *parameters*
+* Number of children.
+* Region.
+* Let's fill in this table together
 
-$Y=$Number of tries | $\mathbb{P}(Y)$  |
+$y=$Number of children | $\mathbb{P}(Y=y)$  |
 |-------|:----:|
-| 1 | 0 |
-| 2 | 0.03 |
-| 3 | 0.28 |
-| 4 | 0.40 |
-| 5 | 0.18 |
-| 6 | 0.11  |
-| 7 | ?? |
+| 0 | ___ |
+| 1 | ___ |
+| 2 | ___ |
+| 3 | ___ |
+| 4 | ___ |
+| 5 | ___  |
+| 6+ | ___?? |
 
-<center>
-![Wordle results](figures/wordle.jpg){#id .class width=25%}
+
+* What is the probability someone in the US has more than 5 children?
+* What is the estimated probability someone in the US has more than 5 children?
+* Write out the table for region and estimate the probabilities from the dataset.
 
 
 
@@ -254,4 +275,6 @@ $$
   
 * The normal distribution is just an approximation.
   + Normal distribution is defined from $(-\infty, \infty)$
-  
+
+
+#

@@ -355,6 +355,3 @@ boxplot( ircigfm ~ age, data=nsduh, ylab='No days smoking', main='Cig by Age', o
 
 
 
-#### Violin plots
-
-
