@@ -214,7 +214,7 @@ $y=$Number of children | $\mathbb{P}(Y=y)$  |
 
 * What is the probability someone in the US has more than 5 children?
 * What is the estimated probability someone in the US has more than 5 children?
-* Write out the table for region and estimate the probabilities from the dataset.
+* Write out the table for `region` and estimate the probabilities from the dataset.
 
 
 
@@ -238,9 +238,10 @@ x = seq(0, 1)
 plot(x, dbinom(x, size = 1, prob = 1/4), main='Bern(1/4)', type='p', ylab='P(X=x)', ylim=c(0,1))
 ```
 
-#### Wordle PDF
+#### Number of children probability density function (PDF)
 
-* Let's draw the PDF for the Wordle distribution
+* Let's draw the estimated PDF for the number of children.
+* Let's draw the estimated PDF for region.
 
 
 #### Body mass index
