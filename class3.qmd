@@ -28,7 +28,7 @@ cols = c('black', RColorBrewer::brewer.pal(9, 'Set1'))
 
 ## Recap
 
-* We talked about PMFs, PDFs, probability, and a lot of notation.
+* We talked about PMFs and PDFs.
 
 ### PDFs
 
@@ -52,10 +52,17 @@ x = seq(min(lims$mids), max(lims$mids), length.out=100)
 lines(x, dnorm(x, mean = mean(insurance$bmi),sd=sd(insurance$bmi)))
 ```
 
+
+
 * The normal distribution is 
 $$
 f_X(x) = \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2}
 $$
+
+* This is a picture of the standard normal distribution ($\mu=0$, $\sigma^2=1$).
+
+<div class="centered">
+![](figures/normal_distribution.png){ width=95% }
 
 * In our dataset the mean is $\hat \mu =$ `r round(mean(insurance$bmi), 2)`, and the standard deviation is $\hat\sigma =$ `r round(sd(insurance$bmi), 2)`.
 * We can use $f_X(x)$ to compute probabilities that a person's BMI lies in a particular range.

@@ -169,10 +169,12 @@ Some questions:
 
 * For $X\sim \text{Be}(p)$, what is the probability that $X$ is 100?
 * What is the probability $X$ is 0.5?
+* What is the probability $X$ is 0?
 
 ### Random sample to estimate smoking proportion
 
 * Let's say the smoking status of each person in the `insurance` dataset is a random sample from $X_i \sim \text{Be}(p)$, for $i=1, \ldots, 1338$.
+* What is a reasonable value for $p$?
 * How can we estimate what $p$ is?
 
 
@@ -223,8 +225,6 @@ $y=$Number of children | $\mathbb{P}(Y=y)$  |
 * The probability density function $f_X(x)$ for a random variable $X$ can be thought of as $\mathbb{P}(X=x)$.
 * It is called the probability mass function (PMF) for discrete random variables.
 
-The PDF (probability density function) is the derivative of the CDF and often denoted with a lower case letter $f(x)$.
-For discrete random variables the PDF is call the PMF (probability mass function).
 
 ```{r, echo=FALSE, fig.cap='Density functions.', fig.width=8, fig.height=2}
 layout(matrix(1:4, nrow=1))
@@ -240,6 +240,7 @@ plot(x, dbinom(x, size = 1, prob = 1/4), main='Bern(1/4)', type='p', ylab='P(X=x
 
 #### Number of children probability density function (PDF)
 
+* Let's draw the estimated PDF for smoking status.
 * Let's draw the estimated PDF for the number of children.
 * Let's draw the estimated PDF for region.
 
@@ -263,19 +264,3 @@ lims = hist(insurance$bmi, freq = FALSE, ylim=c(0, .08), main='BMI Histogram', x
 x = seq(min(lims$mids), max(lims$mids), length.out=100)
 lines(x, dnorm(x, mean = mean(insurance$bmi),sd=sd(insurance$bmi)))
 ```
-
-* The normal distribution is 
-$$
-f_X(x) = \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2}
-$$
-
-* In our dataset the mean is $\hat \mu =$ `r round(mean(insurance$bmi), 2)`, and the standard deviation is $\hat\sigma =$ `r round(sd(insurance$bmi), 2)`.
-* We can use $f_X(x)$ to compute probabilities that a person's BMI lies in a particular range.
-  + Probability less than or equal to "healthy" -- $\mathbb{P}(X \le 25) = \int^{25}_0 f_X(x)dx$
-  + Probability in "healthy range" -- $\mathbb{P}(18 < X \le 25) = \int^{25}_{18} f_X(x)dx$
-  
-* The normal distribution is just an approximation.
-  + Normal distribution is defined from $(-\infty, \infty)$
-
-
-#

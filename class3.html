@@ -143,7 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="recap" class="level2">
 <h2 class="anchored" data-anchor-id="recap">Recap</h2>
 <ul>
-<li>We talked about PMFs, PDFs, probability, and a lot of notation.</li>
+<li>We talked about PMFs and PDFs.</li>
 </ul>
 <section id="pdfs" class="level3">
 <h3 class="anchored" data-anchor-id="pdfs">PDFs</h3>
@@ -182,18 +182,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>The normal distribution is <span class="math display">
 f_X(x) = \frac{1}{2\pi \sigma^2} e^{-\frac{1}{2\sigma^2} (x - \mu)^2}
 </span></p></li>
-<li><p>In our dataset the mean is <span class="math inline">\hat \mu =</span> 30.66, and the standard deviation is <span class="math inline">\hat\sigma =</span> 6.1.</p></li>
-<li><p>We can use <span class="math inline">f_X(x)</span> to compute probabilities that a person’s BMI lies in a particular range.</p>
+<li><p>This is a picture of the standard normal distribution (<span class="math inline">\mu=0</span>, <span class="math inline">\sigma^2=1</span>).</p></li>
+</ul>
+<div class="centered">
+<p><img src="figures/normal_distribution.png" class="img-fluid" style="width:95.0%"></p>
+<ul>
+<li>In our dataset the mean is <span class="math inline">\hat \mu =</span> 30.66, and the standard deviation is <span class="math inline">\hat\sigma =</span> 6.1.</li>
+<li>We can use <span class="math inline">f_X(x)</span> to compute probabilities that a person’s BMI lies in a particular range.
 <ul>
 <li>Probability less than or equal to “healthy” – <span class="math inline">\mathbb{P}(X \le 25) = \int^{25}_0 f_X(x)dx</span></li>
 <li>Probability in “healthy range” – <span class="math inline">\mathbb{P}(18 &lt; X \le 25) = \int^{25}_{18} f_X(x)dx</span></li>
 </ul></li>
-<li><p>The normal distribution is just an approximation.</p>
+<li>The normal distribution is just an approximation.
 <ul>
 <li>Normal distribution is defined from <span class="math inline">(-\infty, \infty)</span></li>
 </ul></li>
 </ul>
-</section>
+</div></section>
 </section>
 <section id="cumulative-distribution-function-cdf" class="level3">
 <h3 class="anchored" data-anchor-id="cumulative-distribution-function-cdf">Cumulative Distribution Function (CDF)</h3>
